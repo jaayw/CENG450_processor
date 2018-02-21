@@ -12,7 +12,7 @@ use IEEE.NUMERIC_STD.ALL;
 --library UNISIM;
 --use UNISIM.VComponents.all;
 
-entity alu_vhdl is
+entity alu is
 	Port(
 			-- input
 			rst : IN std_logic;
@@ -27,9 +27,9 @@ entity alu_vhdl is
 			n_flag : OUT std_logic
 			);
 	
-end alu_vhdl;
+end alu;
 
-architecture Behavioral of alu_vhdl is
+architecture Behavioral of alu is
 
 signal result_32 : std_logic_vector(31 downto 0);
 
