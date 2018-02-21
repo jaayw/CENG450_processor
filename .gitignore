@@ -6,9 +6,13 @@
 *.bgn
 *.bit
 *.bld
+*.cmd
 *.cmd_log
 *.drc
+*.exe
+*.ini
 *.ll
+*.log
 *.lso
 *.msd
 *.msk
@@ -29,8 +33,10 @@
 *.twx
 *.unroutes
 *.ut
+*.wdb
 *.xpi
 *.xst
+*.xmsgs
 *_bitgen.xwbt
 *_envsettings.html
 *_map.map
@@ -69,6 +75,7 @@ xlnx_auto_0_xdb/
 xst/
 _ngo/
 _xmsgs/
+isim/
 
 
 # End of https://www.gitignore.io/api/xilinxise
