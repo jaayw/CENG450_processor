@@ -23,8 +23,13 @@ end cpu;
 
 architecture Behavioral of cpu is
 
+signal rd_data1 : std_logic_vector(15 downto 0); 
+signal rd_data2 : std_logic_vector(15 downto 0);
+
 begin
 
+ALU0 : entity work.alu port map(rst, clk, in1, in2, alu_mode, result, z_flag, n_flag);
+REG0 : entity work.register_file port map(rst, clk, rd_index1, rd_index2, rd_data1, rd_data2, wr_index, wr_data, wr_enable);
 
 end Behavioral;
 

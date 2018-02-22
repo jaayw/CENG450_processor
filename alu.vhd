@@ -33,13 +33,17 @@ architecture Behavioral of alu is
 
 signal result_32 : std_logic_vector(31 downto 0);
 
+signal result_mul : std_logic_vector(15 downto 0);
+
 begin
 
-	process
+	result_32 <= std_logic_vector((signed(in1(15 downto 0)) * signed(in2(15 downto 0))));
+	
+	result_mul <= result_32(31 downto 16);
+
+	process(clk)
 		
 		variable result_sh : std_logic_vector(15 downto 0);
-		
-		variable result_mul : std_logic_vector(15 downto 0);
 	
 		begin
 		
@@ -55,25 +59,26 @@ begin
 					result <= std_logic_vector((signed(in1) - signed(in2)));
 					
 				when "011" => -- mul (mode: 3)
-					result_mul := std_logic_vector((signed(in1(15 downto 0)) * signed(in2(15 downto 0))));
-					result <= result_mul(15 downto 0);
+					result <= result_32(15 downto 0);
 					
 				when "100" => -- nand (mode: 4)
 					result <= (in1 nand in2);
 					
 				when "101" => -- SHL (Shift Left) (mode: 5)
+									result_sh := in1;
 									for i in 0 to 15 loop
-										if i <= to_integer(unsigned(in2)) then
-											result_sh := in1(14 downto 0) & '0';
+										if i < to_integer(unsigned(in2)) then
+											result_sh := result_sh(14 downto 0) & '0';
 										end if;
 									end loop;
 									
 									result <= result_sh;
 					
 				when "110" => -- SHR (Shift Right) mode: 6)
+									result_sh := in1;
 									for i in 0 to 15 loop
-										if i <= to_integer(unsigned(in2)) then
-											result_sh := in1(15 downto 1) & '0';
+										if i < to_integer(unsigned(in2)) then
+											result_sh := '0' & result_sh(15 downto 1);
 										end if;
 									end loop;
 									
@@ -82,15 +87,14 @@ begin
 				when "111" => -- test (mode: 7)
 					result <= "0000000000000000";
 					
-					if(in1 = "0") then
+					if(in1 = "0000000000000000") then
 						z_flag <= '1';
-					else
+						n_flag <= '0';
+					elsif(in1(15) = '1') then
 						z_flag <= '0';
-					end if;
-					
-					if(signed(in1) < 0) then
 						n_flag <= '1';
 					else
+						z_flag <= '0';
 						n_flag <= '0';
 					end if;
 					
@@ -100,18 +104,6 @@ begin
 			end case;
 			
 	end process;
-
--- zero flag
-z_flag <=
-'1' when(alu_mode = "111") and (to_integer(unsigned(in1)) = 0) else
-'0' when(alu_mode = "111") and (to_integer(unsigned(in1)) /= 0) else
-'0';
-
--- negative flag
-n_flag <=
-'1' when(alu_mode = "111") and (to_integer(unsigned(in1)) < 0) else
-'0' when(alu_mode = "111") and (to_integer(unsigned(in1)) >= 0) else
-'0';
 
 end Behavioral;
 

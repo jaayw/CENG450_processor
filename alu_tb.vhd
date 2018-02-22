@@ -72,6 +72,8 @@ BEGIN
 		rst <= '1';
       wait for 100 us;
 		wait until (clk='0' and clk'event);
+		wait until (clk='1' and clk'event);
+		
 		rst <= '0';
 		
 		wait until (clk='1' and clk'event);
@@ -82,49 +84,53 @@ BEGIN
 			-- Result should be:
 			-- decimal: 15500 hexa: 3C8C
 		
---		wait until (clk='1' and clk'event);
---			-- Testing sub (mode: 2)
---			alu_mode <= "010";
---			in1 <= "0100000001110100";
---			in2 <= "0100000001000010";
---			-- Result should be:
---			-- decimal: 50 hex: 0032
---		
---		wait until (clk='1' and clk'event);
---			-- Testing multi (mode: 3)
---			alu_mode <= "011";
---			in1 <= "0000000010011011";
---			in2 <= "0000000001111101";
---			-- Result should be:
---			-- decimal: 19375 hex: 4BAF
---		
---		wait until (clk='1' and clk'event);
---			-- Testing nand (mode: 4)
---			alu_mode <= "100";
---			in1 <= "1010101010101010";
---			in2 <= "1010101010101010";
---			-- Result should be:
---			-- decimal: 21845 hexa: 5555
---		
---		wait until (clk='1' and clk'event);
---			-- Testing SHL (mode: 5)
---			alu_mode <= "101";
---			in1 <= "0000000000111111";
---			in2 <= "0000000000001010"; -- left shift 10
---			-- Result should be:
---			-- decimal: 64512 hex: FC00
---		
---		wait until (clk='1' and clk'event);
---			-- Testing SHR (mode: 6)
---			alu_mode <= "110";
---			in1 <= "1010100000000000";
---			in2 <= "0000000000001000"; -- right shift 8
---			-- Result should be"
---			-- decimal: 168 hexa: 00A8
---			
---		wait until (clk='1' and clk'event);
---			-- Testing NOP
---			alu_mode <= "000";
+		wait until (clk='1' and clk'event);
+			-- Testing sub (mode: 2)
+			alu_mode <= "010";
+			in1 <= "0100000001110100";
+			in2 <= "0100000001000010";
+			-- Result should be:
+			-- decimal: 50 hex: 0032
+		
+		wait until (clk='1' and clk'event);
+			-- Testing multi (mode: 3)
+			alu_mode <= "011";
+			in1 <= "0000000010011011";
+			in2 <= "0000000001111101";
+			-- Result should be:
+			-- decimal: 19375 hex: 4BAF
+		
+		wait until (clk='1' and clk'event);
+			-- Testing nand (mode: 4)
+			alu_mode <= "100";
+			in1 <= "1010101010101010";
+			in2 <= "1010101010101010";
+			-- Result should be:
+			-- decimal: 21845 hexa: 5555
+		
+		wait until (clk='1' and clk'event);
+			-- Testing SHL (mode: 5)
+			alu_mode <= "101";
+			in1 <= "0000000000111111";
+			in2 <= "0000000000000100"; -- left shift 4
+			-- Result should be:
+			-- decimal: 1008 hex: 03F0
+		
+		wait until (clk='1' and clk'event);
+			-- Testing SHR (mode: 6)
+			alu_mode <= "110";
+			in1 <= "1010100000000000";
+			in2 <= "0000000000001000"; -- right shift 8
+			-- Result should be"
+			-- decimal: 168 hexa: 00A8
+			
+		wait until (clk='1' and clk'event);
+			-- Testing test mode (mode: 7)
+			alu_mode <= "111";
+			
+		wait until (clk='1' and clk'event);
+			-- Testing NOP
+			alu_mode <= "000";
 		
       wait;
 		

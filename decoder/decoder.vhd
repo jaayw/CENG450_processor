@@ -11,11 +11,19 @@ use IEEE.STD_LOGIC_1164.ALL;
 --use UNISIM.VComponents.all;
 
 entity decoder is
+
+	PORT(
+		in_inst : std_logic_vector;
+		out_inst : std_logic_vector
+	);
+
 end decoder;
 
 architecture Behavioral of decoder is
 
 begin
+
+	
 
 
 end Behavioral;
