@@ -1,5 +1,5 @@
 library IEEE;
-use IEEE.STD_LOGIC_1164.ALL;
+USE IEEE.STD_LOGIC_1164.ALL;
 
 -- Uncomment the following library declaration if using
 -- arithmetic functions with Signed or Unsigned values
@@ -10,20 +10,16 @@ use IEEE.STD_LOGIC_1164.ALL;
 --library UNISIM;
 --use UNISIM.VComponents.all;
 
-entity decoder is
+entity mux is
 
-	PORT(
-		-- input
-		in_inst : IN std_logic_vector(15 downto 0);
-		
-		-- output
-		out_inst : OUT std_logic_vector(15 downto 0);
-		cl : OUT std_logic_vector(3 downto 0)
+	PORT (
+		data1 : std_logic_vector(15 downto 0);
+		data2 : std_logic_vector(15 downto 0)
 	);
 
-end decoder;
+end mux;
 
-architecture Behavioral of decoder is
+architecture Behavioral of mux is
 
 begin
 
@@ -31,9 +27,10 @@ begin
 	
 		begin
 		
-			cl <= in_inst & X"000F";
-				
+			
+		
 	end process;
-	
+
+
 end Behavioral;
 
