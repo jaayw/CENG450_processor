@@ -25,11 +25,17 @@ end decoder;
 
 architecture Behavioral of decoder is
 
+signal op_code : in_inst(15 downto 12);
+
 begin
 
 	process
 	
 		begin
+		
+		
+		
+			
 		
 			cl <= in_inst & X"000F";
 				

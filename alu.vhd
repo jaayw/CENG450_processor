@@ -15,8 +15,8 @@ use IEEE.NUMERIC_STD.ALL;
 entity alu is
 	Port(
 			-- input
+			clk : IN std_logic;
 			rst : IN std_logic;
-         clk : IN std_logic;
 			in1 : IN	std_logic_vector(15 downto 0);
 			in2 : IN std_logic_vector(15 downto 0);
 			alu_mode : IN std_logic_vector(2 downto 0);
