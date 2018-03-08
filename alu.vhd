@@ -41,7 +41,7 @@ begin
 	
 	result_mul <= result_32(31 downto 16);
 
-	process(clk)
+	process(clk, rst, in1, in2, alu_mode, result_32)
 		
 		variable result_sh : std_logic_vector(15 downto 0);
 	

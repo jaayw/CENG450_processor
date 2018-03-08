@@ -13,58 +13,92 @@ use IEEE.STD_LOGIC_1164.ALL;
 entity cpu is
 
 	PORT (
+		-- inputs
 		clk : IN std_logic;
 		rst : IN std_logic;
-		wr_enable : IN std_logic;
 		en : IN std_logic;
-		addr : IN std_logic_vector (6 downto 0);
+		in_data : std_logic_vector(15 downto 0);
 		
-		-- output
-		Q : OUT std_logic_vector(6 downto 0);
-		z_flag : OUT std_logic;
-		n_flag : OUT std_logic
+		-- outputs
+		out_data : OUT std_logic_vector(15 downto 0)
 		);
 
 end cpu;
 
 architecture Behavioral of cpu is
 
-signal rd_data1 : std_logic_vector(15 downto 0); 
-signal rd_data2 : std_logic_vector(15 downto 0);
+-- PC Signals
+-- Q -> count [signal] -> addr [ROM]
+signal counter : std_logic_vector(6 downto 0);
 
---signal a_mode : std_logic_vector(2 downto 0);
---signal rd_index1, rd_index2 : std_logic_vector(2 downto 0);
---signal wr_index : std_logic_vector(2 downto 0);
-signal wr_data :  std_logic_vector(15 downto 0);
+-- ROM Signals
+-- data -> in_inst [fetch_decode]
+--		  -> instr [execute]
+-- instr(15 downto 9) = op_code
+-- instr(11 downto 9) = alu_mode
+-- instr(8 downto 6) = ra = wr_index
+-- instr(5 downto 3) = rb = rd_index1
+-- instr(2 downto 0) = rc = rd_index2
 signal instr : std_logic_vector (15 downto 0);
-signal count : std_logic_vector(6 downto 0);
-signal result : std_logic_vector(15 downto 0);
 
--- alu_mode = instr(11 downto 9)
--- rd_index1 = rb = instr(5 downto 3)
--- rd_index2 = rc = instr(2 downto 0)
--- wr_index = ra = instr(8 downto 6)
--- Q = addr = count(6 downto 0)
-
-signal ra : std_logic_vector(2 downto 0);
+-- fetch_decode Signals
+-- ra -> wr_index [register_file]
+-- rb -> rd_index1 [register_file]
+-- rc -> rd_index2 [register_file]
+signal ra_id : std_logic_vector(2 downto 0);
 signal rb : std_logic_vector(2 downto 0);
 signal rc : std_logic_vector(2 downto 0);
 signal cl : std_logic_vector(3 downto 0);
 
+-- register_file Signals
+-- rd_data1 -> in_data1 [execute]
+-- rd_data2 -> in_data2 [execute]
+signal rd_data1 : std_logic_vector(15 downto 0); 
+signal rd_data2 : std_logic_vector(15 downto 0);
+
+-- execute Signals
+signal alu_mode : std_logic_vector(2 downto 0);
+signal out_data1 : std_logic_vector(15 downto 0);
+signal out_data2 : std_logic_vector(15 downto 0);
+signal ra_ex : std_logic_vector(2 downto 0);
+
+-- alu Signals
+signal result : std_logic_vector(15 downto 0);
+
+signal wr_index : std_logic_vector(2 downto 0);
+signal wr_data :  std_logic_vector(15 downto 0);
+signal wr_enable : std_logic;
+
+signal ra_mem : std_logic_vector(2 downto 0);
+signal z_flag : std_logic;
+signal n_flag : std_logic;
+
+
 begin
 
 --IN: clk, rst OUT: en, Q 
-PC0 : entity work.pc port map(clk, rst, en, count); 
---IN: clk, count OUT: instr
-ROM_A_16 : entity work.ROM_VHDL_16 port map(clk, count, instr);
---IN: clk, rst, instr OUT: ra, rb, rc, cl
-IF_ID : entity work.fetch_decode port map(clk, rst, instr, ra, rb, rc, cl); 
---IN: clk, rst, rd_index1, rd_index2, wr_index, wr_data, wr_enable OUT: rd_data1, rd_data2
-REG0 : entity work.register_file port map(clk, rst, rb, rc, ra, wr_data, wr_enable, rd_data1, rd_data2);
---IN: clk, rst, instr, in_data1, in_data2 OUT: alu_mode, out_data1, out_data2
-EX0 : entity work.execute port map(clk, rst, instr, rd_data1, rd_data2, alu_mode, out_data1, out_data2);
---IN: clk, rst, in1, in2, alu_mode OUT: result, z_flag, n_flag
-ALU0 : entity work.alu port map(clk, rst, rd_data1, rd_data2, instr(11 downto 9), result, z_flag, n_flag);
+PC0 : entity work.pc port map(clk, rst, en, counter);
 
+--IN: clk, count OUT: instr
+ROM_A_16 : entity work.ROM_VHDL_16 port map(clk, counter, instr);
+
+--IN: clk, rst, instr OUT: ra, rb, rc, cl
+IF_ID : entity work.fetch_decode port map(clk, rst, instr, wr_index, wr_data, ra_id, rb, rc, cl); 
+
+--IN: clk, rst, rd_index1, rd_index2, wr_index, wr_data, wr_enable OUT: rd_data1, rd_data2
+REG0 : entity work.register_file port map(clk, rst, rb, rc, ra_id, wr_data, wr_enable, rd_data1, rd_data2);
+
+--IN: clk, rst, instr, in_direct, in_data1, in_data2, cl, ra OUT: alu_mode, out_data1, out_data2, ra
+EX0 : entity work.execute port map(clk, rst, instr, in_data, rd_data1, rd_data2, cl, alu_mode, out_data1, out_data2, ra_id, ra_ex);
+
+--IN: clk, rst, in1, in2, alu_mode OUT: result, z_flag, n_flag
+ALU0 : entity work.alu port map(clk, rst, out_data1, out_data2, alu_mode, result, z_flag, n_flag);
+
+--IN: clk, rst, alu_result, ra, n_flag, z_flag OUT: alu_result, ra, n_flag, z_flag
+MEM0 : entity work.mem port map(clk, rst, ra_ex, result, ra_mem, z_flag, n_flag);
+
+--IN: clk, rst, wr_enable, wr_index, wr_data OUT: wr_enable, wr_index, wr_data
+WRB0 : entity work.writeback port map(clk, rst, wr_enable, wr_index, wr_data);
+	
 end Behavioral;
 

@@ -15,10 +15,13 @@ USE IEEE.STD_LOGIC_ARITH.all;
 entity pc is
 
 	PORT (
+		-- input
 		clk :	in std_logic;
 		rst : in std_logic;
 		en : in std_logic;
-		Q : out std_logic_vector(6 downto 0)
+		
+		-- output
+		Q : out std_logic_vector(6 downto 0) --counter
 	);	
 
 end pc;
