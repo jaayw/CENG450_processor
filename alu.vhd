@@ -25,7 +25,7 @@ entity alu is
 			result : OUT std_logic_vector(15 downto 0);
 			z_flag : OUT std_logic;
 			n_flag : OUT std_logic
-			);
+	);
 	
 end alu;
 

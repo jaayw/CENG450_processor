@@ -20,12 +20,12 @@ entity fetch_decode is
 			in_inst : IN std_logic_vector(15 downto 0); -- take in inst from rom
 			
 			-- output
-			wr_index : OUT std_logic_vector(2 downto 0);
-			wr_data : OUT std_logic_vector(15 downto 0);
-			ra :	OUT std_logic_vector(2 downto 0);
-			rb	:	OUT std_logic_vector(2 downto 0);
-			rc	:	OUT std_logic_vector(2 downto 0);
-			cl	:	OUT std_logic_vector(3 downto 0)
+			wr_index_out : OUT std_logic_vector(2 downto 0);
+			wr_data_out : OUT std_logic_vector(15 downto 0);
+			ra_out :	OUT std_logic_vector(2 downto 0);
+			rb_out :	OUT std_logic_vector(2 downto 0);
+			rc_out :	OUT std_logic_vector(2 downto 0);
+			cl_out :	OUT std_logic_vector(3 downto 0)
 		);
 		
 end fetch_decode;
@@ -43,17 +43,20 @@ begin
 		begin
 		
 			if op_code = ("0100000" or "0100001") then
-				ra <= in_inst(8 downto 6);
-				rb <= (others => '0');
-				rc <= (others => '0');
+				ra_out <= in_inst(8 downto 6);
+				rb_out <= (others => '0');
+				rc_out <= (others => '0');
 				
 			else
-				ra <= in_inst(8 downto 6); -- wr_index
-				rb <= in_inst(5 downto 3); -- rd_index1 (FORMAT A1)
-				rc <= in_inst(2 downto 0); -- rd_index2 (FORMAT A1)
-				cl <= in_inst(3 downto 0); -- rd_index2 (FORMAT A2 - shifting)
+				ra_out <= in_inst(8 downto 6); -- wr_index
+				rb_out <= in_inst(5 downto 3); -- rd_index1 (FORMAT A1)
+				rc_out <= in_inst(2 downto 0); -- rd_index2 (FORMAT A1)
+				cl_out <= in_inst(3 downto 0); -- rd_index2 (FORMAT A2 - shifting)
 			end if;
 		
+			-- temporary
+			wr_index_out <= (others => '0');
+			wr_data_out <= (others => '0');
 	end process;
 
 end Behavioral;

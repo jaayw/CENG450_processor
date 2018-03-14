@@ -18,14 +18,15 @@ entity mem is
 		
 		--input
 		ra_in : in std_logic_vector(2 downto 0);
+		result_in : in std_logic_vector(15 downto 0);
+		
 		--output
+		ra_out : out std_logic_vector(2 downto 0);
+		result_out : out std_logic_vector(15 downto 0);
 		
 		--inout
-		alu_result : inout std_logic_vector(15 downto 0);
-		ra_out : out std_logic_vector(2 downto 0);
 		z_flag : inout std_logic;
 		n_flag : inout std_logic
-		
 		
 	);
 
@@ -35,12 +36,12 @@ architecture Behavioral of mem is
 
 begin
 
-	process(clk, rst)
+	process (clk, result_in, ra_in)
 	
 		begin
 		
-		alu_result <= (others => '0');--alu_result;
-		ra_out <= ra_in;
+		result_out <= result_in; --alu_result;
+		ra_out <= ra_in; --ra register
 		n_flag <= n_flag;
 		z_flag <= z_flag;
 		

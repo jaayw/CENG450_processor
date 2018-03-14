@@ -21,7 +21,7 @@ entity cpu is
 		
 		-- outputs
 		out_data : OUT std_logic_vector(15 downto 0)
-		);
+	);
 
 end cpu;
 
@@ -70,6 +70,7 @@ signal wr_data :  std_logic_vector(15 downto 0);
 signal wr_enable : std_logic;
 
 signal ra_mem : std_logic_vector(2 downto 0);
+signal result_mem : std_logic_vector(15 downto 0);
 signal z_flag : std_logic;
 signal n_flag : std_logic;
 
@@ -82,7 +83,7 @@ PC0 : entity work.pc port map(clk, rst, en, counter);
 --IN: clk, count OUT: instr
 ROM_A_16 : entity work.ROM_VHDL_16 port map(clk, counter, instr);
 
---IN: clk, rst, instr OUT: ra, rb, rc, cl
+--IN: clk, rst, instr OUT: wr_index_out, wr_data_in, ra, rb, rc, cl
 IF_ID : entity work.fetch_decode port map(clk, rst, instr, wr_index, wr_data, ra_id, rb, rc, cl); 
 
 --IN: clk, rst, rd_index1, rd_index2, wr_index, wr_data, wr_enable OUT: rd_data1, rd_data2
@@ -94,8 +95,8 @@ EX0 : entity work.execute port map(clk, rst, instr, in_data, rd_data1, rd_data2,
 --IN: clk, rst, in1, in2, alu_mode OUT: result, z_flag, n_flag
 ALU0 : entity work.alu port map(clk, rst, out_data1, out_data2, alu_mode, result, z_flag, n_flag);
 
---IN: clk, rst, alu_result, ra, n_flag, z_flag OUT: alu_result, ra, n_flag, z_flag
-MEM0 : entity work.mem port map(clk, rst, ra_ex, result, ra_mem, z_flag, n_flag);
+--IN: clk, rst, ra_in, result_in, n_flag, z_flag OUT: ra_out, result_out, n_flag, z_flag
+MEM0 : entity work.mem port map(clk, rst, ra_ex, result, ra_mem, result_mem, z_flag, n_flag);
 
 --IN: clk, rst, wr_enable, wr_index, wr_data OUT: wr_enable, wr_index, wr_data
 WRB0 : entity work.writeback port map(clk, rst, wr_enable, wr_index, wr_data);
