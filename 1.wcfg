@@ -3,63 +3,135 @@
    <wave_state>
    </wave_state>
    <db_ref_list>
-      <db_ref path="C:/Users/jawong.UVIC/Documents/ceng450/CENG450_processor/alu_tb_isim_beh.wdb" id="1" type="auto">
+      <db_ref path="C:/Users/jawong.UVIC.001/Xilinx/CENG450_processor/tb_cpu_isim_beh.wdb" id="1" type="auto">
          <top_modules>
-            <top_module name="alu_tb" />
             <top_module name="numeric_std" />
             <top_module name="std_logic_1164" />
             <top_module name="std_logic_arith" />
             <top_module name="std_logic_unsigned" />
+            <top_module name="tb_cpu" />
          </top_modules>
       </db_ref>
    </db_ref_list>
-   <WVObjectSize size="11" />
-   <wvobject fp_name="/alu_tb/rst" type="logic" db_ref_id="1">
-      <obj_property name="ElementShortName">rst</obj_property>
-      <obj_property name="ObjectShortName">rst</obj_property>
-   </wvobject>
-   <wvobject fp_name="/alu_tb/clk" type="logic" db_ref_id="1">
+   <WVObjectSize size="30" />
+   <wvobject fp_name="/tb_cpu/clk" type="logic" db_ref_id="1">
       <obj_property name="ElementShortName">clk</obj_property>
       <obj_property name="ObjectShortName">clk</obj_property>
    </wvobject>
-   <wvobject fp_name="/alu_tb/in1" type="array" db_ref_id="1">
-      <obj_property name="ElementShortName">in1[15:0]</obj_property>
-      <obj_property name="ObjectShortName">in1[15:0]</obj_property>
-      <obj_property name="Radix">HEXRADIX</obj_property>
+   <wvobject fp_name="/tb_cpu/rst" type="logic" db_ref_id="1">
+      <obj_property name="ElementShortName">rst</obj_property>
+      <obj_property name="ObjectShortName">rst</obj_property>
    </wvobject>
-   <wvobject fp_name="/alu_tb/in2" type="array" db_ref_id="1">
-      <obj_property name="ElementShortName">in2[15:0]</obj_property>
-      <obj_property name="ObjectShortName">in2[15:0]</obj_property>
-      <obj_property name="Radix">HEXRADIX</obj_property>
+   <wvobject fp_name="/tb_cpu/in_data" type="array" db_ref_id="1">
+      <obj_property name="ElementShortName">in_data[15:0]</obj_property>
+      <obj_property name="ObjectShortName">in_data[15:0]</obj_property>
    </wvobject>
-   <wvobject fp_name="/alu_tb/alu_mode" type="array" db_ref_id="1">
-      <obj_property name="ElementShortName">alu_mode[2:0]</obj_property>
-      <obj_property name="ObjectShortName">alu_mode[2:0]</obj_property>
+   <wvobject fp_name="/tb_cpu/out_data" type="array" db_ref_id="1">
+      <obj_property name="ElementShortName">out_data[15:0]</obj_property>
+      <obj_property name="ObjectShortName">out_data[15:0]</obj_property>
    </wvobject>
-   <wvobject fp_name="/alu_tb/result" type="array" db_ref_id="1">
-      <obj_property name="ElementShortName">result[15:0]</obj_property>
-      <obj_property name="ObjectShortName">result[15:0]</obj_property>
-      <obj_property name="Radix">HEXRADIX</obj_property>
-   </wvobject>
-   <wvobject fp_name="/alu_tb/z_flag" type="logic" db_ref_id="1">
-      <obj_property name="ElementShortName">z_flag</obj_property>
-      <obj_property name="ObjectShortName">z_flag</obj_property>
-   </wvobject>
-   <wvobject fp_name="/alu_tb/n_flag" type="logic" db_ref_id="1">
-      <obj_property name="ElementShortName">n_flag</obj_property>
-      <obj_property name="ObjectShortName">n_flag</obj_property>
-   </wvobject>
-   <wvobject fp_name="/alu_tb/clk_period" type="other" db_ref_id="1">
+   <wvobject fp_name="/tb_cpu/clk_period" type="other" db_ref_id="1">
       <obj_property name="ElementShortName">clk_period</obj_property>
       <obj_property name="ObjectShortName">clk_period</obj_property>
    </wvobject>
-   <wvobject fp_name="/alu_tb/uut/result_32" type="array" db_ref_id="1">
-      <obj_property name="ElementShortName">result_32[31:0]</obj_property>
-      <obj_property name="ObjectShortName">result_32[31:0]</obj_property>
-      <obj_property name="Radix">HEXRADIX</obj_property>
+   <wvobject fp_name="/tb_cpu/uut/input_test" type="array" db_ref_id="1">
+      <obj_property name="ElementShortName">input_test[15:0]</obj_property>
+      <obj_property name="ObjectShortName">input_test[15:0]</obj_property>
    </wvobject>
-   <wvobject fp_name="/alu_tb/uut/result_mul" type="array" db_ref_id="1">
-      <obj_property name="ElementShortName">result_mul[15:0]</obj_property>
-      <obj_property name="ObjectShortName">result_mul[15:0]</obj_property>
+   <wvobject fp_name="/tb_cpu/uut/counter" type="array" db_ref_id="1">
+      <obj_property name="ElementShortName">counter[6:0]</obj_property>
+      <obj_property name="ObjectShortName">counter[6:0]</obj_property>
+   </wvobject>
+   <wvobject fp_name="/tb_cpu/uut/instr" type="array" db_ref_id="1">
+      <obj_property name="ElementShortName">instr[15:0]</obj_property>
+      <obj_property name="ObjectShortName">instr[15:0]</obj_property>
+   </wvobject>
+   <wvobject fp_name="/tb_cpu/uut/ra_id" type="array" db_ref_id="1">
+      <obj_property name="ElementShortName">ra_id[2:0]</obj_property>
+      <obj_property name="ObjectShortName">ra_id[2:0]</obj_property>
+   </wvobject>
+   <wvobject fp_name="/tb_cpu/uut/rb" type="array" db_ref_id="1">
+      <obj_property name="ElementShortName">rb[2:0]</obj_property>
+      <obj_property name="ObjectShortName">rb[2:0]</obj_property>
+   </wvobject>
+   <wvobject fp_name="/tb_cpu/uut/rc" type="array" db_ref_id="1">
+      <obj_property name="ElementShortName">rc[2:0]</obj_property>
+      <obj_property name="ObjectShortName">rc[2:0]</obj_property>
+   </wvobject>
+   <wvobject fp_name="/tb_cpu/uut/cl" type="array" db_ref_id="1">
+      <obj_property name="ElementShortName">cl[3:0]</obj_property>
+      <obj_property name="ObjectShortName">cl[3:0]</obj_property>
+   </wvobject>
+   <wvobject fp_name="/tb_cpu/uut/rd_data1" type="array" db_ref_id="1">
+      <obj_property name="ElementShortName">rd_data1[15:0]</obj_property>
+      <obj_property name="ObjectShortName">rd_data1[15:0]</obj_property>
+   </wvobject>
+   <wvobject fp_name="/tb_cpu/uut/rd_data2" type="array" db_ref_id="1">
+      <obj_property name="ElementShortName">rd_data2[15:0]</obj_property>
+      <obj_property name="ObjectShortName">rd_data2[15:0]</obj_property>
+   </wvobject>
+   <wvobject fp_name="/tb_cpu/uut/alu_mode" type="array" db_ref_id="1">
+      <obj_property name="ElementShortName">alu_mode[2:0]</obj_property>
+      <obj_property name="ObjectShortName">alu_mode[2:0]</obj_property>
+   </wvobject>
+   <wvobject fp_name="/tb_cpu/uut/out_data1" type="array" db_ref_id="1">
+      <obj_property name="ElementShortName">out_data1[15:0]</obj_property>
+      <obj_property name="ObjectShortName">out_data1[15:0]</obj_property>
+   </wvobject>
+   <wvobject fp_name="/tb_cpu/uut/out_data2" type="array" db_ref_id="1">
+      <obj_property name="ElementShortName">out_data2[15:0]</obj_property>
+      <obj_property name="ObjectShortName">out_data2[15:0]</obj_property>
+   </wvobject>
+   <wvobject fp_name="/tb_cpu/uut/ra_ex" type="array" db_ref_id="1">
+      <obj_property name="ElementShortName">ra_ex[2:0]</obj_property>
+      <obj_property name="ObjectShortName">ra_ex[2:0]</obj_property>
+   </wvobject>
+   <wvobject fp_name="/tb_cpu/uut/result_alu" type="array" db_ref_id="1">
+      <obj_property name="ElementShortName">result_alu[15:0]</obj_property>
+      <obj_property name="ObjectShortName">result_alu[15:0]</obj_property>
+   </wvobject>
+   <wvobject fp_name="/tb_cpu/uut/wr_index" type="array" db_ref_id="1">
+      <obj_property name="ElementShortName">wr_index[2:0]</obj_property>
+      <obj_property name="ObjectShortName">wr_index[2:0]</obj_property>
+   </wvobject>
+   <wvobject fp_name="/tb_cpu/uut/wr_data" type="array" db_ref_id="1">
+      <obj_property name="ElementShortName">wr_data[15:0]</obj_property>
+      <obj_property name="ObjectShortName">wr_data[15:0]</obj_property>
+   </wvobject>
+   <wvobject fp_name="/tb_cpu/uut/wr_enable" type="logic" db_ref_id="1">
+      <obj_property name="ElementShortName">wr_enable</obj_property>
+      <obj_property name="ObjectShortName">wr_enable</obj_property>
+   </wvobject>
+   <wvobject fp_name="/tb_cpu/uut/ra_mem" type="array" db_ref_id="1">
+      <obj_property name="ElementShortName">ra_mem[2:0]</obj_property>
+      <obj_property name="ObjectShortName">ra_mem[2:0]</obj_property>
+   </wvobject>
+   <wvobject fp_name="/tb_cpu/uut/result_mem" type="array" db_ref_id="1">
+      <obj_property name="ElementShortName">result_mem[15:0]</obj_property>
+      <obj_property name="ObjectShortName">result_mem[15:0]</obj_property>
+   </wvobject>
+   <wvobject fp_name="/tb_cpu/uut/wr_en_mem" type="logic" db_ref_id="1">
+      <obj_property name="ElementShortName">wr_en_mem</obj_property>
+      <obj_property name="ObjectShortName">wr_en_mem</obj_property>
+   </wvobject>
+   <wvobject fp_name="/tb_cpu/uut/z_flag_alu" type="logic" db_ref_id="1">
+      <obj_property name="ElementShortName">z_flag_alu</obj_property>
+      <obj_property name="ObjectShortName">z_flag_alu</obj_property>
+   </wvobject>
+   <wvobject fp_name="/tb_cpu/uut/n_flag_alu" type="logic" db_ref_id="1">
+      <obj_property name="ElementShortName">n_flag_alu</obj_property>
+      <obj_property name="ObjectShortName">n_flag_alu</obj_property>
+   </wvobject>
+   <wvobject fp_name="/tb_cpu/uut/z_flag" type="logic" db_ref_id="1">
+      <obj_property name="ElementShortName">z_flag</obj_property>
+      <obj_property name="ObjectShortName">z_flag</obj_property>
+   </wvobject>
+   <wvobject fp_name="/tb_cpu/uut/n_flag" type="logic" db_ref_id="1">
+      <obj_property name="ElementShortName">n_flag</obj_property>
+      <obj_property name="ObjectShortName">n_flag</obj_property>
+   </wvobject>
+   <wvobject fp_name="/tb_cpu/uut/ra_wb" type="array" db_ref_id="1">
+      <obj_property name="ElementShortName">ra_wb[2:0]</obj_property>
+      <obj_property name="ObjectShortName">ra_wb[2:0]</obj_property>
    </wvobject>
 </wave_config>

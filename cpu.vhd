@@ -11,99 +11,241 @@ use IEEE.STD_LOGIC_1164.ALL;
 --use UNISIM.VComponents.all;
 
 entity cpu is
+
 	PORT (
 		-- inputs
 		clk : IN std_logic;
 		rst : IN std_logic;
-		in_data : std_logic_vector(15 downto 0);
+		in_data : IN std_logic_vector(15 downto 0);
 		
 		-- outputs
 		out_data : OUT std_logic_vector(15 downto 0)
 	);
+
 end cpu;
 
 architecture Behavioral of cpu is
 
--- PC Signals
--- Q -> count [signal] -> addr [ROM]
+component pc is
+	port (
+			clk : IN STD_LOGIC;
+			rst : IN STD_LOGIC;
+			Q : OUT STD_LOGIC_VECTOR(6 downto 0)
+			);
+end component;
+
+component ROM_VHDL_16 is
+	port (
+			clk : IN STD_LOGIC;
+			addr : IN STD_LOGIC_VECTOR(6 downto 0);
+			data : OUT STD_LOGIC_VECTOR(15 downto 0)
+			);
+end component;
+
+component fetch_decode is
+	port (
+			clk : IN STD_LOGIC;
+			rst : IN STD_LOGIC;
+			instr_in : IN STD_LOGIC_VECTOR(15 downto 0);
+			ra_out : OUT STD_LOGIC_VECTOR(2 downto 0);
+			rb_out : OUT STD_LOGIC_VECTOR(2 downto 0);
+			rc_out : OUT STD_LOGIC_VECTOR(2 downto 0);
+			cl_out : OUT STD_LOGIC_VECTOR(3 downto 0)
+			);
+end component;
+
+component register_file is
+	port (
+			clk : IN STD_LOGIC;
+			rst : IN STD_LOGIC;
+			rd_index1 : IN STD_LOGIC_VECTOR(2 downto 0);
+			rd_index2 : IN STD_LOGIC_VECTOR(2 downto 0);
+			wr_index : IN STD_LOGIC_VECTOR(2 downto 0);
+			wr_data_reg : IN STD_LOGIC_VECTOR(15 downto 0);
+			wr_enable_reg : IN STD_LOGIC;
+			rd_data1 : OUT STD_LOGIC_VECTOR(15 downto 0);
+			rd_data2 : OUT STD_LOGIC_VECTOR(15 downto 0)
+			);
+end component;	
+			
+component execute is
+	port (
+			clk : IN STD_LOGIC;
+			rst : IN STD_LOGIC;
+			instr_in : IN STD_LOGIC_VECTOR(15 downto 0);
+			in_direct : IN STD_LOGIC_VECTOR(15 downto 0);
+			in_data1 : IN STD_LOGIC_VECTOR(15 downto 0);
+			in_data2 : IN STD_LOGIC_VECTOR(15 downto 0);
+			ra_in : IN STD_LOGIC_VECTOR(2 downto 0);
+			cl_in : IN STD_LOGIC_VECTOR(3 downto 0);
+			alu_mode : OUT STD_LOGIC_VECTOR(2 downto 0);
+			out_data1 : OUT STD_LOGIC_VECTOR(15 downto 0);
+			out_data2 : OUT STD_LOGIC_VECTOR(15 downto 0);
+			ra_out : out std_logic_vector(2 downto 0)
+			);
+end component;
+
+component alu is
+	port (
+			clk : IN STD_LOGIC;
+			rst : IN STD_LOGIC;
+			in1 : IN STD_LOGIC_VECTOR(15 downto 0);
+			in2 : IN STD_LOGIC_VECTOR(15 downto 0);
+			alu_mode_in : IN STD_LOGIC_VECTOR(2 downto 0);
+			result : OUT STD_LOGIC_VECTOR(15 downto 0);
+			z_flag : OUT STD_LOGIC;
+			n_flag : OUT STD_LOGIC
+			);
+end component;	
+
+component mem is
+	port (
+			clk : IN STD_LOGIC;
+			rst : IN STD_LOGIC;
+			instr_in : IN STD_LOGIC_VECTOR(15 downto 0);
+			ra_in : IN STD_LOGIC_VECTOR(2 downto 0);
+			result_in : IN STD_LOGIC_VECTOR(15 downto 0);
+			z_in : IN STD_LOGIC;
+			n_in : IN STD_LOGIC;
+			ra_out : OUT STD_LOGIC_VECTOR(2 downto 0);
+			result_out : OUT STD_LOGIC_VECTOR(15 downto 0);
+			wr_en : OUT STD_LOGIC;
+			z_out : OUT STD_LOGIC;
+			n_out : OUT STD_LOGIC
+			);
+end component;	
+
+component writeback is
+	port (
+			clk : IN STD_LOGIC;
+			rst : IN STD_LOGIC;
+			result_in : IN STD_LOGIC_VECTOR(15 downto 0);
+			ra_in : IN STD_LOGIC_VECTOR(2 downto 0);
+			wr_en_in : IN STD_LOGIC;
+			ra_out : OUT STD_LOGIC_VECTOR(2 downto 0);
+			wr_en_out : OUT STD_LOGIC;
+			wr_data_out : OUT STD_LOGIC_VECTOR(15 downto 0)
+			);
+end component;				
+
+signal input_test : std_logic_vector(15 downto 0);
+
 signal counter : std_logic_vector(6 downto 0);
-
--- ROM Signals
--- data -> in_inst [fetch_decode]
---		  -> instr [execute]
--- instr(15 downto 9) = op_code
--- instr(11 downto 9) = alu_mode
--- instr(8 downto 6) = ra = wr_index
--- instr(5 downto 3) = rb = rd_index1
--- instr(2 downto 0) = rc = rd_index2
 signal instr : std_logic_vector (15 downto 0);
-
--- fetch_decode Signals
--- ra -> wr_index [register_file]
--- rb -> rd_index1 [register_file]
--- rc -> rd_index2 [register_file]
 signal ra_id : std_logic_vector(2 downto 0);
 signal rb : std_logic_vector(2 downto 0);
 signal rc : std_logic_vector(2 downto 0);
 signal cl : std_logic_vector(3 downto 0);
-
--- register_file Signals
--- rd_data1 -> in_data1 [execute]
--- rd_data2 -> in_data2 [execute]
 signal rd_data1 : std_logic_vector(15 downto 0); 
 signal rd_data2 : std_logic_vector(15 downto 0);
-
--- execute Signals
 signal alu_mode : std_logic_vector(2 downto 0);
 signal out_data1 : std_logic_vector(15 downto 0);
 signal out_data2 : std_logic_vector(15 downto 0);
 signal ra_ex : std_logic_vector(2 downto 0);
-
--- alu Signals
 signal result_alu : std_logic_vector(15 downto 0);
-signal z_flag_alu : std_logic;
-signal n_flag_alu : std_logic;
-
--- MEM Signals
-signal wr_en_mem : std_logic;
-
--- WB Signals
 signal wr_index : std_logic_vector(2 downto 0);
 signal wr_data :  std_logic_vector(15 downto 0);
 signal wr_enable : std_logic;
-signal ra_wb : std_logic_vector(2 downto 0);
-
 signal ra_mem : std_logic_vector(2 downto 0);
 signal result_mem : std_logic_vector(15 downto 0);
+signal wr_en_mem : std_logic;
+signal z_flag_alu : std_logic;
+signal n_flag_alu : std_logic;
 signal z_flag : std_logic;
 signal n_flag : std_logic;
+signal ra_wb : std_logic_vector(2 downto 0);
 
 
 begin
+			
+PC0: pc port map (
+			clk => clk,
+			rst => rst,
+			Q => counter
+			);
+			
+ROM_16: ROM_VHDL_16 port map (
+			clk => clk,
+			addr => counter,
+			data => instr
+			);
 
---IN: clk, rst OUT: Q 
-PC0 : entity work.pc port map(clk, rst, counter);
+IF_ID: fetch_decode port map (
+			clk => clk,
+			rst => rst,
+			instr_in => instr,
+			ra_out => ra_id,
+			rb_out => rb,
+			rc_out => rc,
+			cl_out => cl
+			);
 
---IN: clk, addr OUT: data
-ROM_A_16 : entity work.ROM_VHDL_16 port map(clk, counter, instr);
-
---IN: clk, rst, in_instr OUT: ra_out, rb_out, rc_out, cl_out
-IF_ID : entity work.fetch_decode port map(clk, rst, instr, ra_id, rb, rc, cl);
-
---IN: clk, rst, rd_index1, rd_index2, wr_index, wr_data, wr_enable OUT: rd_data1, rd_data2
-REG0 : entity work.register_file port map(clk, rst, rb, rc, ra_id, wr_data, wr_enable, rd_data1, rd_data2);
-
---IN: clk, rst, instr_in, in_direct, in_data1, in_data2, ra_in, cl_in,  OUT: alu_mode, out_data1, out_data2, ra
-EX0 : entity work.execute port map(clk, rst, instr, in_data, rd_data1, rd_data2, ra_id, cl, alu_mode, out_data1, out_data2, ra_ex);
-
---IN: clk, rst, in1, in2, alu_mode OUT: result, z_flag, n_flag
-ALU0 : entity work.alu port map(clk, rst, out_data1, out_data2, alu_mode, result_alu, z_flag_alu, n_flag_alu);
-
---IN: clk, rst, instr_in, ra_in, result_in, z_in, n_in OUT: ra_out, result_out, wr_en, z_out, n_out
-MEM0 : entity work.mem port map(clk, rst, instr, ra_ex, result_alu, z_flag_alu, n_flag_alu, ra_mem, result_mem, wr_en_mem, z_flag, n_flag);
-
---IN: clk, rst, result_in, ra_in, wr_en_in OUT: ra_out, wr_en_out, wr_data_out
-WRB0 : entity work.writeback port map(clk, rst, result_mem, ra_mem, wr_en_mem, ra_wb, wr_enable, wr_data);
+REG0: register_file	port map (
+			clk => clk,
+			rst => rst,
+			rd_index1 => rb,
+			rd_index2 => rc,
+			wr_index => ra_id,
+			wr_data_reg => wr_data,
+			wr_enable_reg => wr_enable,
+			rd_data1 => rd_data1,
+			rd_data2 =>	rd_data2
+			);
+			
+EX0: execute port map (
+			clk => clk,
+			rst => rst,
+			instr_in => instr,
+			in_direct => in_data,
+			in_data1 => rd_data1,
+			in_data2 => rd_data2,
+			ra_in => ra_id,
+			cl_in => cl,
+			alu_mode => alu_mode,
+			out_data1 => out_data1,
+			out_data2 => out_data2,
+			ra_out => ra_ex
+			);
 	
-end Behavioral;
+ALU0: alu port map (
+			clk => clk,
+			rst => rst,
+			in1 => out_data1,
+			in2 => out_data2,
+			alu_mode_in => alu_mode,
+			result => result_alu,
+			z_flag => z_flag,
+			n_flag => n_flag
+			);
+				
+MEM0: mem port map (
+			clk => clk,
+			rst => rst,
+			instr_in => instr,
+			ra_in => ra_ex,
+			result_in => result_alu,
+			z_in => z_flag_alu,
+			n_in => n_flag_alu,
+			ra_out => ra_mem,
+			result_out => result_mem,
+			wr_en => wr_en_mem,
+			z_out => z_flag,
+			n_out => n_flag
+			);
+			
+out_data <= result_mem;
+			
+WB0: writeback port map(
+			clk => clk,
+			rst => rst,
+			result_in => result_mem,
+			ra_in => ra_mem,
+			wr_en_in => wr_en_mem,
+			ra_out => ra_wb,
+			wr_en_out => wr_enable,
+			wr_data_out => wr_data
+			);
+			
+		
 
+end Behavioral;
