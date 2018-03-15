@@ -17,15 +17,13 @@ entity fetch_decode is
 			rst : IN std_logic;
 			
 			-- input
-			in_inst : IN std_logic_vector(15 downto 0); -- take in inst from rom
+			instr_in : IN std_logic_vector(15 downto 0); -- take in inst from rom
 			
 			-- output
-			wr_index : OUT std_logic_vector(2 downto 0);
-			wr_data : OUT std_logic_vector(15 downto 0);
-			ra :	OUT std_logic_vector(2 downto 0);
-			rb	:	OUT std_logic_vector(2 downto 0);
-			rc	:	OUT std_logic_vector(2 downto 0);
-			cl	:	OUT std_logic_vector(3 downto 0)
+			ra_out :	OUT std_logic_vector(2 downto 0);
+			rb_out :	OUT std_logic_vector(2 downto 0);
+			rc_out :	OUT std_logic_vector(2 downto 0);
+			cl_out :	OUT std_logic_vector(3 downto 0)
 		);
 		
 end fetch_decode;
@@ -36,24 +34,41 @@ signal op_code : std_logic_vector(6 downto 0);
 
 begin
 	
-	op_code <= in_inst(15 downto 9);
+	op_code <= instr_in(15 downto 9);
 	
-	process(clk, rst, in_inst, op_code)
+	process(clk, rst, instr_in, op_code)
 	
 		begin
 		
-			if op_code = ("0100000" or "0100001") then
-				ra <= in_inst(8 downto 6);
-				rb <= (others => '0');
-				rc <= (others => '0');
+		if rising_edge(clk) then
+			
+			if rst = '1' then
 				
+				ra_out <= (others => '0');
+				rb_out <= (others => '0');
+				rc_out <= (others => '0');
+				cl_out <= (others => '0');
+			
 			else
-				ra <= in_inst(8 downto 6); -- wr_index
-				rb <= in_inst(5 downto 3); -- rd_index1 (FORMAT A1)
-				rc <= in_inst(2 downto 0); -- rd_index2 (FORMAT A1)
-				cl <= in_inst(3 downto 0); -- rd_index2 (FORMAT A2 - shifting)
+			
+				if op_code = ("0100000" or "0100001") then
+					ra_out <= instr_in(8 downto 6);
+					rb_out <= (others => '0');
+					rc_out <= (others => '0');
+					
+				else
+				
+					ra_out <= instr_in(8 downto 6); -- wr_index
+					rb_out <= instr_in(5 downto 3); -- rd_index1 (FORMAT A1)
+					rc_out <= instr_in(2 downto 0); -- rd_index2 (FORMAT A1)
+					cl_out <= instr_in(3 downto 0); -- rd_index2 (FORMAT A2 - shifting)
+					
+				end if;
+				
 			end if;
-		
+			
+		end if;
+			
 	end process;
 
 end Behavioral;

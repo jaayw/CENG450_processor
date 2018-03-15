@@ -18,7 +18,6 @@ entity pc is
 		-- input
 		clk :	in std_logic;
 		rst : in std_logic;
-		en : in std_logic;
 		
 		-- output
 		Q : out std_logic_vector(6 downto 0) --counter
@@ -37,7 +36,7 @@ begin
 			if rising_edge(clk) then
 				if rst = '1' then
 					Pre_Q <= 0;
-				elsif en = '1' then	    
+				else	    
 					Pre_Q <= Pre_Q + 1;
 				end if;
 			end if;
