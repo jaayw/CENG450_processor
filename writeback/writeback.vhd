@@ -17,13 +17,14 @@ entity writeback is
 		rst : IN std_logic;
 		
 		-- input
+		result_in : IN std_logic_vector(15 downto 0);
+		ra_in : IN std_logic_vector(2 downto 0);
+		wr_en_in : in std_logic;
 		
 		-- output
-		
-		-- inout
-		wr_enable : inout std_logic;
-		wr_index : inout std_logic_vector(2 downto 0);
-		wr_data : inout std_logic_vector(15 downto 0)
+		ra_out : OUT std_logic_vector(2 downto 0); -- wr_index
+		wr_en_out : out std_logic;
+		wr_data_out : out std_logic_vector(15 downto 0) --wr_data
 		
 	);
 
@@ -33,12 +34,34 @@ architecture Behavioral of writeback is
 
 begin
 
-	process(clk, rst, wr_enable, wr_index, wr_data)
+	process(clk, rst, wr_en_in, result_in)
 	
 		begin
 		
+			if rising_edge(clk) then
+			
+				if rst = '1' then
+				
+					ra_out <= (others => '0');
+					wr_en_out <= '0';
+					wr_data_out <= (others => '0');
+					
+				else
+				
+					if wr_en_in = '1' then
+						wr_data_out <= result_in;
+						wr_en_out <= '1';
+					else
+						wr_en_out <= '0';
+					end if;
+					
+					ra_out <= ra_in; --outputs to ra -> wr_index 
+					
+				end if;
+				
+			end if;
+	
 	end process;
-
 
 end Behavioral;
 
