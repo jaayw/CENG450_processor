@@ -1,5 +1,6 @@
 library IEEE;
-use IEEE.STD_LOGIC_1164.ALL;
+USE IEEE.STD_LOGIC_1164.ALL;
+USE ieee.numeric_std.ALL;
 
 -- Uncomment the following library declaration if using
 -- arithmetic functions with Signed or Unsigned values
@@ -128,8 +129,6 @@ component writeback is
 			);
 end component;				
 
-signal input_test : std_logic_vector(15 downto 0);
-
 signal counter : std_logic_vector(6 downto 0);
 signal instr : std_logic_vector (15 downto 0);
 signal ra_id : std_logic_vector(2 downto 0);
@@ -153,7 +152,6 @@ signal z_flag_alu : std_logic;
 signal n_flag_alu : std_logic;
 signal z_flag : std_logic;
 signal n_flag : std_logic;
-signal ra_wb : std_logic_vector(2 downto 0);
 
 
 begin
@@ -185,7 +183,7 @@ REG0: register_file	port map (
 			rst => rst,
 			rd_index1 => rb,
 			rd_index2 => rc,
-			wr_index => ra_id,
+			wr_index => wr_index,
 			wr_data_reg => wr_data,
 			wr_enable_reg => wr_enable,
 			rd_data1 => rd_data1,
@@ -241,7 +239,7 @@ WB0: writeback port map(
 			result_in => result_mem,
 			ra_in => ra_mem,
 			wr_en_in => wr_en_mem,
-			ra_out => ra_wb,
+			ra_out => wr_index,
 			wr_en_out => wr_enable,
 			wr_data_out => wr_data
 			);

@@ -51,17 +51,24 @@ begin
 			
 			else
 			
-				if op_code = ("0100000" or "0100001") then
+				-- Format A3
+				if op_code = ("0100000" or "0100001") then -- IN (32) or OUT (34)
 					ra_out <= instr_in(8 downto 6);
 					rb_out <= (others => '0');
 					rc_out <= (others => '0');
 					
+				-- Format A2	
+				elsif op_code = ("0000101" or "0000110") then -- SHL (5) or RHL (6)
+				
+					ra_out <= instr_in(8 downto 6); -- wr_index
+					cl_out <= instr_in(3 downto 0); -- rd_index2 (FORMAT A2 - shifting)
+				
+				-- Format A1
 				else
 				
 					ra_out <= instr_in(8 downto 6); -- wr_index
 					rb_out <= instr_in(5 downto 3); -- rd_index1 (FORMAT A1)
-					rc_out <= instr_in(2 downto 0); -- rd_index2 (FORMAT A1)
-					cl_out <= instr_in(3 downto 0); -- rd_index2 (FORMAT A2 - shifting)
+					--rc_out <= instr_in(2 downto 0); -- rd_index2 (FORMAT A1)
 					
 				end if;
 				
