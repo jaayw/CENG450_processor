@@ -85,8 +85,6 @@ BEGIN
 			-- out_data = 2
 			
 		wait;
-			
-
       
    end process;
 

@@ -1,0 +1,77 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<wave_config>
+   <wave_state>
+   </wave_state>
+   <db_ref_list>
+      <db_ref path="C:/Users/james/Documents/Xilinx Projects/CENG450_processor/fetch_decode_tb_isim_beh.wdb" id="1" type="auto">
+         <top_modules>
+            <top_module name="fetch_decode_tb" />
+            <top_module name="numeric_std" />
+            <top_module name="std_logic_1164" />
+         </top_modules>
+      </db_ref>
+   </db_ref_list>
+   <WVObjectSize size="13" />
+   <wave_markers>
+      <marker time="350000000000" label="" />
+      <marker time="450000000000" label="" />
+      <marker time="550000000000" label="" />
+      <marker time="650000000000" label="" />
+      <marker time="750000000000" label="" />
+      <marker time="850000000000" label="" />
+      <marker time="950000000000" label="" />
+      <marker time="1048500000000" label="" />
+   </wave_markers>
+   <wvobject fp_name="/fetch_decode_tb/clk" type="logic" db_ref_id="1">
+      <obj_property name="ElementShortName">clk</obj_property>
+      <obj_property name="ObjectShortName">clk</obj_property>
+   </wvobject>
+   <wvobject fp_name="/fetch_decode_tb/rst" type="logic" db_ref_id="1">
+      <obj_property name="ElementShortName">rst</obj_property>
+      <obj_property name="ObjectShortName">rst</obj_property>
+   </wvobject>
+   <wvobject fp_name="/fetch_decode_tb/instr_in" type="array" db_ref_id="1">
+      <obj_property name="ElementShortName">instr_in[15:0]</obj_property>
+      <obj_property name="ObjectShortName">instr_in[15:0]</obj_property>
+   </wvobject>
+   <wvobject fp_name="/fetch_decode_tb/uut/op_code" type="array" db_ref_id="1">
+      <obj_property name="ElementShortName">op_code[6:0]</obj_property>
+      <obj_property name="ObjectShortName">op_code[6:0]</obj_property>
+   </wvobject>
+   <wvobject fp_name="/fetch_decode_tb/uut/ra_internal" type="array" db_ref_id="1">
+      <obj_property name="ElementShortName">ra_internal[2:0]</obj_property>
+      <obj_property name="ObjectShortName">ra_internal[2:0]</obj_property>
+   </wvobject>
+   <wvobject fp_name="/fetch_decode_tb/ra_out" type="array" db_ref_id="1">
+      <obj_property name="ElementShortName">ra_out[2:0]</obj_property>
+      <obj_property name="ObjectShortName">ra_out[2:0]</obj_property>
+   </wvobject>
+   <wvobject fp_name="/fetch_decode_tb/uut/rb_internal" type="array" db_ref_id="1">
+      <obj_property name="ElementShortName">rb_internal[2:0]</obj_property>
+      <obj_property name="ObjectShortName">rb_internal[2:0]</obj_property>
+   </wvobject>
+   <wvobject fp_name="/fetch_decode_tb/rb_out" type="array" db_ref_id="1">
+      <obj_property name="ElementShortName">rb_out[2:0]</obj_property>
+      <obj_property name="ObjectShortName">rb_out[2:0]</obj_property>
+   </wvobject>
+   <wvobject fp_name="/fetch_decode_tb/uut/rc_internal" type="array" db_ref_id="1">
+      <obj_property name="ElementShortName">rc_internal[2:0]</obj_property>
+      <obj_property name="ObjectShortName">rc_internal[2:0]</obj_property>
+   </wvobject>
+   <wvobject fp_name="/fetch_decode_tb/rc_out" type="array" db_ref_id="1">
+      <obj_property name="ElementShortName">rc_out[2:0]</obj_property>
+      <obj_property name="ObjectShortName">rc_out[2:0]</obj_property>
+   </wvobject>
+   <wvobject fp_name="/fetch_decode_tb/uut/cl_internal" type="array" db_ref_id="1">
+      <obj_property name="ElementShortName">cl_internal[3:0]</obj_property>
+      <obj_property name="ObjectShortName">cl_internal[3:0]</obj_property>
+   </wvobject>
+   <wvobject fp_name="/fetch_decode_tb/cl_out" type="array" db_ref_id="1">
+      <obj_property name="ElementShortName">cl_out[3:0]</obj_property>
+      <obj_property name="ObjectShortName">cl_out[3:0]</obj_property>
+   </wvobject>
+   <wvobject fp_name="/fetch_decode_tb/clk_period" type="other" db_ref_id="1">
+      <obj_property name="ElementShortName">clk_period</obj_property>
+      <obj_property name="ObjectShortName">clk_period</obj_property>
+   </wvobject>
+</wave_config>

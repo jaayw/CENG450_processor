@@ -212,8 +212,8 @@ ALU0: alu port map (
 			in2 => out_data2,
 			alu_mode_in => alu_mode,
 			result => result_alu,
-			z_flag => z_flag,
-			n_flag => n_flag
+			z_flag => z_flag_alu,
+			n_flag => n_flag_alu
 			);
 				
 MEM0: mem port map (
