@@ -93,6 +93,7 @@ BEGIN
 		-- rc_out => 111
 		-- cl_out => 0000
 		
+		--wait for 500 us;
 		wait until (clk='1' and clk'event);
 		
 		instr_in <= "0000010011010001"; -- sub
@@ -137,10 +138,10 @@ BEGIN
 		-- rb_out => 000
 		-- rc_out => 000
 		-- cl_out => 0101
-		
+	
 		wait until (clk='1' and clk'event);
 		
-		instr_in <= "0100000000000000"; -- in (32)
+		instr_in <= "0100000101000000"; -- in (32)
 		-- Expected outputs:
 		-- ra_out => 100
 		-- rb_out => 000

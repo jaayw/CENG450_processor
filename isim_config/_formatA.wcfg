@@ -3,7 +3,7 @@
    <wave_state>
    </wave_state>
    <db_ref_list>
-      <db_ref path="C:/Users/james/Documents/Xilinx Projects/CENG450_processor/cpu_tb_isim_beh.wdb" id="1" type="auto">
+      <db_ref path="E:/Documents/Xilinx/CENG450_processor/cpu_tb_isim_beh.wdb" id="1" type="auto">
          <top_modules>
             <top_module name="cpu_tb" />
             <top_module name="numeric_std" />
@@ -13,12 +13,12 @@
          </top_modules>
       </db_ref>
    </db_ref_list>
-   <WVObjectSize size="36" />
+   <WVObjectSize size="37" />
    <wave_markers>
-      <marker time="250000000000" label="" />
       <marker time="450000000000" label="" />
       <marker time="1250000000000" label="" />
       <marker time="1750000000000" label="" />
+      <marker time="250000000000" label="" />
    </wave_markers>
    <wvobject fp_name="/cpu_tb/clk" type="logic" db_ref_id="1">
       <obj_property name="ElementShortName">clk</obj_property>
@@ -79,6 +79,10 @@
       <obj_property name="ElementShortName">op_code[6:0]</obj_property>
       <obj_property name="ObjectShortName">op_code[6:0]</obj_property>
    </wvobject>
+   <wvobject fp_name="/cpu_tb/uut/EX0/op_code" type="array" db_ref_id="1">
+      <obj_property name="ElementShortName">op_code[6:0]</obj_property>
+      <obj_property name="ObjectShortName">op_code[6:0]</obj_property>
+   </wvobject>
    <wvobject fp_name="/cpu_tb/uut/ra_id" type="array" db_ref_id="1">
       <obj_property name="ElementShortName">ra_id[2:0]</obj_property>
       <obj_property name="ObjectShortName">ra_id[2:0]</obj_property>
@@ -95,17 +99,9 @@
       <obj_property name="ElementShortName">rb[2:0]</obj_property>
       <obj_property name="ObjectShortName">rb[2:0]</obj_property>
    </wvobject>
-   <wvobject fp_name="/cpu_tb/uut/IF_ID/rc_out" type="array" db_ref_id="1">
-      <obj_property name="ElementShortName">rc_out[2:0]</obj_property>
-      <obj_property name="ObjectShortName">rc_out[2:0]</obj_property>
-   </wvobject>
    <wvobject fp_name="/cpu_tb/uut/rc" type="array" db_ref_id="1">
       <obj_property name="ElementShortName">rc[2:0]</obj_property>
       <obj_property name="ObjectShortName">rc[2:0]</obj_property>
-   </wvobject>
-   <wvobject fp_name="/cpu_tb/uut/IF_ID/cl_out" type="array" db_ref_id="1">
-      <obj_property name="ElementShortName">cl_out[3:0]</obj_property>
-      <obj_property name="ObjectShortName">cl_out[3:0]</obj_property>
    </wvobject>
    <wvobject fp_name="/cpu_tb/uut/cl" type="array" db_ref_id="1">
       <obj_property name="ElementShortName">cl[3:0]</obj_property>
@@ -125,6 +121,11 @@
       <obj_property name="ObjectShortName">rd_data2[15:0]</obj_property>
       <obj_property name="Radix">HEXRADIX</obj_property>
    </wvobject>
+   <wvobject fp_name="/cpu_tb/uut/EX0/in_direct" type="array" db_ref_id="1">
+      <obj_property name="ElementShortName">in_direct[15:0]</obj_property>
+      <obj_property name="ObjectShortName">in_direct[15:0]</obj_property>
+      <obj_property name="Radix">HEXRADIX</obj_property>
+   </wvobject>
    <wvobject fp_name="/cpu_tb/uut/out_data1" type="array" db_ref_id="1">
       <obj_property name="ElementShortName">out_data1[15:0]</obj_property>
       <obj_property name="ObjectShortName">out_data1[15:0]</obj_property>
@@ -135,14 +136,9 @@
       <obj_property name="ObjectShortName">out_data2[15:0]</obj_property>
       <obj_property name="Radix">HEXRADIX</obj_property>
    </wvobject>
-   <wvobject fp_name="/cpu_tb/uut/wr_index" type="array" db_ref_id="1">
-      <obj_property name="ElementShortName">wr_index[2:0]</obj_property>
-      <obj_property name="ObjectShortName">wr_index[2:0]</obj_property>
-   </wvobject>
-   <wvobject fp_name="/cpu_tb/uut/wr_data" type="array" db_ref_id="1">
-      <obj_property name="ElementShortName">wr_data[15:0]</obj_property>
-      <obj_property name="ObjectShortName">wr_data[15:0]</obj_property>
-      <obj_property name="Radix">HEXRADIX</obj_property>
+   <wvobject fp_name="/cpu_tb/uut/EX0/alu_mode" type="array" db_ref_id="1">
+      <obj_property name="ElementShortName">alu_mode[2:0]</obj_property>
+      <obj_property name="ObjectShortName">alu_mode[2:0]</obj_property>
    </wvobject>
    <wvobject fp_name="/cpu_tb/uut/alu_mode" type="array" db_ref_id="1">
       <obj_property name="ElementShortName">alu_mode[2:0]</obj_property>
@@ -172,6 +168,15 @@
    <wvobject fp_name="/cpu_tb/uut/result_mem" type="array" db_ref_id="1">
       <obj_property name="ElementShortName">result_mem[15:0]</obj_property>
       <obj_property name="ObjectShortName">result_mem[15:0]</obj_property>
+      <obj_property name="Radix">HEXRADIX</obj_property>
+   </wvobject>
+   <wvobject fp_name="/cpu_tb/uut/wr_index" type="array" db_ref_id="1">
+      <obj_property name="ElementShortName">wr_index[2:0]</obj_property>
+      <obj_property name="ObjectShortName">wr_index[2:0]</obj_property>
+   </wvobject>
+   <wvobject fp_name="/cpu_tb/uut/wr_data" type="array" db_ref_id="1">
+      <obj_property name="ElementShortName">wr_data[15:0]</obj_property>
+      <obj_property name="ObjectShortName">wr_data[15:0]</obj_property>
       <obj_property name="Radix">HEXRADIX</obj_property>
    </wvobject>
    <wvobject fp_name="/cpu_tb/uut/REG0/reg_file" type="array" db_ref_id="1">

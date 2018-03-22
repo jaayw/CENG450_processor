@@ -41,6 +41,8 @@ signal op_code : std_logic_vector(6 downto 0);
 begin
 
 	op_code <= instr_in(15 downto 9);
+	
+	
 
 	process(clk, instr_in, in_direct, in_data1, in_data2, cl_in, ra_in, op_code)
 	
@@ -56,27 +58,27 @@ begin
 					ra_out <= (others => '0');
 				
 				else
+				
+					-- IN/d1 mux
+					if op_code = ("0100000" or "0100001") then -- IN op_code
+						out_data1 <= in_direct;
+					else
+						out_data1 <= in_data1;
+					end if;
 					
+					-- rc/d2 mux
+					if op_code = ("0000101" or "0000110") then -- shift
+						out_data2 <= "000000000000" & cl_in;
+					else
+						out_data2 <= in_data2;
+					end if;
+						
 					alu_mode <= op_code(2 downto 0);
 					
 					ra_out <= ra_in;
 					
 				end if;
 				
-			end if;
-			
-			-- IN/d1 mux
-			if op_code = ("0100000" or "0100001") then -- IN op_code
-				out_data1 <= in_direct;
-			else
-				out_data1 <= in_data1;
-			end if;
-			
-			-- rc/d2 mux
-			if op_code = ("0000101" or "0000110") then -- shift
-				out_data2 <= "000000000000" & cl_in;
-			else
-				out_data2 <= in_data2;
 			end if;
 				
 	end process;

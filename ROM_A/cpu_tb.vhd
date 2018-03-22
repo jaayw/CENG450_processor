@@ -63,22 +63,23 @@ BEGIN
 		
 		rst <= '0';
 		
+		wait until (clk='1' and clk'event);
+		
+		wait for 100 us;
+		
 		wait until (clk='0' and clk'event);
 		wait until (clk='1' and clk'event);
 		
-		wait for 150 us;
 		
-		wait until (clk='1' and clk'event);
-		
-			in_data <= "0000000000000100";
+			in_data <= "0000000000000100"; -- input 4
 			
 		wait until (clk='1' and clk'event);
 		
-			in_data <= "0000000000000110";
+			in_data <= "0000000000000110"; -- input 6
 			
 		wait until (clk='1' and clk'event);
 		
-			in_data <= "0000000000001000";
+			in_data <= "0000000000001000"; -- input 8
 		
 			-- Wait until in_data required
 			-- 1 + 1
