@@ -17,6 +17,7 @@ ARCHITECTURE behavior OF fetch_decode_tb IS
          clk : IN  std_logic;
          rst : IN  std_logic;
          instr_in : IN  std_logic_vector(15 downto 0);
+			instr_out : OUT std_logic_vector(15 downto 0);
          ra_out : OUT  std_logic_vector(2 downto 0);
          rb_out : OUT  std_logic_vector(2 downto 0);
          rc_out : OUT  std_logic_vector(2 downto 0);
@@ -31,6 +32,7 @@ ARCHITECTURE behavior OF fetch_decode_tb IS
    signal instr_in : std_logic_vector(15 downto 0) := (others => '0');
 
  	--Outputs
+	signal instr_out : std_logic_vector(15 downto 0) := (others => '0');
    signal ra_out : std_logic_vector(2 downto 0);
    signal rb_out : std_logic_vector(2 downto 0);
    signal rc_out : std_logic_vector(2 downto 0);
@@ -46,6 +48,7 @@ BEGIN
           clk => clk,
           rst => rst,
           instr_in => instr_in,
+			 instr_out => instr_out,
           ra_out => ra_out,
           rb_out => rb_out,
           rc_out => rc_out,

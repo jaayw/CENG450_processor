@@ -20,6 +20,7 @@ entity fetch_decode is
 			instr_in : IN std_logic_vector(15 downto 0); -- take in inst from rom
 			
 			-- output
+			instr_out : OUT std_logic_vector(15 downto 0); -- Output instr to 
 			ra_out :	OUT std_logic_vector(2 downto 0);
 			rb_out :	OUT std_logic_vector(2 downto 0);
 			rc_out :	OUT std_logic_vector(2 downto 0);
@@ -30,6 +31,7 @@ end fetch_decode;
 
 architecture Behavioral of fetch_decode is
 
+signal instr : std_logic_vector(15 downto 0);
 signal op_code : std_logic_vector(6 downto 0);
 signal ra_internal : std_logic_vector(2 downto 0);
 signal rb_internal : std_logic_vector(2 downto 0);
@@ -38,6 +40,7 @@ signal cl_internal : std_logic_vector(3 downto 0);
 
 begin
 	
+	instr <= instr_in;
 	op_code <= instr_in(15 downto 9);
 	ra_internal <= instr_in(8 downto 6);
 	rb_internal <= instr_in(5 downto 3);
@@ -52,6 +55,7 @@ begin
 			
 			if rst = '1' then
 				
+				instr_out <= (others => '0');
 				ra_out <= (others => '0');
 				rb_out <= (others => '0');
 				rc_out <= (others => '0');
@@ -86,6 +90,8 @@ begin
 						cl_out <= (others => '0');
 					
 					end case;
+					
+					instr_out <= instr;
 				
 			end if;
 			

@@ -48,6 +48,7 @@ component fetch_decode is
 			clk : IN STD_LOGIC;
 			rst : IN STD_LOGIC;
 			instr_in : IN STD_LOGIC_VECTOR(15 downto 0);
+			instr_out : OUT STD_LOGIC_VECTOR(15 downto 0);
 			ra_out : OUT STD_LOGIC_VECTOR(2 downto 0);
 			rb_out : OUT STD_LOGIC_VECTOR(2 downto 0);
 			rc_out : OUT STD_LOGIC_VECTOR(2 downto 0);
@@ -131,6 +132,7 @@ end component;
 
 signal counter : std_logic_vector(6 downto 0);
 signal instr : std_logic_vector (15 downto 0);
+signal instr_ifid : std_logic_vector (15 downto 0);
 signal ra_id : std_logic_vector(2 downto 0);
 signal rb : std_logic_vector(2 downto 0);
 signal rc : std_logic_vector(2 downto 0);
@@ -172,6 +174,7 @@ IF_ID: fetch_decode port map (
 			clk => clk,
 			rst => rst,
 			instr_in => instr,
+			instr_out => instr_ifid,
 			ra_out => ra_id,
 			rb_out => rb,
 			rc_out => rc,
@@ -193,7 +196,7 @@ REG0: register_file	port map (
 EX0: execute port map (
 			clk => clk,
 			rst => rst,
-			instr_in => instr,
+			instr_in => instr_ifid,
 			in_direct => in_data,
 			in_data1 => rd_data1,
 			in_data2 => rd_data2,
@@ -244,6 +247,4 @@ WB0: writeback port map(
 			wr_data_out => wr_data
 			);
 			
-		
-
 end Behavioral;
