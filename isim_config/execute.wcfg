@@ -1,0 +1,80 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<wave_config>
+   <wave_state>
+   </wave_state>
+   <db_ref_list>
+      <db_ref path="C:/Users/james/Documents/Xilinx Projects/CENG450_processor/exe_tb_isim_beh.wdb" id="1" type="auto">
+         <top_modules>
+            <top_module name="exe_tb" />
+            <top_module name="numeric_std" />
+            <top_module name="std_logic_1164" />
+         </top_modules>
+      </db_ref>
+   </db_ref_list>
+   <WVObjectSize size="14" />
+   <wave_markers>
+      <marker time="250000000000" label="" />
+   </wave_markers>
+   <wvobject fp_name="/exe_tb/clk" type="logic" db_ref_id="1">
+      <obj_property name="ElementShortName">clk</obj_property>
+      <obj_property name="ObjectShortName">clk</obj_property>
+   </wvobject>
+   <wvobject fp_name="/exe_tb/rst" type="logic" db_ref_id="1">
+      <obj_property name="ElementShortName">rst</obj_property>
+      <obj_property name="ObjectShortName">rst</obj_property>
+   </wvobject>
+   <wvobject fp_name="/exe_tb/instr_in" type="array" db_ref_id="1">
+      <obj_property name="ElementShortName">instr_in[15:0]</obj_property>
+      <obj_property name="ObjectShortName">instr_in[15:0]</obj_property>
+   </wvobject>
+   <wvobject fp_name="/exe_tb/in_direct" type="array" db_ref_id="1">
+      <obj_property name="ElementShortName">in_direct[15:0]</obj_property>
+      <obj_property name="ObjectShortName">in_direct[15:0]</obj_property>
+      <obj_property name="Radix">HEXRADIX</obj_property>
+   </wvobject>
+   <wvobject fp_name="/exe_tb/in_data1" type="array" db_ref_id="1">
+      <obj_property name="ElementShortName">in_data1[15:0]</obj_property>
+      <obj_property name="ObjectShortName">in_data1[15:0]</obj_property>
+      <obj_property name="Radix">HEXRADIX</obj_property>
+   </wvobject>
+   <wvobject fp_name="/exe_tb/in_data2" type="array" db_ref_id="1">
+      <obj_property name="ElementShortName">in_data2[15:0]</obj_property>
+      <obj_property name="ObjectShortName">in_data2[15:0]</obj_property>
+      <obj_property name="Radix">HEXRADIX</obj_property>
+   </wvobject>
+   <wvobject fp_name="/exe_tb/ra_in" type="array" db_ref_id="1">
+      <obj_property name="ElementShortName">ra_in[2:0]</obj_property>
+      <obj_property name="ObjectShortName">ra_in[2:0]</obj_property>
+   </wvobject>
+   <wvobject fp_name="/exe_tb/cl_in" type="array" db_ref_id="1">
+      <obj_property name="ElementShortName">cl_in[3:0]</obj_property>
+      <obj_property name="ObjectShortName">cl_in[3:0]</obj_property>
+   </wvobject>
+   <wvobject fp_name="/exe_tb/instr_out" type="array" db_ref_id="1">
+      <obj_property name="ElementShortName">instr_out[15:0]</obj_property>
+      <obj_property name="ObjectShortName">instr_out[15:0]</obj_property>
+   </wvobject>
+   <wvobject fp_name="/exe_tb/alu_mode" type="array" db_ref_id="1">
+      <obj_property name="ElementShortName">alu_mode[2:0]</obj_property>
+      <obj_property name="ObjectShortName">alu_mode[2:0]</obj_property>
+      <obj_property name="Radix">HEXRADIX</obj_property>
+   </wvobject>
+   <wvobject fp_name="/exe_tb/out_data1" type="array" db_ref_id="1">
+      <obj_property name="ElementShortName">out_data1[15:0]</obj_property>
+      <obj_property name="ObjectShortName">out_data1[15:0]</obj_property>
+      <obj_property name="Radix">HEXRADIX</obj_property>
+   </wvobject>
+   <wvobject fp_name="/exe_tb/out_data2" type="array" db_ref_id="1">
+      <obj_property name="ElementShortName">out_data2[15:0]</obj_property>
+      <obj_property name="ObjectShortName">out_data2[15:0]</obj_property>
+      <obj_property name="Radix">HEXRADIX</obj_property>
+   </wvobject>
+   <wvobject fp_name="/exe_tb/ra_out" type="array" db_ref_id="1">
+      <obj_property name="ElementShortName">ra_out[2:0]</obj_property>
+      <obj_property name="ObjectShortName">ra_out[2:0]</obj_property>
+   </wvobject>
+   <wvobject fp_name="/exe_tb/clk_period" type="other" db_ref_id="1">
+      <obj_property name="ElementShortName">clk_period</obj_property>
+      <obj_property name="ObjectShortName">clk_period</obj_property>
+   </wvobject>
+</wave_config>

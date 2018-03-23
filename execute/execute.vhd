@@ -25,6 +25,7 @@ entity execute is
 		cl_in : IN std_logic_vector(3 downto 0);
 		
 		--output
+		instr_out : OUT std_logic_vector(15 downto 0);
 		alu_mode : OUT std_logic_vector(2 downto 0);
 		out_data1 : OUT std_logic_vector(15 downto 0);
 		out_data2 : OUT std_logic_vector(15 downto 0);
@@ -36,14 +37,14 @@ end execute;
 
 architecture Behavioral of execute is
 
+signal instr : std_logic_vector(15 downto 0);
 signal op_code : std_logic_vector(6 downto 0);
 
 begin
 
+	instr <= instr_in;
 	op_code <= instr_in(15 downto 9);
 	
-	
-
 	process(clk, instr_in, in_direct, in_data1, in_data2, cl_in, ra_in, op_code)
 	
 		begin
@@ -52,6 +53,7 @@ begin
 			
 				if rst ='1' then
 				
+					instr_out <= (others => '0');
 					alu_mode <= (others => '0');
 					out_data1 <= (others => '0');
 					out_data2 <= (others => '0');
@@ -72,9 +74,9 @@ begin
 					else
 						out_data2 <= in_data2;
 					end if;
-						
-					alu_mode <= op_code(2 downto 0);
 					
+					instr_out <= instr;
+					alu_mode <= op_code(2 downto 0);
 					ra_out <= ra_in;
 					
 				end if;
