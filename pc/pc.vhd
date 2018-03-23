@@ -18,6 +18,8 @@ entity pc is
 		-- input
 		clk :	in std_logic;
 		rst : in std_logic;
+		-- #TODO
+		-- Create enable and/or branch flag
 		
 		-- output
 		Q : out std_logic_vector(6 downto 0) --counter
@@ -36,9 +38,14 @@ begin
 			if rising_edge(clk) then
 				if rst = '1' then
 					Pre_Q <= 0;
-				else	    
+				else
 					Pre_Q <= Pre_Q + 1;
 				end if;
+				
+				-- #TODO
+				-- Create conditions for enable/branching
+				-- Create logic for branching
+				
 			end if;
 	end process;	
  
