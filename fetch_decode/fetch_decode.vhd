@@ -18,6 +18,9 @@ entity fetch_decode is
 			
 			-- input
 			instr_in : IN std_logic_vector(15 downto 0); -- take in inst from rom
+			-- #TODO
+			-- Create input for branch flag(s)
+			
 			
 			-- output
 			instr_out : OUT std_logic_vector(15 downto 0); -- Output instr to 
@@ -90,6 +93,9 @@ begin
 						cl_out <= (others => '0');
 					
 					end case;
+					
+					-- #TODO
+					-- Create logic and conditions for branching
 					
 					instr_out <= instr;
 				
