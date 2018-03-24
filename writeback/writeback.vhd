@@ -55,7 +55,7 @@ begin
 						wr_en_out <= '0';
 					end if;
 					
-					ra_out <= ra_in; --outputs to ra -> wr_index 
+					ra_out <= ra_in; --outputs to ra -> wr_index [rom]
 					
 				end if;
 				

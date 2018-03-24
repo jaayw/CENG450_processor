@@ -1,0 +1,53 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<wave_config>
+   <wave_state>
+   </wave_state>
+   <db_ref_list>
+      <db_ref path="C:/Users/james/Documents/Xilinx Projects/CENG450_processor/wb_tb_isim_beh.wdb" id="1" type="auto">
+         <top_modules>
+            <top_module name="std_logic_1164" />
+            <top_module name="wb_tb" />
+         </top_modules>
+      </db_ref>
+   </db_ref_list>
+   <WVObjectSize size="9" />
+   <wave_markers>
+      <marker time="250000000000" label="" />
+   </wave_markers>
+   <wvobject fp_name="/wb_tb/clk" type="logic" db_ref_id="1">
+      <obj_property name="ElementShortName">clk</obj_property>
+      <obj_property name="ObjectShortName">clk</obj_property>
+   </wvobject>
+   <wvobject fp_name="/wb_tb/rst" type="logic" db_ref_id="1">
+      <obj_property name="ElementShortName">rst</obj_property>
+      <obj_property name="ObjectShortName">rst</obj_property>
+   </wvobject>
+   <wvobject fp_name="/wb_tb/result_in" type="array" db_ref_id="1">
+      <obj_property name="ElementShortName">result_in[15:0]</obj_property>
+      <obj_property name="ObjectShortName">result_in[15:0]</obj_property>
+   </wvobject>
+   <wvobject fp_name="/wb_tb/ra_in" type="array" db_ref_id="1">
+      <obj_property name="ElementShortName">ra_in[2:0]</obj_property>
+      <obj_property name="ObjectShortName">ra_in[2:0]</obj_property>
+   </wvobject>
+   <wvobject fp_name="/wb_tb/wr_en_in" type="logic" db_ref_id="1">
+      <obj_property name="ElementShortName">wr_en_in</obj_property>
+      <obj_property name="ObjectShortName">wr_en_in</obj_property>
+   </wvobject>
+   <wvobject fp_name="/wb_tb/ra_out" type="array" db_ref_id="1">
+      <obj_property name="ElementShortName">ra_out[2:0]</obj_property>
+      <obj_property name="ObjectShortName">ra_out[2:0]</obj_property>
+   </wvobject>
+   <wvobject fp_name="/wb_tb/wr_en_out" type="logic" db_ref_id="1">
+      <obj_property name="ElementShortName">wr_en_out</obj_property>
+      <obj_property name="ObjectShortName">wr_en_out</obj_property>
+   </wvobject>
+   <wvobject fp_name="/wb_tb/wr_data_out" type="array" db_ref_id="1">
+      <obj_property name="ElementShortName">wr_data_out[15:0]</obj_property>
+      <obj_property name="ObjectShortName">wr_data_out[15:0]</obj_property>
+   </wvobject>
+   <wvobject fp_name="/wb_tb/clk_period" type="other" db_ref_id="1">
+      <obj_property name="ElementShortName">clk_period</obj_property>
+      <obj_property name="ObjectShortName">clk_period</obj_property>
+   </wvobject>
+</wave_config>
