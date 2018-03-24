@@ -81,7 +81,7 @@ component execute is
 			ra_in : IN STD_LOGIC_VECTOR(2 downto 0);
 			cl_in : IN STD_LOGIC_VECTOR(3 downto 0);
 			instr_out : OUT std_logic_vector(15 downto 0);
-			alu_mode : OUT STD_LOGIC_VECTOR(2 downto 0);
+			opc_out : OUT std_logic_vector(6 downto 0);
 			out_data1 : OUT STD_LOGIC_VECTOR(15 downto 0);
 			out_data2 : OUT STD_LOGIC_VECTOR(15 downto 0);
 			ra_out : out std_logic_vector(2 downto 0)
@@ -94,7 +94,7 @@ component alu is
 			rst : IN STD_LOGIC;
 			in1 : IN STD_LOGIC_VECTOR(15 downto 0);
 			in2 : IN STD_LOGIC_VECTOR(15 downto 0);
-			alu_mode_in : IN STD_LOGIC_VECTOR(2 downto 0);
+			opc_in : IN std_logic_vector(6 downto 0);
 			result : OUT STD_LOGIC_VECTOR(15 downto 0);
 			z_flag : OUT STD_LOGIC;
 			n_flag : OUT STD_LOGIC
@@ -141,7 +141,7 @@ signal rc : std_logic_vector(2 downto 0);
 signal cl : std_logic_vector(3 downto 0);
 signal rd_data1 : std_logic_vector(15 downto 0); 
 signal rd_data2 : std_logic_vector(15 downto 0);
-signal alu_mode : std_logic_vector(2 downto 0);
+signal op_code : std_logic_vector(6 downto 0);
 signal out_data1 : std_logic_vector(15 downto 0);
 signal out_data2 : std_logic_vector(15 downto 0);
 signal ra_ex : std_logic_vector(2 downto 0);
@@ -205,7 +205,7 @@ EX0: execute port map (
 			ra_in => ra_id,
 			cl_in => cl,
 			instr_out => instr_exe,
-			alu_mode => alu_mode,
+			opc_out => op_code,
 			out_data1 => out_data1,
 			out_data2 => out_data2,
 			ra_out => ra_ex
@@ -216,7 +216,7 @@ ALU0: alu port map (
 			rst => rst,
 			in1 => out_data1,
 			in2 => out_data2,
-			alu_mode_in => alu_mode,
+			opc_in => op_code,
 			result => result_alu,
 			z_flag => z_flag_alu,
 			n_flag => n_flag_alu

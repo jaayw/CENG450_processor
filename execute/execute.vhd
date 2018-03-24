@@ -26,7 +26,7 @@ entity execute is
 		
 		--output
 		instr_out : OUT std_logic_vector(15 downto 0);
-		alu_mode : OUT std_logic_vector(2 downto 0);
+		opc_out : OUT std_logic_vector(6 downto 0);
 		out_data1 : OUT std_logic_vector(15 downto 0);
 		out_data2 : OUT std_logic_vector(15 downto 0);
 		ra_out : out std_logic_vector(2 downto 0)
@@ -54,7 +54,7 @@ begin
 				if rst ='1' then
 				
 					instr_out <= (others => '0');
-					alu_mode <= (others => '0');
+					opc_out <= (others => '0');
 					out_data1 <= (others => '0');
 					out_data2 <= (others => '0');
 					ra_out <= (others => '0');
@@ -63,35 +63,35 @@ begin
 				
 				case op_code is
 				
-					-- IN (32)
-					when ("0100000") =>
-						out_data1 <= in_direct;
-						out_data2 <= "1111111111111111";--in_data2;
-						
-					-- OUT (32)
+					-- IN (33)
 					when ("0100001") =>
 						out_data1 <= in_direct;
-						out_data2 <= "1111111111111111";--in_data2;
+						out_data2 <= (others => '0');
+						
+					-- OUT (32)
+					when ("0100000") =>
+						out_data1 <= in_data1;
+						out_data2 <= (others => '0');
 						
 					-- Shift (5/6)
 					when ("0000101") =>
-						out_data1 <= in_data2;
+						out_data1 <= in_data1;
 						out_data2 <= "000000000000" & cl_in;
 						
 					-- Shift (6)
 					when ("0000110") =>
-						out_data1 <= in_data2;
+						out_data1 <= in_data1;
 						out_data2 <= "000000000000" & cl_in;
 					
 					-- Add/Sub/Mult/NAnd/NOP (1, 2, 3, 4 5, 0)
 					when others =>
 						out_data1 <= in_data1;
-						out_data2 <= "1010101010101010";
+						out_data2 <= in_data2;
 				
 				end case;
 					
 					instr_out <= instr;
-					alu_mode <= op_code(2 downto 0);
+					opc_out <= op_code;
 					ra_out <= ra_in;
 					
 				end if;

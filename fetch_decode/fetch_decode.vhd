@@ -80,12 +80,19 @@ begin
 						rb_out <= ra_internal;
 						rc_out <= (others => '0');
 						cl_out <= cl_internal;
-					-- when in and out
-					when "0100000" | "0100001" =>
+					-- OUT (32)
+					when "0100000" =>
+						ra_out <= ra_internal;
+						rb_out <= ra_internal;
+						rc_out <= (others => '0');
+						cl_out <= (others => '0');
+					-- IN (33)
+					when "0100001" =>
 						ra_out <= ra_internal;
 						rb_out <= (others => '0');
 						rc_out <= (others => '0');
 						cl_out <= (others => '0');
+						
 					when others =>
 						ra_out <= (others => '0');
 						rb_out <= (others => '0');

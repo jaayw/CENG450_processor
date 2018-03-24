@@ -1,36 +1,9 @@
---------------------------------------------------------------------------------
--- Company: 
--- Engineer:
---
--- Create Date:   15:00:54 03/15/2018
--- Design Name:   
--- Module Name:   C:/Users/james/Documents/Xilinx Projects/CENG450_processor/TESTBENCHES/alu_tb.vhd
--- Project Name:  CENG450_processor
--- Target Device:  
--- Tool versions:  
--- Description:   
--- 
--- VHDL Test Bench Created by ISE for module: alu
--- 
--- Dependencies:
--- 
--- Revision:
--- Revision 0.01 - File Created
--- Additional Comments:
---
--- Notes: 
--- This testbench has been automatically generated using types std_logic and
--- std_logic_vector for the ports of the unit under test.  Xilinx recommends
--- that these types always be used for the top-level I/O of a design in order
--- to guarantee that the testbench will bind correctly to the post-implementation 
--- simulation model.
---------------------------------------------------------------------------------
 LIBRARY ieee;
 USE ieee.std_logic_1164.ALL;
  
 -- Uncomment the following library declaration if using
 -- arithmetic functions with Signed or Unsigned values
---USE ieee.numeric_std.ALL;
+USE ieee.numeric_std.ALL;
  
 ENTITY alu_tb IS
 END alu_tb;
@@ -45,7 +18,7 @@ ARCHITECTURE behavior OF alu_tb IS
          rst : IN  std_logic;
          in1 : IN  std_logic_vector(15 downto 0);
          in2 : IN  std_logic_vector(15 downto 0);
-         alu_mode_in : IN  std_logic_vector(2 downto 0);
+         opc_in : IN  std_logic_vector(6 downto 0);
          result : OUT  std_logic_vector(15 downto 0);
          z_flag : OUT  std_logic;
          n_flag : OUT  std_logic
@@ -58,7 +31,7 @@ ARCHITECTURE behavior OF alu_tb IS
    signal rst : std_logic := '0';
    signal in1 : std_logic_vector(15 downto 0) := (others => '0');
    signal in2 : std_logic_vector(15 downto 0) := (others => '0');
-   signal alu_mode_in : std_logic_vector(2 downto 0) := (others => '0');
+   signal opc_in : std_logic_vector(6 downto 0) := (others => '0');
 
  	--Outputs
    signal result : std_logic_vector(15 downto 0);
@@ -76,7 +49,7 @@ BEGIN
           rst => rst,
           in1 => in1,
           in2 => in2,
-          alu_mode_in => alu_mode_in,
+          opc_in => opc_in,
           result => result,
           z_flag => z_flag,
           n_flag => n_flag
@@ -104,8 +77,20 @@ BEGIN
 		rst <= '0';
 		
 		wait until (clk='1' and clk'event);
+			-- Testing IN (mode: 33)
+			opc_in <= "0100001";
+			in1 <= "1011101010011111";
+			in2 <= "0000000111110100";
+			
+		wait until (clk='1' and clk'event);
+			-- Testing IN (mode: 32)
+			opc_in <= "0100000";
+			in1 <= "0011101010011001";
+			in2 <= "0000000111110101";
+		
+		wait until (clk='1' and clk'event);
 			-- Testing add (mode: 1)
-			alu_mode_in <= "001";
+			opc_in <= "0000001";
 			in1 <= "0011101010011000";
 			in2 <= "0000000111110100";
 			-- Result should be:
@@ -113,7 +98,7 @@ BEGIN
 		
 		wait until (clk='1' and clk'event);
 			-- Testing sub (mode: 2)
-			alu_mode_in <= "010";
+			opc_in <= "0000010";
 			in1 <= "0100000001110100";
 			in2 <= "0100000001000010";
 			-- Result should be:
@@ -121,7 +106,7 @@ BEGIN
 		
 		wait until (clk='1' and clk'event);
 			-- Testing multi (mode: 3)
-			alu_mode_in <= "011";
+			opc_in <= "0000011";
 			in1 <= "0000000010011011";
 			in2 <= "0000000001111101";
 			-- Result should be:
@@ -129,7 +114,7 @@ BEGIN
 		
 		wait until (clk='1' and clk'event);
 			-- Testing nand (mode: 4)
-			alu_mode_in <= "100";
+			opc_in <= "0000100";
 			in1 <= "1010101010101010";
 			in2 <= "1010101010101010";
 			-- Result should be:
@@ -137,7 +122,7 @@ BEGIN
 		
 		wait until (clk='1' and clk'event);
 			-- Testing SHL (mode: 5)
-			alu_mode_in <= "101";
+			opc_in <= "0000101";
 			in1 <= "0000000000111111";
 			in2 <= "0000000000000100"; -- left shift 4
 			-- Result should be:
@@ -145,7 +130,7 @@ BEGIN
 		
 		wait until (clk='1' and clk'event);
 			-- Testing SHR (mode: 6)
-			alu_mode_in <= "110";
+			opc_in <= "0000110";
 			in1 <= "1010100000000000";
 			in2 <= "0000000000001000"; -- right shift 8
 			-- Result should be"
@@ -153,11 +138,11 @@ BEGIN
 			
 		wait until (clk='1' and clk'event);
 			-- Testing test mode (mode: 7)
-			alu_mode_in <= "111";
+			opc_in <= "0000111";
 			
 		wait until (clk='1' and clk'event);
 			-- Testing NOP
-			alu_mode_in <= "000";
+			opc_in <= "0000000";
 		
       wait;
 		

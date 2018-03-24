@@ -19,7 +19,7 @@ entity alu is
 			rst : IN std_logic;
 			in1 : IN	std_logic_vector(15 downto 0);
 			in2 : IN std_logic_vector(15 downto 0);
-			alu_mode_in : IN std_logic_vector(2 downto 0);
+			opc_in : IN std_logic_vector(6 downto 0);
 			
 			-- output
 			result : OUT std_logic_vector(15 downto 0);
@@ -32,7 +32,6 @@ end alu;
 architecture Behavioral of alu is
 
 signal result_32 : std_logic_vector(31 downto 0);
-
 signal result_mul : std_logic_vector(15 downto 0);
 
 begin
@@ -41,7 +40,7 @@ begin
 	
 	result_mul <= result_32(31 downto 16);
 
-	process(rst, in1, in2, alu_mode_in, result_32)
+	process(rst, in1, in2, opc_in, result_32)
 		
 		variable result_sh : std_logic_vector(15 downto 0);
 	
@@ -57,24 +56,30 @@ begin
 				
 				else
 				
-					case alu_mode_in is
+					case opc_in is
 					
-						when "000" => -- nop (mode: 0)
+						when "0100001" => -- IN (mode: 33)
+							result <= in1;
+							
+						when "0100000" => -- OUT (mode: 32)
+							result <= in1;
+					
+						when "0000000" => -- nop (mode: 0)
 							result <= "0000000000000000";
 					
-						when "001" => -- add (mode: 1)
+						when "0000001" => -- add (mode: 1)
 							result <= std_logic_vector((signed(in1) + signed(in2)));
 							
-						when "010" => -- sub (mode: 2)
+						when "0000010" => -- sub (mode: 2)
 							result <= std_logic_vector((signed(in1) - signed(in2)));
 							
-						when "011" => -- mul (mode: 3)
+						when "0000011" => -- mul (mode: 3)
 							result <= result_32(15 downto 0);
 							
-						when "100" => -- nand (mode: 4)
+						when "0000100" => -- nand (mode: 4)
 							result <= (in1 nand in2);
 							
-						when "101" => -- SHL (Shift Left) (mode: 5)
+						when "0000101" => -- SHL (Shift Left) (mode: 5)
 											result_sh := in1;
 											for i in 0 to 15 loop
 												if i < to_integer(unsigned(in2)) then
@@ -84,7 +89,7 @@ begin
 											
 											result <= result_sh;
 							
-						when "110" => -- SHR (Shift Right) mode: 6)
+						when "0000110" => -- SHR (Shift Right) mode: 6)
 											result_sh := in1;
 											for i in 0 to 15 loop
 												if i < to_integer(unsigned(in2)) then
@@ -94,7 +99,7 @@ begin
 											
 											result <= result_sh;
 											
-						when "111" => -- test (mode: 7)
+						when "0000111" => -- test (mode: 7)
 							result <= "0000000000000000";
 							
 							if(in1 = "0000000000000000") then

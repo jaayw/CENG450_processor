@@ -20,7 +20,7 @@ ARCHITECTURE behavior OF exe_tb IS
          ra_in : IN  std_logic_vector(2 downto 0);
          cl_in : IN  std_logic_vector(3 downto 0);
 			instr_out : OUT std_logic_vector(15 downto 0);
-         alu_mode : OUT  std_logic_vector(2 downto 0);
+         opc_out : OUT std_logic_vector(6 downto 0);
          out_data1 : OUT  std_logic_vector(15 downto 0);
          out_data2 : OUT  std_logic_vector(15 downto 0);
          ra_out : OUT  std_logic_vector(2 downto 0)
@@ -40,7 +40,7 @@ ARCHITECTURE behavior OF exe_tb IS
 
  	--Outputs
 	signal instr_out : std_logic_vector(15 downto 0);
-   signal alu_mode : std_logic_vector(2 downto 0);
+   signal opc_out : std_logic_vector(6 downto 0);
    signal out_data1 : std_logic_vector(15 downto 0);
    signal out_data2 : std_logic_vector(15 downto 0);
    signal ra_out : std_logic_vector(2 downto 0);
@@ -61,7 +61,7 @@ BEGIN
           ra_in => ra_in,
           cl_in => cl_in,
 			 instr_out => instr_out,
-          alu_mode => alu_mode,
+			 opc_out => opc_out,
           out_data1 => out_data1,
           out_data2 => out_data2,
           ra_out => ra_out
