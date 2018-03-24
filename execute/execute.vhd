@@ -62,7 +62,7 @@ begin
 				else
 				
 					-- IN/d1 mux
-					if op_code = ("0100000" or "0100001") then -- IN op_code
+					if op_code = ("0100000" or "0100001") then -- IN/OUT (32/33)
 						out_data1 <= in_direct;
 					else
 						out_data1 <= in_data1;

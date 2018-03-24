@@ -22,6 +22,8 @@ entity mem is
 		result_in : in std_logic_vector(15 downto 0);
 		z_in : in std_logic;
 		n_in : in std_logic;
+		-- #TODO
+		-- Create input for branch and Format L
 		
 		--output
 		ra_out : out std_logic_vector(2 downto 0);
@@ -63,9 +65,11 @@ begin
 					else
 							wr_en <= '1';
 					end if;
+					-- #TODO
+					-- Create logic for Format B and Format L
 					
 					-- write data out to WB stage AND out
-					result_out <= result_in; --alu_result;
+					result_out <= result_in; --alu_result to wb stage
 					ra_out <= ra_in; --ra register
 					z_out <= z_in;
 					n_out <= n_in;
