@@ -77,7 +77,7 @@ begin
 					-- when shl, lhl	
 					when "0000101" | "0000110" =>
 						ra_out <= ra_internal;
-						rb_out <= (others => '0');
+						rb_out <= ra_internal;
 						rc_out <= (others => '0');
 						cl_out <= cl_internal;
 					-- when in and out

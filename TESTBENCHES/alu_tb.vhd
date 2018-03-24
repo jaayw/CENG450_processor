@@ -82,7 +82,7 @@ BEGIN
           n_flag => n_flag
         );
 
-   -- Clock process definitions
+   --Clock process definitions
    clk_process :process
    begin
 		clk <= '0';

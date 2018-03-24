@@ -61,19 +61,34 @@ begin
 				
 				else
 				
-					-- IN/d1 mux
-					if op_code = ("0100000" or "0100001") then -- IN/OUT (32/33)
+				case op_code is
+				
+					-- IN (32)
+					when ("0100000") =>
 						out_data1 <= in_direct;
-					else
-						out_data1 <= in_data1;
-					end if;
-					
-					-- rc/d2 mux
-					if op_code = ("0000101" or "0000110") then -- shift
+						out_data2 <= "1111111111111111";--in_data2;
+						
+					-- OUT (32)
+					when ("0100001") =>
+						out_data1 <= in_direct;
+						out_data2 <= "1111111111111111";--in_data2;
+						
+					-- Shift (5/6)
+					when ("0000101") =>
+						out_data1 <= in_data2;
 						out_data2 <= "000000000000" & cl_in;
-					else
-						out_data2 <= in_data2;
-					end if;
+						
+					-- Shift (6)
+					when ("0000110") =>
+						out_data1 <= in_data2;
+						out_data2 <= "000000000000" & cl_in;
+					
+					-- Add/Sub/Mult/NAnd/NOP (1, 2, 3, 4 5, 0)
+					when others =>
+						out_data1 <= in_data1;
+						out_data2 <= "1010101010101010";
+				
+				end case;
 					
 					instr_out <= instr;
 					alu_mode <= op_code(2 downto 0);

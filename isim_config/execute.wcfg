@@ -11,9 +11,11 @@
          </top_modules>
       </db_ref>
    </db_ref_list>
-   <WVObjectSize size="14" />
+   <WVObjectSize size="15" />
    <wave_markers>
       <marker time="250000000000" label="" />
+      <marker time="750000000000" label="" />
+      <marker time="950000000000" label="" />
    </wave_markers>
    <wvobject fp_name="/exe_tb/clk" type="logic" db_ref_id="1">
       <obj_property name="ElementShortName">clk</obj_property>
@@ -40,7 +42,7 @@
    <wvobject fp_name="/exe_tb/in_data2" type="array" db_ref_id="1">
       <obj_property name="ElementShortName">in_data2[15:0]</obj_property>
       <obj_property name="ObjectShortName">in_data2[15:0]</obj_property>
-      <obj_property name="Radix">HEXRADIX</obj_property>
+      <obj_property name="Radix">BINARYRADIX</obj_property>
    </wvobject>
    <wvobject fp_name="/exe_tb/ra_in" type="array" db_ref_id="1">
       <obj_property name="ElementShortName">ra_in[2:0]</obj_property>
@@ -49,6 +51,11 @@
    <wvobject fp_name="/exe_tb/cl_in" type="array" db_ref_id="1">
       <obj_property name="ElementShortName">cl_in[3:0]</obj_property>
       <obj_property name="ObjectShortName">cl_in[3:0]</obj_property>
+   </wvobject>
+   <wvobject fp_name="/exe_tb/uut/op_code" type="array" db_ref_id="1">
+      <obj_property name="ElementShortName">op_code[6:0]</obj_property>
+      <obj_property name="ObjectShortName">op_code[6:0]</obj_property>
+      <obj_property name="Radix">SIGNEDDECRADIX</obj_property>
    </wvobject>
    <wvobject fp_name="/exe_tb/instr_out" type="array" db_ref_id="1">
       <obj_property name="ElementShortName">instr_out[15:0]</obj_property>
@@ -67,7 +74,7 @@
    <wvobject fp_name="/exe_tb/out_data2" type="array" db_ref_id="1">
       <obj_property name="ElementShortName">out_data2[15:0]</obj_property>
       <obj_property name="ObjectShortName">out_data2[15:0]</obj_property>
-      <obj_property name="Radix">HEXRADIX</obj_property>
+      <obj_property name="Radix">BINARYRADIX</obj_property>
    </wvobject>
    <wvobject fp_name="/exe_tb/ra_out" type="array" db_ref_id="1">
       <obj_property name="ElementShortName">ra_out[2:0]</obj_property>

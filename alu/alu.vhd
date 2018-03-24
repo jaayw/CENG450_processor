@@ -41,13 +41,13 @@ begin
 	
 	result_mul <= result_32(31 downto 16);
 
-	process(clk, rst, in1, in2, alu_mode_in, result_32)
+	process(rst, in1, in2, alu_mode_in, result_32)
 		
 		variable result_sh : std_logic_vector(15 downto 0);
 	
 		begin
 		
-			if rising_edge(clk) then
+			--if rising_edge(clk) then
 			
 				if rst = '1' then
 				
@@ -115,7 +115,7 @@ begin
 			
 			end if;
 			
-		end if;
+		--end if;
 			
 	end process;
 

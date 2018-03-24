@@ -65,7 +65,7 @@ BEGIN
 		
 		wait until (clk='1' and clk'event);
 		
-		wait for 100 us;
+		wait for 200 us;
 		
 		wait until (clk='0' and clk'event);
 		wait until (clk='1' and clk'event);
