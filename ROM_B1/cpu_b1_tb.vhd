@@ -1,11 +1,14 @@
 LIBRARY ieee;
 USE ieee.std_logic_1164.ALL;
+ 
+-- Uncomment the following library declaration if using
+-- arithmetic functions with Signed or Unsigned values
 USE ieee.numeric_std.ALL;
  
-ENTITY cpu_tb IS
-END cpu_tb;
+ENTITY cpu_b1_tb IS
+END cpu_b1_tb;
  
-ARCHITECTURE behavior OF cpu_tb IS 
+ARCHITECTURE behavior OF cpu_b1_tb IS 
  
     -- Component Declaration for the Unit Under Test (UUT)
  
@@ -65,44 +68,21 @@ BEGIN
 		
 		wait until (clk='1' and clk'event);
 		
-		wait for 200 us;
+		in_data <= "0000000000000010"; -- IN 2
 		
-		wait until (clk='0' and clk'event);
 		wait until (clk='1' and clk'event);
 		
+		in_data <= "0000000000000011"; -- IN 3
 		
-			in_data <= "0000000000000100"; -- input 4
-			
 		wait until (clk='1' and clk'event);
 		
-			in_data <= "0000000000000110"; -- input 6
-			
+		in_data <= "0000000000000001"; -- IN 1
+		
 		wait until (clk='1' and clk'event);
 		
-			in_data <= "0000000000001000"; -- input 8
-		
-			-- Wait until in_data required
-			-- IN instr
-			-- R1: 4, R2: 6, R3: 8
-			
-			-- ADD instr
-			-- Result: 000a -> R3: 000a
-			-- R1: 4, R2: 6
-			
-			-- SHL instr
-			-- Result: 0028 -> R3: 0028
-			-- R1: 4, R2: 6
-			
-			-- MULT instr
-			-- Result: 00a0 -> R2: 00a0
-			-- R1: 4, R3: 0028
-			
-			-- OUT instr
-			-- Result: 00a0
-			-- R1: 4, R2: 00a0, R3: 0028
-			
-		wait;
-      
+		in_data <= "0000000000000101"; -- IN 5
+
+      wait;
    end process;
 
 END;
