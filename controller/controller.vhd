@@ -36,8 +36,10 @@ begin
 		-- Process instructions for stalling and/or data forwarding
 		
 		-- RAW Hazards
+		-- Parse op_code from execute or mem stage to account for holding or data forward to if/id
 		
 		-- WAR Hazards
+		-- Parse op_code from if/id stage or mem stage?
 	
 	--end process;
 
