@@ -39,7 +39,7 @@ end component;
 -- Format A: ROM_VHDL_16
 -- Format B:
 -- Format L:
-component ROM_VHDL_B1 is
+component ROM_VHDL_B is
 	port (
 			clk : IN STD_LOGIC;
 			addr : IN STD_LOGIC_VECTOR(6 downto 0);
@@ -172,9 +172,9 @@ PC0: pc port map (
 
 -- Change name according to Format testing
 -- Format A: ROM_VHDL_16
--- Format B:
+-- Format B: ROM_VHDL_B
 -- Format L:
-ROM: ROM_VHDL_B1 port map (
+ROM: ROM_VHDL_B port map (
 			clk => clk,
 			addr => counter,
 			data => instr
