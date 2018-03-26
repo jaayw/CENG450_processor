@@ -31,6 +31,7 @@ component pc is
 	port (
 			clk : IN STD_LOGIC;
 			rst : IN STD_LOGIC;
+			en : IN STD_LOGIC;
 			Q : OUT STD_LOGIC_VECTOR(6 downto 0)
 			);
 end component;
@@ -136,6 +137,7 @@ component writeback is
 end component;				
 
 signal counter : std_logic_vector(6 downto 0);
+signal pc_en : std_logic;
 signal instr : std_logic_vector (15 downto 0);
 signal instr_ifid : std_logic_vector (15 downto 0);
 signal instr_exe : std_logic_vector (15 downto 0);
@@ -167,6 +169,7 @@ begin
 PC0: pc port map (
 			clk => clk,
 			rst => rst,
+			en => pc_en,
 			Q => counter
 			);
 

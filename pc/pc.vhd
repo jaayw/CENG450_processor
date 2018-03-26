@@ -16,10 +16,12 @@ entity pc is
 
 	PORT (
 		-- input
-		clk :	in std_logic;
-		rst : in std_logic;
+		clk :	IN std_logic;
+		rst : IN std_logic;
 		-- #TODO
 		-- Create enable and/or branch flag
+		en : IN std_logic;
+		-- Q_in : IN std_logic_vector(6 downto 0);
 		
 		-- output
 		Q : out std_logic_vector(6 downto 0) --counter
@@ -38,8 +40,10 @@ begin
 			if rising_edge(clk) then
 				if rst = '1' then
 					Pre_Q <= 0;
-				else
+				elsif (en = '1' and rst = '0') then
 					Pre_Q <= Pre_Q + 1;
+				else
+					Pre_Q <= Pre_Q;
 				end if;
 				
 				-- #TODO
