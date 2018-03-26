@@ -16,6 +16,9 @@ ARCHITECTURE behavior OF pc_tb IS
     PORT(
          clk : IN  std_logic;
          rst : IN  std_logic;
+			-- br : IN std_logic;
+			en : IN std_logic;
+			-- Q_in : IN std_logic_vector(6 downto 0);
          Q : OUT  std_logic_vector(6 downto 0)
         );
     END COMPONENT;
@@ -24,12 +27,15 @@ ARCHITECTURE behavior OF pc_tb IS
    --Inputs
    signal clk : std_logic := '0';
    signal rst : std_logic := '0';
+	-- br : IN std_logic;
+	signal en : std_logic := '0';
+	-- Q_in : IN std_logic_vector(6 downto 0);
 
  	--Outputs
    signal Q : std_logic_vector(6 downto 0);
 
    -- Clock period definitions
-   constant clk_period : time := 10 us;
+   constant clk_period : time := 100 us;
  
 BEGIN
  
@@ -37,6 +43,9 @@ BEGIN
    uut: pc PORT MAP (
           clk => clk,
           rst => rst,
+			 -- br : IN std_logic;
+			 en => en,
+			-- Q_in : IN std_logic_vector(6 downto 0);
           Q => Q
         );
 
@@ -55,20 +64,31 @@ BEGIN
    begin		
       -- hold reset state for 100 ns.
 		rst <= '1';
+		en <= '0';
+		-- Nothing should be running
 		
-      wait for 50 us;
+      wait for 100 us;
+		wait until (clk='1' and clk'event);
 
 		rst <= '0';
-		
-		wait for 50 us;
-
-      rst <= '1';
+		en <= '0';
+		-- Again, nothing should be running
 		
 		wait for 100 us;
+		wait until (clk='1' and clk'event);
+		
+		rst <= '1';
+		en <= '1';
+		-- Again, nothing should be running
+		
+		wait for 100 us;
+		wait until (clk='1' and clk'event);
 		
 		rst <= '0';
+		en <= '1';
+		-- Running condition, PC should be incrementing
 		
-		wait for 100 us;
+		wait;
 		
    end process;
 
