@@ -1,9 +1,11 @@
 LIBRARY ieee;
 USE ieee.std_logic_1164.ALL;
+USE IEEE.STD_LOGIC_UNSIGNED.ALL;
+USE IEEE.STD_LOGIC_ARITH.all;
  
 -- Uncomment the following library declaration if using
 -- arithmetic functions with Signed or Unsigned values
-USE ieee.numeric_std.ALL;
+--USE ieee.numeric_std.ALL;
  
 ENTITY pc_tb IS
 END pc_tb;
@@ -16,9 +18,9 @@ ARCHITECTURE behavior OF pc_tb IS
     PORT(
          clk : IN  std_logic;
          rst : IN  std_logic;
-			-- br : IN std_logic;
 			en : IN std_logic;
-			-- Q_in : IN std_logic_vector(6 downto 0);
+			br : IN std_logic;
+			Q_in : IN std_logic_vector(6 downto 0);
          Q : OUT  std_logic_vector(6 downto 0)
         );
     END COMPONENT;
@@ -27,9 +29,9 @@ ARCHITECTURE behavior OF pc_tb IS
    --Inputs
    signal clk : std_logic := '0';
    signal rst : std_logic := '0';
-	-- br : IN std_logic;
 	signal en : std_logic := '0';
-	-- Q_in : IN std_logic_vector(6 downto 0);
+	signal br : std_logic := '0';
+	signal Q_in : std_logic_vector(6 downto 0) := (others => '0');
 
  	--Outputs
    signal Q : std_logic_vector(6 downto 0);
@@ -43,9 +45,9 @@ BEGIN
    uut: pc PORT MAP (
           clk => clk,
           rst => rst,
-			 -- br : IN std_logic;
 			 en => en,
-			-- Q_in : IN std_logic_vector(6 downto 0);
+			 br => br,
+			 Q_in => Q_in,
           Q => Q
         );
 
@@ -62,31 +64,69 @@ BEGIN
    -- Stimulus process
    stim_proc: process
    begin		
-      -- hold reset state for 100 ns.
+      
 		rst <= '1';
 		en <= '0';
-		-- Nothing should be running
+		br <= '0';
+		Q_in <= "0000111"; -- Can be anything
+		-- Expected non-running condition
+		-- PC should not be incrementing
 		
-      wait for 100 us;
+      wait for 200 us;
 		wait until (clk='1' and clk'event);
 
 		rst <= '0';
 		en <= '0';
-		-- Again, nothing should be running
+		br <= '0';
+		Q_in <= "1110000"; -- Can be anything
+		-- Expected non-running condition
+		-- rst = 0, en = 0, br = 0
+		-- PC should not be incrementing
 		
-		wait for 100 us;
+		wait for 200 us;
 		wait until (clk='1' and clk'event);
 		
 		rst <= '1';
 		en <= '1';
-		-- Again, nothing should be running
+		br <= '0';
+		Q_in <= "0101010"; -- Can be anything
+		-- Expected non-running condition
+		-- rst = 1, en = 1, br = 0
+		-- PC should not be incrementing
 		
-		wait for 100 us;
+		wait for 200 us;
+		wait until (clk='1' and clk'event);
+		
+		rst <= '1';
+		en <= '1';
+		br <= '1';
+		Q_in <= "1100011"; -- Can be anything
+		-- Expected non-running condition
+		-- rst = 1, en = 1, br = 1
+		-- PC should not be incrementing
+		
+		wait for 200 us;
 		wait until (clk='1' and clk'event);
 		
 		rst <= '0';
 		en <= '1';
-		-- Running condition, PC should be incrementing
+		br <= '0';
+		Q_in <= "1100011"; -- Can be anything
+		-- Expected running condition (no branch)
+		-- rst = 0, en = 1, br = 0
+		-- PC should be incrementing
+		
+		wait for 200 us;
+		wait until (clk='1' and clk'event);
+		
+		rst <= '0';
+		en <= '1';
+		br <= '1';
+		Q_in <= "0011100"; -- Can be anything
+		-- Expected running condition (branch taken)
+		-- rst = 0, en = 1, br = 1
+		-- Q (counter) = 28
+		-- PC should be incrementing
 		
 		wait;
 		
