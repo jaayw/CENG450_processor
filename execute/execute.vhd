@@ -63,6 +63,7 @@ begin
 				
 				case op_code is
 				
+					-- Format A3
 					-- IN (33)
 					when ("0100001") =>
 						out_data1 <= in_direct;
@@ -72,7 +73,8 @@ begin
 					when ("0100000") =>
 						out_data1 <= in_data1;
 						out_data2 <= (others => '0');
-						
+					
+					-- Format A2
 					-- Shift (5/6)
 					when ("0000101") =>
 						out_data1 <= in_data1;
@@ -83,6 +85,7 @@ begin
 						out_data1 <= in_data1;
 						out_data2 <= "000000000000" & cl_in;
 					
+					-- Format A1/0
 					-- Add/Sub/Mult/NAnd/NOP (1, 2, 3, 4 5, 0)
 					when others =>
 						out_data1 <= in_data1;

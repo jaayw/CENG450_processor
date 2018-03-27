@@ -16,11 +16,13 @@ entity branch is
 		rst : IN std_logic;
 		
 		-- input
+		instr_in : IN std_logic_vector(15 downto 0);
 		pc_in : IN std_logic_vector(6 downto 0);
 		z_in : IN std_logic;
 		n_in : IN std_logic;
 		
 		-- output
+		br_flag : OUT std_logic;
 		pc_out : OUT std_logic_vector(6 downto 0)
 		
 	);
@@ -28,9 +30,14 @@ end branch;
 
 architecture Behavioral of branch is
 
+signal op_code : std_logic_vector(6 downto 0);
+signal br : std_logic;
+
 begin
 
-	process(clk, rst, z_in, n_in)
+	op_code <= instr_in(15 downto 9);
+
+	process(clk)
 	
 		begin
 		
@@ -39,9 +46,49 @@ begin
 				if rst = '1' then
 				
 					pc_out <= (others => '0');
+					br_flag <= '0';
 				
 				else
 		
+					case op_code is
+					
+						-- BRR
+						when "1000000" =>
+							br_flag <= '1';
+						
+						-- BRR.N
+						when "1000001" =>
+							br_flag <= '1';
+						
+						-- BRR.Z
+						when "1000010" =>
+							br_flag <= '1';
+						
+						-- BR
+						when "1000011" =>
+							br_flag <= '1';
+						
+						-- BR.N
+						when "1000100" =>
+							br_flag <= '1';
+						
+						-- BR.Z
+						when "1000101" =>
+							br_flag <= '1';
+						
+						-- BR.SUB
+						when "1000110" =>
+							br_flag <= '1';
+						
+						-- Return
+						when "1000111" =>
+						 br_flag <= '1';
+						
+						when others =>
+						 br_flag <= '0';
+						
+					end case;
+					
 					if z_in = '1' then
 						-- z flag branch stuff
 					else
