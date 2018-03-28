@@ -18,7 +18,7 @@ end ROM_VHDL_B;
 
 architecture BHV of ROM_VHDL_B is
 
-    type ROM_TYPE is array (0 to 127 ) of std_logic_vector (15 downto 0);
+    type ROM_TYPE is array (0 to 127) of std_logic_vector (15 downto 0);
 
     constant rom_content : ROM_TYPE := (
 	 
