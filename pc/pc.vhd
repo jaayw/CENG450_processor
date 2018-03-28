@@ -32,7 +32,7 @@ end pc;
 
 architecture Behavioral of pc is
 
-signal Pre_Q: integer range 0 to 127;
+signal Pre_Q : integer range 0 to 127;
 signal br_Q : integer range 0 to 127;
 
 begin
@@ -54,8 +54,7 @@ br_Q <= conv_integer(Q_in);
 				end if;
 				
 				-- #TODO
-				-- Create conditions for branching
-				-- Create logic for branching
+				
 				
 			end if;
 	end process;	

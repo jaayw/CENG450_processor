@@ -27,12 +27,15 @@ end cpu;
 
 architecture Behavioral of cpu is
 
+-- Fetch Stage
 component pc is
 	port (
-			clk : IN STD_LOGIC;
-			rst : IN STD_LOGIC;
-			en : IN STD_LOGIC;
-			Q : OUT STD_LOGIC_VECTOR(6 downto 0)
+			clk : IN  std_logic;
+         rst : IN  std_logic;
+			en : IN std_logic;
+			br : IN std_logic;
+			Q_in : IN std_logic_vector(6 downto 0);
+         Q : OUT  std_logic_vector(6 downto 0)
 			);
 end component;
 
@@ -47,6 +50,7 @@ component ROM_VHDL_B is
 			data : OUT STD_LOGIC_VECTOR(15 downto 0)
 			);
 end component;
+
 
 component fetch_decode is
 	port (
@@ -136,8 +140,9 @@ component writeback is
 			);
 end component;				
 
+
 signal counter : std_logic_vector(6 downto 0);
-signal pc_en : std_logic;
+signal en_pc : std_logic := '1'; -- REMOVE THE ONE ONLY FOR TESTING
 signal instr : std_logic_vector (15 downto 0);
 signal instr_ifid : std_logic_vector (15 downto 0);
 signal instr_exe : std_logic_vector (15 downto 0);
@@ -163,13 +168,23 @@ signal n_flag_alu : std_logic;
 signal z_flag : std_logic;
 signal n_flag : std_logic;
 
+-- TEMPORARY FOR OPEN INPUTS AND OUTPUTS
+-- TEMPORARY INPUTS
+-- PC
+signal br_PCtemp : std_logic := '0';
+signal Q_in_PCtemp : std_logic_vector(6 downto 0) := (others => '0');
+
+-- TEMPORARY OUTPUTS
+
 
 begin
 			
 PC0: pc port map (
 			clk => clk,
 			rst => rst,
-			en => pc_en,
+			en => en_pc,
+			br => br_PCtemp, -- Temp - Hook to signal later
+			Q_in => Q_in_PCtemp, -- Temp - Hook to signal later
 			Q => counter
 			);
 
@@ -260,5 +275,18 @@ WB0: writeback port map(
 			wr_en_out => wr_enable,
 			wr_data_out => wr_data
 			);
+
+
+	process(clk)
+	
+		begin
+		
+			if rst='1' then
+				en_pc <= '0';
+			else
+				en_pc <= '1';
+			end if;
+		
+	end process;
 			
 end Behavioral;
