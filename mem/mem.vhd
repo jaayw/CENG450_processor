@@ -60,11 +60,18 @@ begin
 				
 				else	
 		
-					if op_code = "0100000" then 
+					case op_code is
+					
+						-- DO NOT WRITE TO REGISTER WHEN
+						-- FORMAT A: OUT, TEST, NOP
+						-- FORMAT B: BRR, BRR,N, BRR.Z, BR, BR.N, BR.Z, RETURN
+						-- FORMAT L:
+						when "0100000" | "0000111" |"0000000" | "1000000" | "1000001" | "1000010" | "1000011" | "1000100" | "1000101" =>
 							wr_en <= '0';
-					else
+						when others	 =>
 							wr_en <= '1';
-					end if;
+					end case;
+			
 					-- #TODO
 					-- Create logic for Format B and Format L
 					
@@ -73,7 +80,6 @@ begin
 					ra_out <= ra_in; --ra register
 					z_out <= z_in;
 					n_out <= n_in;
-					
 				end if;
 		
 			end if;
