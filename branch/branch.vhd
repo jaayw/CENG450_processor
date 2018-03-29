@@ -32,6 +32,7 @@ architecture Behavioral of branch is
 
 signal op_code : std_logic_vector(6 downto 0);
 signal br : std_logic;
+signal pc_new : std_logic_vector(6 downto 0);
 
 begin
 
@@ -55,53 +56,66 @@ begin
 						-- BRR
 						when "1000000" =>
 							br_flag <= '1';
+							-- PC = PC+ 2 * disp.l (sign extended 2's complement)
 						
 						-- BRR.N
 						when "1000001" =>
 							br_flag <= '1';
+							-- if negative flag = 1
+								-- PC = PC + 2 * disp.l (sign extended 2's complement)
+							-- elsif negative flag = 0
+								-- PC = PC + 2 (2's complement)
 						
 						-- BRR.Z
 						when "1000010" =>
 							br_flag <= '1';
+							-- if zero flag = 1
+								-- PC = PC + 2 * disp.l (signed extended 2's complement)
+							-- elsif zero flag = 0
+								-- PC = PC + 2 (2's complement)
 						
 						-- BR
 						when "1000011" =>
 							br_flag <= '1';
+							-- PC = R[a] + 2 * disp.s (sign extended 2's complement)
 						
 						-- BR.N
 						when "1000100" =>
 							br_flag <= '1';
+							-- if negative flag = 1
+								-- PC = R[a] (word aligned) + 2 * disp.s (sign extended 2's complement)
+							-- elsif negative flag = 0
+								-- PC = PC + 2 (2's complement)
 						
 						-- BR.Z
 						when "1000101" =>
 							br_flag <= '1';
-						
+							-- if zero flag = 1
+								-- PC = R[a] (word aligned) + 2 * disp.s (sign extended 2's complement)
+							-- elsif zero flag = 0
+								-- PC = PC + 2 (2's complement)
+								
 						-- BR.SUB
 						when "1000110" =>
 							br_flag <= '1';
+							-- Store current PC into R[7] + 2 (2's complement)
+							-- PC = R[a] (word aligned) + 2 * disp.s (signed extended 2's complement)
 						
 						-- Return
 						when "1000111" =>
-						 br_flag <= '1';
+						 br_flag <= '0';
+						 -- Go read R7
+						 -- Store it back into PC
 						
 						when others =>
 						 br_flag <= '0';
+						 pc_new <= pc_in;
 						
 					end case;
 					
-					if z_in = '1' then
-						-- z flag branch stuff
-					else
-						-- other z flag branch stuff
-					end if;
-					
-					if n_in = '1' then
-						-- n flag branch stuff
-					else
-						-- other n flag branch stuff
-					end if;
-					
 				end if;
+				
+				pc_out <= pc_new;
 				
 			end if; -- end rising_edge(clk)
 	
