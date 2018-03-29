@@ -1,7 +1,6 @@
 library IEEE;
 use IEEE.STD_LOGIC_1164.ALL;
 use IEEE.STD_LOGIC_ARITH.ALL;
-use ieee.std_logic_unsigned.all;
 
 -- Uncomment the following library declaration if using
 -- arithmetic functions with Signed or Unsigned values
@@ -10,6 +9,7 @@ use ieee.std_logic_unsigned.all;
 entity memory is
 	Port(
 		clk : IN std_logic;
+		rst : IN std_logic;
 		
 		-- inputs
 		addr : IN std_logic_vector(6 downto 0);
@@ -24,53 +24,40 @@ end memory;
 
 architecture Behavioral of memory is
 
-	type MEM_ARRAY is array (0 to (2**12)) of std_logic_vector(15 downto 0);
+	type MEM_ARRAY is array (0 to 2**8) of std_logic_vector(15 downto 0);
 	signal memory_content : MEM_ARRAY;
-	-- Data stored as big endian
+	-- Data stored as big endian (2**12)
+	
+	signal data_fetch : std_logic_vector(15 downto 0);
 
-begin
+begin	
 
 	-- Write Process
 	mem_wr : process(clk)
 	
-		variable addr : integer := 0;
-	
 		begin
 		
-			if(clk='0' and clk'event) then
+			if rising_edge(clk) then
 			
-				addr := conv_integer(unsigned(addr));
-			
-				if(rst='1') then
-				
-					for i in 0 to (2**12) loop
-						memory_content(i)<= (others => '0'); 
-					end loop;
-				
+				if rst = '1' then
+					
+						for i in 0 to 2**8 loop --(2**8)
+							memory_content(i) <= (others => '0'); 
+						end loop;
+					
+						data_out <= (others => '0');
+						
 				elsif(wr_en_mem='1') then
-			
-					addr := conv_integer(unsigned(addr));
-					memory_content(addr) <= wr_data;
-				
+					memory_content(conv_integer(unsigned(addr))) <= wr_data;
 				end if;
 			
 			end if;
-		
-	end process;
-	
-	-- Read Process
-	mem_rd : process
-	
-		variable addr : integer := 0;
-		
-		begin
-		
-			addr := conv_integer(unsigned(addr));
-		
+			
 			if wr_en_mem = '0' then
-				data_out <= memory_content(addr);
+				data_fetch <= memory_content(conv_integer(unsigned(addr)));
+				data_out <= data_fetch;
 			end if;
-	
+		
 	end process;
 
 end Behavioral;

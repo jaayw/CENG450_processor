@@ -1,0 +1,51 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<wave_config>
+   <wave_state>
+   </wave_state>
+   <db_ref_list>
+      <db_ref path="C:/Users/james/Documents/Xilinx Projects/CENG450_processor/memory_tb_isim_beh.wdb" id="1" type="auto">
+         <top_modules>
+            <top_module name="memory_tb" />
+            <top_module name="std_logic_1164" />
+            <top_module name="std_logic_arith" />
+         </top_modules>
+      </db_ref>
+   </db_ref_list>
+   <WVObjectSize size="9" />
+   <wvobject fp_name="/memory_tb/clk" type="logic" db_ref_id="1">
+      <obj_property name="ElementShortName">clk</obj_property>
+      <obj_property name="ObjectShortName">clk</obj_property>
+   </wvobject>
+   <wvobject fp_name="/memory_tb/rst" type="logic" db_ref_id="1">
+      <obj_property name="ElementShortName">rst</obj_property>
+      <obj_property name="ObjectShortName">rst</obj_property>
+   </wvobject>
+   <wvobject fp_name="/memory_tb/addr" type="array" db_ref_id="1">
+      <obj_property name="ElementShortName">addr[6:0]</obj_property>
+      <obj_property name="ObjectShortName">addr[6:0]</obj_property>
+   </wvobject>
+   <wvobject fp_name="/memory_tb/wr_en_mem" type="logic" db_ref_id="1">
+      <obj_property name="ElementShortName">wr_en_mem</obj_property>
+      <obj_property name="ObjectShortName">wr_en_mem</obj_property>
+   </wvobject>
+   <wvobject fp_name="/memory_tb/wr_data" type="array" db_ref_id="1">
+      <obj_property name="ElementShortName">wr_data[15:0]</obj_property>
+      <obj_property name="ObjectShortName">wr_data[15:0]</obj_property>
+   </wvobject>
+   <wvobject fp_name="/memory_tb/uut/data_fetch" type="array" db_ref_id="1">
+      <obj_property name="ElementShortName">data_fetch[15:0]</obj_property>
+      <obj_property name="ObjectShortName">data_fetch[15:0]</obj_property>
+   </wvobject>
+   <wvobject fp_name="/memory_tb/data_out" type="array" db_ref_id="1">
+      <obj_property name="ElementShortName">data_out[15:0]</obj_property>
+      <obj_property name="ObjectShortName">data_out[15:0]</obj_property>
+   </wvobject>
+   <wvobject fp_name="/memory_tb/clk_period" type="other" db_ref_id="1">
+      <obj_property name="ElementShortName">clk_period</obj_property>
+      <obj_property name="ObjectShortName">clk_period</obj_property>
+   </wvobject>
+   <wvobject fp_name="/memory_tb/uut/memory_content" type="array" db_ref_id="1">
+      <obj_property name="ElementShortName">memory_content[0:63]</obj_property>
+      <obj_property name="ObjectShortName">memory_content[0:63]</obj_property>
+   </wvobject>
+</wave_config>
