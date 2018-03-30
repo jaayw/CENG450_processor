@@ -38,6 +38,5 @@ begin
 		data_wb when data_select = "111" else
 		data_reg;
 
-
 end Behavioral;
 
