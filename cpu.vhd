@@ -51,7 +51,6 @@ component ROM_VHDL_B is
 			);
 end component;
 
-
 component fetch_decode is
 	port (
 			clk : IN STD_LOGIC;
@@ -138,7 +137,20 @@ component writeback is
 			wr_en_out : OUT STD_LOGIC;
 			wr_data_out : OUT STD_LOGIC_VECTOR(15 downto 0)
 			);
-end component;				
+end component;
+
+component controller is
+	port (
+		clk : IN STD_LOGIC;
+		
+		-- Input
+		instr : IN std_logic_vector(15 downto 0);
+		
+		-- Output
+		displacement : OUT std_logic_vector(8 downto 0)
+		
+	);
+end component;
 
 
 signal counter : std_logic_vector(6 downto 0);
@@ -156,6 +168,7 @@ signal op_code : std_logic_vector(6 downto 0);
 signal out_data1 : std_logic_vector(15 downto 0);
 signal out_data2 : std_logic_vector(15 downto 0);
 signal ra_ex : std_logic_vector(2 downto 0);
+signal displ_data : std_logic_vector(8 downto 0); -- CU -> BRANCH
 signal result_alu : std_logic_vector(15 downto 0);
 signal wr_index : std_logic_vector(2 downto 0);
 signal wr_data :  std_logic_vector(15 downto 0);
@@ -240,9 +253,11 @@ EX0: execute port map (
 ALU0: alu port map (
 			clk => clk,
 			rst => rst,
+			-- Inputs
 			in1 => out_data1,
 			in2 => out_data2,
 			opc_in => op_code,
+			-- Outputs
 			result => result_alu,
 			z_flag => z_flag_alu,
 			n_flag => n_flag_alu
@@ -251,11 +266,13 @@ ALU0: alu port map (
 MEM0: mem port map (
 			clk => clk,
 			rst => rst,
+			-- Inputs
 			instr_in => instr_exe,
 			ra_in => ra_ex,
 			result_in => result_alu,
 			z_in => z_flag_alu,
 			n_in => n_flag_alu,
+			-- Outputs
 			ra_out => ra_mem,
 			result_out => result_mem,
 			wr_en => wr_en_mem,
@@ -268,12 +285,22 @@ out_data <= result_mem;
 WB0: writeback port map(
 			clk => clk,
 			rst => rst,
+			-- Inputs
 			result_in => result_mem,
 			ra_in => ra_mem,
 			wr_en_in => wr_en_mem,
+			-- Outputs
 			ra_out => wr_index,
 			wr_en_out => wr_enable,
 			wr_data_out => wr_data
+			);
+			
+CU0: controller port map(
+				clk => clk,
+				-- Inputs
+				instr => instr,
+				-- Outputs
+				displacement => displ_data
 			);
 
 
