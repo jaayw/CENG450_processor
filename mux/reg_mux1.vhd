@@ -15,7 +15,7 @@ entity reg_mux1 is
 		-- Inputs
 		data_select : IN std_logic_vector(2 downto 0);
 		pc_val : IN std_logic_vector(6 downto 0);
-		data_direct : IN std_logic_vector(15 downto 0);
+		data_imm : IN std_logic_vector(15 downto 0);
 		data_reg : IN std_logic_vector(15 downto 0);
 		data_exe : IN std_logic_vector(15 downto 0);
 		data_mem : IN std_logic_vector(15 downto 0);
@@ -32,7 +32,7 @@ begin
 
 	data_out <=
 		("000000000" & pc_val) when data_select = "001" else
-		data_direct when data_select = "010" else
+		data_imm when data_select = "010" else
 		data_exe when data_select = "101" else
 		data_mem when data_select = "110" else
 		data_wb when data_select = "111" else
