@@ -26,6 +26,7 @@ entity mem is
 		-- Create input for branch and Format L
 		
 		--output
+		opc_out : out std_logic_vector(6 downto 0);
 		ra_out : out std_logic_vector(2 downto 0);
 		result_out : out std_logic_vector(15 downto 0);
 		wr_en : out std_logic;
@@ -83,10 +84,10 @@ begin
 				end if;
 		
 			end if;
+			
+			opc_out <= op_code;
 		
 	end process;
-		
-
-
+	
 end Behavioral;
 
