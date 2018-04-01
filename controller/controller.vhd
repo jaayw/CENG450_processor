@@ -33,6 +33,7 @@ entity controller is
 		
 		-- Output
 		stall : OUT std_logic;
+		pc_overwrite_en : OUT std_logic;
 		mux1_select : OUT std_logic_vector(2 downto 0);
 		mux2_select : OUT std_logic_vector(2 downto 0);
 		loadimm_data : OUT std_logic_vector(7 downto 0);

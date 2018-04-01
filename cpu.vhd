@@ -47,6 +47,7 @@ component controller is
 		
 		-- Output
 		stall : OUT std_logic;
+		pc_overwrite_en : OUT std_logic;
 		mux1_select : OUT std_logic_vector(2 downto 0);
 		mux2_select : OUT std_logic_vector(2 downto 0);
 		loadimm_data : OUT std_logic_vector(7 downto 0);
@@ -238,24 +239,25 @@ signal ra_ex : std_logic_vector(2 downto 0);
 signal displacement : std_logic_vector(8 downto 0); -- CU -> BRANCH
 signal result_alu : std_logic_vector(15 downto 0);
 signal mux_ex_result : std_logic_vector(15 downto 0); -- Data forwarding from EXE to ID
-
--- MEM SIGNALS
-signal op_code_mem : std_logic_vector(6 downto 0);
-signal wr_index : std_logic_vector(2 downto 0);
-signal wr_data :  std_logic_vector(15 downto 0);
-signal wr_enable : std_logic;
-signal ra_mem : std_logic_vector(2 downto 0);
-signal result_mem : std_logic_vector(15 downto 0);
-signal mux_mem_result : std_logic_vector(15 downto 0); -- Data forwarding from MEM to ID
-
--- WB SIGNALS
-signal op_code_wb : std_logic_vector(6 downto 0);
-signal mux_wb_result : std_logic_vector(15 downto 0); -- Data forwarding from WB to ID
-signal wr_en_mem : std_logic;
 signal z_flag_alu : std_logic;
 signal n_flag_alu : std_logic;
 signal z_flag : std_logic;
 signal n_flag : std_logic;
+
+-- MEM SIGNALS
+signal op_code_mem : std_logic_vector(6 downto 0);
+signal ra_mem : std_logic_vector(2 downto 0);
+signal result_mem : std_logic_vector(15 downto 0);
+signal wr_en_mem : std_logic;
+signal mux_mem_result : std_logic_vector(15 downto 0); -- Data forwarding from MEM to ID
+
+-- WB SIGNALS
+signal op_code_wb : std_logic_vector(6 downto 0);
+signal wr_index : std_logic_vector(2 downto 0);
+signal wr_data :  std_logic_vector(15 downto 0); --*******************
+signal wr_enable : std_logic;
+signal mux_wb_result : std_logic_vector(15 downto 0); -- Data forwarding from WB to ID **************
+
 
 -- TEMPORARY FOR OPEN INPUTS AND OUTPUTS
 -- TEMPORARY INPUTS
@@ -280,6 +282,7 @@ CU0: controller port map(
 				ra_wb => ra_ex,
 				-- Outputs
 				stall => en_pc,
+				pc_overwrite_en => br_en,
 				mux1_select => mux1_select,
 				mux2_select => mux2_select,
 				loadimm_data => loadimm_data,
