@@ -468,8 +468,16 @@ begin
 					mux1_select <= "000";
 					mux2_select <= "000";
 				
-				
 			end case; -- end op_code is case
+			
+			case opc_wb is
+				-- OUT
+				when "0100000" =>
+					stall <= '1';
+					
+				when others =>
+					NULL;
+			end case;
 			
 		-- Process instructions for stalling and/or data forwarding
 		
