@@ -27,7 +27,7 @@ entity controller is
 		
 		-- WB
 		opc_wb : IN std_logic_vector(6 downto 0);
-		ra_mem : IN std_logic_vector(2 downto 0);
+		ra_wb : IN std_logic_vector(2 downto 0);
 
 		-- Instruction from various stages
 		
@@ -144,7 +144,6 @@ begin
 		begin
 		
 			case op_code is
-			
 				-- ADD or SUB or MUL or NAND (i think)
 				-- Check for write back
 				when "0000001" | "0000010" | "0000011" | "0000100" =>
@@ -311,7 +310,7 @@ begin
 					-- end when SHR or SHL case
 				
 				-- TEST
-				when "0000011" | "0100000" =>
+				when "0000111" | "0100000" =>
 					-- Check for write back
 					case trackHazard_1 is
 						when "01" =>
@@ -384,33 +383,94 @@ begin
 				
 				-- IN
 				when "0100001" =>
+					mux1_select <= "000";
+					mux2_select <= "000";
+				
+				-- BRR, BRR.N, BRR.Z
+				when "1000000" | "1000001" | "1000010" =>
+					mux1_select <= "001"; -- Use PC value for mux 1
+					mux2_select <= "010"; -- Use displacement data for mux 2
+				
+				-- BR, BR.N, BR.Z, BRR.SUB
+				when "1000011" | "1000100" | "1000101" | "1000110" | "1000111" =>
+					-- Check for write back
+					case trackHazard_1 is
+						when "01" =>
+							case opc_exe is
+								-- IN @ EXE
+								-- Stall to allow WB to finish
+								when "0100001" =>
+									stall <= '1';
+									mux1_select <= "000";
+									
+								-- LOADIMM @ EXE
+								-- Stall to allow WB to finish
+								when "0010010" =>
+									stall <= '1';
+									mux1_select <= "000";
+									
+								-- LOAD @ EXE
+								-- Stall to allow load from MEM
+								when "0010000" =>
+									stall <= '1';
+									mux1_select <= "000";
+								
+								when others =>
+									-- Forward data from EXE
+									mux1_select <= "101";
+									
+							end case; -- end opc_exe case select
+						
+						when "10" =>
+							case opc_mem is
+								-- IN @ MEM
+								-- Stall to allow WB to finish
+								when "0100001" =>
+									stall <= '1';
+									mux1_select <= "000";
+									
+								-- LOADIMM @ MEM
+								-- Stall to allow WB to finish
+								when "0100010" =>
+									stall <= '1';
+									mux1_select <= "000";
+									
+								when others =>
+									-- Forward data from MEM
+									mux1_select <= "110";
+							
+							end case; -- end opc_mem case select
+						
+						when "11" =>
+							case opc_wb is
+								-- LOADIMM @ MEM
+								-- Stall to allow WB to finish
+								when "0100010" =>
+								stall <= '1';
+								mux1_select <= "000";
+								
+								when others =>
+									-- Forward data from WB
+									mux1_select <= "111";
+							end case;
+						
+						when others =>
+							mux1_select <= "000";
+							
+					end case; -- end trackHazard_1
 					
+					-- Displacement
+					mux2_select <= "010"; 
+					
+					-- end when BR or BR.N or BR.Z or BR.SUB or RETURN case
+					
+				when others =>
+					mux1_select <= "000";
+					mux2_select <= "000";
 				
-				-- BRR
-				when "1000000" =>
-
-				-- BRR.N
-				when "1000001" =>
 				
-				-- BRR.Z
-				when "1000010" =>
-				
-				-- BR
-				when "1000011" =>
-				
-				-- BRR.N
-				when "1000100" =>
-				
-				-- BRR.Z
-				when "1000101" =>
-				
-				-- BRR.SUB
-				when "1000110" =>
-				
-				-- RETURN
-				when "1000111" =>
+			end case; -- end op_code is case
 			
-			end case;
 		-- Process instructions for stalling and/or data forwarding
 		
 		-- RAW Hazards
@@ -419,7 +479,7 @@ begin
 		-- WAR Hazards
 		-- Parse op_code from if/id stage or mem stage?
 	
-	end process;
+	end process hazardDetect;
 
 
 end Behavioral;
