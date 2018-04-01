@@ -392,7 +392,7 @@ begin
 					mux1_select <= "001"; -- Use PC value for mux 1
 					mux2_select <= "010"; -- Use displacement data for mux 2
 				
-				-- BR, BR.N, BR.Z, BRR.SUB
+				-- BR, BR.N, BR.Z, BRR.SUB, RETURN
 				when "1000011" | "1000100" | "1000101" | "1000110" | "1000111" =>
 					-- Check for write back
 					case trackHazard_1 is
@@ -489,6 +489,11 @@ begin
 		-- Parse op_code from if/id stage or mem stage?
 	
 	end process hazardDetect;
+	
+	-- Enable PC overwrite if branching
+	pc_overwrite_en <=
+		'1' when (opc_exe = ("1000000" or "1000001" or "1000010" or "1000011" or "1000100" or "1000101" or "1000110" or "1000111")) else
+		'0';
 
 
 end Behavioral;
