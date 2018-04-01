@@ -27,7 +27,35 @@ end cpu;
 
 architecture Behavioral of cpu is
 
--- Fetch Stage
+component controller is
+	port (
+		clk : IN std_logic;
+		instr : IN std_logic_vector(15 downto 0);
+		
+		-- Input
+		-- EXE
+		opc_exe : IN std_logic_vector(6 downto 0);
+		ra_exe : IN std_logic_vector(2 downto 0);
+		
+		-- MEM
+		opc_mem : IN std_logic_vector(6 downto 0);
+		ra_mem : IN std_logic_vector(2 downto 0);
+		
+		-- WB
+		opc_wb : IN std_logic_vector(6 downto 0);
+		ra_mem : IN std_logic_vector(2 downto 0);
+		
+		-- Output
+		stall : OUT std_logic;
+		mux1_select : OUT std_logic_vector(2 downto 0);
+		mux2_select : OUT std_logic_vector(2 downto 0);
+		loadimm_data : OUT std_logic_vector(7 downto 0);
+		displacement : OUT std_logic_vector(8 downto 0)
+	);
+end component;
+
+-- FETCH STAGE
+
 component pc is
 	port (
 			clk : IN  std_logic;
@@ -51,6 +79,8 @@ component ROM_VHDL_B is
 			);
 end component;
 
+-- IF/ID Latch
+
 component fetch_decode is
 	port (
 			clk : IN STD_LOGIC;
@@ -64,6 +94,8 @@ component fetch_decode is
 			);
 end component;
 
+-- DECODE STAGE
+
 component register_file is
 	port (
 			clk : IN STD_LOGIC;
@@ -76,7 +108,35 @@ component register_file is
 			rd_data1 : OUT STD_LOGIC_VECTOR(15 downto 0);
 			rd_data2 : OUT STD_LOGIC_VECTOR(15 downto 0)
 			);
-end component;	
+end component;
+
+component reg_mux1 is
+	port (
+		data_select : IN std_logic_vector(2 downto 0);
+		pc_val : IN std_logic_vector(6 downto 0);
+		data_imm : IN std_logic_vector(15 downto 0);
+		data_reg : IN std_logic_vector(15 downto 0);
+		data_exe : IN std_logic_vector(15 downto 0);
+		data_mem : IN std_logic_vector(15 downto 0);
+		data_wb : IN std_logic_vector(15 downto 0);
+		data_out : OUT std_logic_vector(15 downto 0)
+	);
+end component;
+
+component reg_mux2 is
+	port (
+		data_select : IN std_logic_vector(2 downto 0);
+		data_displ : IN std_logic_vector(8 downto 0);
+		data_imm : IN std_logic_vector(15 downto 0);
+		data_reg : IN std_logic_vector(15 downto 0);
+		data_exe : IN std_logic_vector(15 downto 0);
+		data_mem : IN std_logic_vector(15 downto 0);
+		data_wb : IN std_logic_vector(15 downto 0);
+		data_out : OUT std_logic_vector(15 downto 0)
+	);
+end component;
+
+-- ID/EXE Latch
 			
 component execute is
 	port (
@@ -96,6 +156,8 @@ component execute is
 			);
 end component;
 
+-- EXECUTE STAGE
+
 component alu is
 	port (
 			clk : IN STD_LOGIC;
@@ -109,6 +171,8 @@ component alu is
 			);
 end component;	
 
+-- EXE/MEM Latch
+
 component mem is
 	port (
 			clk : IN STD_LOGIC;
@@ -118,6 +182,7 @@ component mem is
 			result_in : IN STD_LOGIC_VECTOR(15 downto 0);
 			z_in : IN STD_LOGIC;
 			n_in : IN STD_LOGIC;
+			opc_out : OUT STD_LOGIC_VECTOR(6 downto 0);
 			ra_out : OUT STD_LOGIC_VECTOR(2 downto 0);
 			result_out : OUT STD_LOGIC_VECTOR(15 downto 0);
 			wr_en : OUT STD_LOGIC;
@@ -126,35 +191,30 @@ component mem is
 			);
 end component;	
 
+-- MEM/WB Latch
+
 component writeback is
 	port (
 			clk : IN STD_LOGIC;
 			rst : IN STD_LOGIC;
+			opc_in : IN STD_LOGIC_VECTOR(6 downto 0);
 			result_in : IN STD_LOGIC_VECTOR(15 downto 0);
 			ra_in : IN STD_LOGIC_VECTOR(2 downto 0);
 			wr_en_in : IN STD_LOGIC;
+			opc_out : OUT STD_LOGIC_VECTOR(6 downto 0);
 			ra_out : OUT STD_LOGIC_VECTOR(2 downto 0);
 			wr_en_out : OUT STD_LOGIC;
 			wr_data_out : OUT STD_LOGIC_VECTOR(15 downto 0)
 			);
 end component;
 
-component controller is
-	port (
-		clk : IN STD_LOGIC;
-		
-		-- Input
-		instr : IN std_logic_vector(15 downto 0);
-		
-		-- Output
-		displacement : OUT std_logic_vector(8 downto 0)
-		
-	);
-end component;
-
-
+-- Fetch SIGNALS
 signal counter : std_logic_vector(6 downto 0);
-signal en_pc : std_logic := '1'; -- REMOVE THE ONE ONLY FOR TESTING
+signal en_pc : std_logic := '1';
+signal br_en : std_logic := '0';
+signal Q_in_PCtemp : std_logic_vector(6 downto 0) := (others => '0');
+
+-- DECODE SIGNALS
 signal instr : std_logic_vector (15 downto 0);
 signal instr_ifid : std_logic_vector (15 downto 0);
 signal instr_exe : std_logic_vector (15 downto 0);
@@ -164,17 +224,33 @@ signal rc : std_logic_vector(2 downto 0);
 signal cl : std_logic_vector(3 downto 0);
 signal rd_data1 : std_logic_vector(15 downto 0); 
 signal rd_data2 : std_logic_vector(15 downto 0);
-signal op_code : std_logic_vector(6 downto 0);
+signal mux1_select : std_logic_vector(2 downto 0);
+signal mux2_select : std_logic_vector(2 downto 0);
+signal mux1_data : std_logic_vector(15 downto 0);
+signal mux2_data : std_logic_vector(15 downto 0);
+signal loadimm_data : std_logic_vector(15 downto 0);
+
+-- EXECUTE SIGNALS
+signal op_code_exe : std_logic_vector(6 downto 0);
 signal out_data1 : std_logic_vector(15 downto 0);
 signal out_data2 : std_logic_vector(15 downto 0);
 signal ra_ex : std_logic_vector(2 downto 0);
-signal displ_data : std_logic_vector(8 downto 0); -- CU -> BRANCH
+signal displacement : std_logic_vector(8 downto 0); -- CU -> BRANCH
 signal result_alu : std_logic_vector(15 downto 0);
+signal mux_ex_result : std_logic_vector(15 downto 0); -- Data forwarding from EXE to ID
+
+-- MEM SIGNALS
+signal op_code_mem : std_logic_vector(6 downto 0);
 signal wr_index : std_logic_vector(2 downto 0);
 signal wr_data :  std_logic_vector(15 downto 0);
 signal wr_enable : std_logic;
 signal ra_mem : std_logic_vector(2 downto 0);
 signal result_mem : std_logic_vector(15 downto 0);
+signal mux_mem_result : std_logic_vector(15 downto 0); -- Data forwarding from MEM to ID
+
+-- WB SIGNALS
+signal op_code_wb : std_logic_vector(6 downto 0);
+signal mux_wb_result : std_logic_vector(15 downto 0); -- Data forwarding from WB to ID
 signal wr_en_mem : std_logic;
 signal z_flag_alu : std_logic;
 signal n_flag_alu : std_logic;
@@ -184,19 +260,38 @@ signal n_flag : std_logic;
 -- TEMPORARY FOR OPEN INPUTS AND OUTPUTS
 -- TEMPORARY INPUTS
 -- PC
-signal br_PCtemp : std_logic := '0';
-signal Q_in_PCtemp : std_logic_vector(6 downto 0) := (others => '0');
 
 -- TEMPORARY OUTPUTS
 
 
 begin
+
+-- Controller
 			
+CU0: controller port map(
+				clk => clk,
+				-- Inputs
+				instr => instr,
+				opc_exe => op_code_exe,
+				ra_exe => ra_ex,
+				opc_mem => op_code_mem,
+				opc_wb => op_code_wb,
+				ra_mem => ra_mem,
+				-- Outputs
+				stall => en_pc,
+				mux1_select => mux1_select,
+				mux2_select => mux2_select,
+				loadimm_data => loadimm_data,
+				displacement => displacement
+			);
+
+-- FETCH STAGE
+
 PC0: pc port map (
 			clk => clk,
 			rst => rst,
 			en => en_pc,
-			br => br_PCtemp, -- Temp - Hook to signal later
+			br => br_en,
 			Q_in => Q_in_PCtemp, -- Temp - Hook to signal later
 			Q => counter
 			);
@@ -210,6 +305,8 @@ ROM: ROM_VHDL_B port map (
 			addr => counter,
 			data => instr
 			);
+			
+-- IF/ID Latch
 
 IF_ID: fetch_decode port map (
 			clk => clk,
@@ -221,6 +318,8 @@ IF_ID: fetch_decode port map (
 			rc_out => rc,
 			cl_out => cl
 			);
+			
+-- DECODE STAGE
 
 REG0: register_file	port map (
 			clk => clk,
@@ -234,21 +333,53 @@ REG0: register_file	port map (
 			rd_data2 =>	rd_data2
 			);
 			
+MUX1_REG: reg_mux1 port map(
+			-- Inputs
+			data_select => mux1_select, -- From CU
+			pc_val => counter, -- Counter value from PC
+			data_imm => loadimm_data,-- LOADIMM data
+			data_reg => rd_data1, -- Data read from reg (op1)
+			data_exe => mux_ex_result, -- Data forwarded from EXE
+			data_mem => mux_mem_result, -- Data forwarded from MEM
+			data_wb => mux_wb_result, -- Data forwarded from WB
+			-- Outputs
+			data_out => mux1_data
+			);
+			
+MUX2_REG: reg_mux2 port map(
+			-- Inputs
+			data_select => mux2_select,
+			data_displ => displacement, -- displaced data for branching
+			data_imm => loadimm_data, -- LOADIMM data
+			data_reg => rd_data2, -- Data read from reg (op2)
+			data_exe => mux_ex_result, -- Data forwarded from EXE
+			data_mem => mux_mem_result, -- Data forwarded from MEM
+			data_wb => mux_wb_result, -- Data forwarded from WB
+			-- Outputs
+			data_out => mux2_data
+			);
+			
+-- ID/EXE Latch
+
 EX0: execute port map (
 			clk => clk,
 			rst => rst,
+			-- Inputs
 			instr_in => instr_ifid,
 			in_direct => in_data,
-			in_data1 => rd_data1,
-			in_data2 => rd_data2,
+			in_data1 => mux1_data,
+			in_data2 => mux2_data,
 			ra_in => ra_id,
 			cl_in => cl,
+			-- Ouputs
 			instr_out => instr_exe,
-			opc_out => op_code,
+			opc_out => op_code_exe,
 			out_data1 => out_data1,
 			out_data2 => out_data2,
 			ra_out => ra_ex
 			);
+			
+-- EXECUTE STAGE
 	
 ALU0: alu port map (
 			clk => clk,
@@ -256,12 +387,14 @@ ALU0: alu port map (
 			-- Inputs
 			in1 => out_data1,
 			in2 => out_data2,
-			opc_in => op_code,
+			opc_in => op_code_exe,
 			-- Outputs
 			result => result_alu,
 			z_flag => z_flag_alu,
 			n_flag => n_flag_alu
 			);
+			
+-- EXE/MEM Latch
 				
 MEM0: mem port map (
 			clk => clk,
@@ -273,6 +406,7 @@ MEM0: mem port map (
 			z_in => z_flag_alu,
 			n_in => n_flag_alu,
 			-- Outputs
+			opc_out => op_code_mem,
 			ra_out => ra_mem,
 			result_out => result_mem,
 			wr_en => wr_en_mem,
@@ -281,28 +415,23 @@ MEM0: mem port map (
 			);
 			
 out_data <= result_mem;
+
+-- MEM/WB Latch
 			
 WB0: writeback port map(
 			clk => clk,
 			rst => rst,
 			-- Inputs
+			opc_in => op_code_mem,
 			result_in => result_mem,
 			ra_in => ra_mem,
 			wr_en_in => wr_en_mem,
 			-- Outputs
+			opc_out => op_code_wb,
 			ra_out => wr_index,
 			wr_en_out => wr_enable,
 			wr_data_out => wr_data
 			);
-			
-CU0: controller port map(
-				clk => clk,
-				-- Inputs
-				instr => instr,
-				-- Outputs
-				displacement => displ_data
-			);
-
 
 	process(clk)
 	
