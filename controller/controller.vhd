@@ -294,14 +294,151 @@ begin
 					
 					-- IMM
 					mux2_select <= "001";
-					
-				
+					-- end when SHR or SHL case
 				
 				-- TEST
 				when "0000011" =>
+					-- Check for write back
+					case trackHazard_1 is
+						when "01" =>
+							case opc_exe is
+								-- IN @ EXE
+								-- Stall to allow WB to finish
+								when "0100001" =>
+									stall <= '1';
+									mux1_select <= "000";
+									
+								-- LOADIMM @ EXE
+								-- Stall to allow WB to finish
+								when "0010010" =>
+									stall <= '1';
+									mux1_select <= "000";
+									
+								-- LOAD @ EXE
+								-- Stall to allow load from MEM
+								when "0010000" =>
+									stall <= '1';
+									mux1_select <= "000";
+								
+								when others =>
+									-- Forward data from EXE
+									mux1_select <= "101";
+									
+							end case; -- end opc_exe case select
+						
+						when "10" =>
+							case opc_mem is
+								-- IN @ MEM
+								-- Stall to allow WB to finish
+								when "0100001" =>
+									stall <= '1';
+									mux1_select <= "000";
+									
+								-- LOADIMM @ MEM
+								-- Stall to allow WB to finish
+								when "0100010" =>
+									stall <= '1';
+									mux1_select <= "000";
+									
+								when others =>
+									-- Forward data from MEM
+									mux1_select <= "110";
+							
+							end case; -- end opc_mem case select
+						
+						when "11" =>
+							case opc_wb is
+								-- LOADIMM @ MEM
+								-- Stall to allow WB to finish
+								when "0100010" =>
+								stall <= '1';
+								mux1_select <= "000";
+								
+								when others =>
+									-- Forward data from WB
+									mux1_select <= "111";
+							end case;
+						
+						when others =>
+							mux1_select <= "000";
+							
+					end case; -- end trackHazard_1
+					
+					-- IMM
+					mux2_select <= "000";
+					-- end when TEST case
 				
 				-- OUT
 				when "0100000" =>
+					-- Check for write back
+					case trackHazard_1 is
+						when "01" =>
+							case opc_exe is
+								-- IN @ EXE
+								-- Stall to allow WB to finish
+								when "0100001" =>
+									stall <= '1';
+									mux1_select <= "000";
+									
+								-- LOADIMM @ EXE
+								-- Stall to allow WB to finish
+								when "0010010" =>
+									stall <= '1';
+									mux1_select <= "000";
+									
+								-- LOAD @ EXE
+								-- Stall to allow load from MEM
+								when "0010000" =>
+									stall <= '1';
+									mux1_select <= "000";
+								
+								when others =>
+									-- Forward data from EXE
+									mux1_select <= "101";
+									
+							end case; -- end opc_exe case select
+						
+						when "10" =>
+							case opc_mem is
+								-- IN @ MEM
+								-- Stall to allow WB to finish
+								when "0100001" =>
+									stall <= '1';
+									mux1_select <= "000";
+									
+								-- LOADIMM @ MEM
+								-- Stall to allow WB to finish
+								when "0100010" =>
+									stall <= '1';
+									mux1_select <= "000";
+									
+								when others =>
+									-- Forward data from MEM
+									mux1_select <= "110";
+							
+							end case; -- end opc_mem case select
+						
+						when "11" =>
+							case opc_wb is
+								
+								-- LOADIMM @ MEM
+								-- Stall to allow WB to finish
+								when "0100010" =>
+								stall <= '1';
+								mux1_select <= "000";
+								
+								when others =>
+									-- Forward data from WB
+									mux1_select <= "111";
+							end case;
+						
+						when others =>
+							mux1_select <= "000";
+							
+					end case; -- end trackHazard_1
+					
+					-- IMM
+					mux2_select <= "001";
 				
 				-- IN
 				when "0100001" =>
