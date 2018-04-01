@@ -15,17 +15,16 @@ USE IEEE.STD_LOGIC_ARITH.all;
 entity pc is
 
 	PORT (
-	
 		clk :	IN std_logic;
 		rst : IN std_logic;
 		
-		-- input
-		en : IN std_logic;
-		br : IN std_logic;
-		Q_in : IN std_logic_vector(6 downto 0);
+		-- Input
+		en : IN std_logic; -- From CU for stall
+		br : IN std_logic; -- From CU for PC overwrite
+		Q_in : IN std_logic_vector(6 downto 0); -- From ALU (?) for PC overwrite value
 		
-		-- output
-		Q : out std_logic_vector(6 downto 0) --counter
+		-- Output
+		Q : out std_logic_vector(6 downto 0) -- Counter out
 	);	
 
 end pc;
@@ -37,6 +36,7 @@ signal br_Q : integer range 0 to 127;
 
 begin
 
+-- Convert new PC value into integer
 br_Q <= conv_integer(Q_in);
 
 	process(clk)
@@ -53,12 +53,10 @@ br_Q <= conv_integer(Q_in);
 					
 				end if;
 				
-				-- #TODO
-				
-				
 			end if;
 	end process;	
  
+	-- Convert counter value back to binary for output
 	Q <= conv_std_logic_vector(Pre_Q,7);
 
 end Behavioral;
