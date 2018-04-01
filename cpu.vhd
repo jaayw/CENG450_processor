@@ -43,7 +43,7 @@ component controller is
 		
 		-- WB
 		opc_wb : IN std_logic_vector(6 downto 0);
-		ra_mem : IN std_logic_vector(2 downto 0);
+		ra_wb : IN std_logic_vector(2 downto 0);
 		
 		-- Output
 		stall : OUT std_logic;
@@ -114,7 +114,7 @@ component reg_mux1 is
 	port (
 		data_select : IN std_logic_vector(2 downto 0);
 		pc_val : IN std_logic_vector(6 downto 0);
-		data_imm : IN std_logic_vector(15 downto 0);
+		data_imm : IN std_logic_vector(7 downto 0);
 		data_reg : IN std_logic_vector(15 downto 0);
 		data_exe : IN std_logic_vector(15 downto 0);
 		data_mem : IN std_logic_vector(15 downto 0);
@@ -127,7 +127,7 @@ component reg_mux2 is
 	port (
 		data_select : IN std_logic_vector(2 downto 0);
 		data_displ : IN std_logic_vector(8 downto 0);
-		data_imm : IN std_logic_vector(15 downto 0);
+		data_imm : IN std_logic_vector(7 downto 0);
 		data_reg : IN std_logic_vector(15 downto 0);
 		data_exe : IN std_logic_vector(15 downto 0);
 		data_mem : IN std_logic_vector(15 downto 0);
@@ -228,7 +228,7 @@ signal mux1_select : std_logic_vector(2 downto 0);
 signal mux2_select : std_logic_vector(2 downto 0);
 signal mux1_data : std_logic_vector(15 downto 0);
 signal mux2_data : std_logic_vector(15 downto 0);
-signal loadimm_data : std_logic_vector(15 downto 0);
+signal loadimm_data : std_logic_vector(7 downto 0);
 
 -- EXECUTE SIGNALS
 signal op_code_exe : std_logic_vector(6 downto 0);
@@ -275,8 +275,9 @@ CU0: controller port map(
 				opc_exe => op_code_exe,
 				ra_exe => ra_ex,
 				opc_mem => op_code_mem,
-				opc_wb => op_code_wb,
 				ra_mem => ra_mem,
+				opc_wb => op_code_wb,
+				ra_wb => ra_ex,
 				-- Outputs
 				stall => en_pc,
 				mux1_select => mux1_select,
@@ -348,7 +349,7 @@ MUX1_REG: reg_mux1 port map(
 			
 MUX2_REG: reg_mux2 port map(
 			-- Inputs
-			data_select => mux2_select,
+			data_select => mux2_select, -- From CU
 			data_displ => displacement, -- displaced data for branching
 			data_imm => loadimm_data, -- LOADIMM data
 			data_reg => rd_data2, -- Data read from reg (op2)
