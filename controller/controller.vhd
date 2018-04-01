@@ -32,12 +32,11 @@ entity controller is
 		-- Instruction from various stages
 		
 		-- Output
-		-- Output to PC
+		stall : OUT std_logic;
 		mux1_select : OUT std_logic_vector(2 downto 0);
 		mux2_select : OUT std_logic_vector(2 downto 0);
-		stall : OUT std_logic;
+		loadimm_data : OUT std_logic_vector(7 downto 0);
 		displacement : OUT std_logic_vector(8 downto 0)
-		--stall : OUT std_logic
 	
 	);
 end controller;
@@ -48,15 +47,30 @@ signal trackHazard_1 : std_logic_vector(1 downto 0) := (others => '0');
 signal trackHazard_2 : std_logic_vector(1 downto 0) := (others => '0');
 signal trackHazard_3 : std_logic_vector(1 downto 0) := (others => '0');
 
+-- Alias
+
 alias op_code is instr(15 downto 9);
-alias instr_ra is instr(8 downto 6);
-alias instr_rb is instr(5 downto 3);
+
+-- Format A
+alias instr_ra is instr(8 downto 6); -- ra = r.dest (Format L)
+alias instr_rb is instr(5 downto 3); -- rb = r.src (Format L)
 alias instr_rc is instr(2 downto 0);
 alias instr_cl is instr(3 downto 0);
+
+-- Format B
 alias disp_l is instr(8 downto 0);
 alias disp_s is instr(5 downto 0);
 
+-- Format L
+alias m_l is instr(8);
+alias imm is instr(7 downto 0);
+
 begin
+
+	loadimm_data <=
+		-- when LOADIMM
+		imm when op_code = "0010010" else
+		("0000" & instr_cl);
 
 	-- Tracking Data Hazards
 	trackHazard_1 <= 
@@ -370,6 +384,7 @@ begin
 				
 				-- IN
 				when "0100001" =>
+					
 				
 				-- BRR
 				when "1000000" =>
