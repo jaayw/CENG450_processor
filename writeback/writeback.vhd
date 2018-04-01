@@ -17,11 +17,13 @@ entity writeback is
 		rst : IN std_logic;
 		
 		-- input
+		opc_in : IN std_logic_vector(6 downto 0);
 		result_in : IN std_logic_vector(15 downto 0);
 		ra_in : IN std_logic_vector(2 downto 0);
 		wr_en_in : in std_logic;
 		
 		-- output
+		opc_out : OUT std_logic_vector(6 downto 0);
 		ra_out : OUT std_logic_vector(2 downto 0); -- wr_index
 		wr_en_out : out std_logic;
 		wr_data_out : out std_logic_vector(15 downto 0) --wr_data
@@ -32,7 +34,11 @@ end writeback;
 
 architecture Behavioral of writeback is
 
+signal op_code : std_logic_vector(6 downto 0);
+
 begin
+
+op_code <= opc_in;
 
 	process(clk, rst, wr_en_in, result_in)
 	
@@ -60,6 +66,8 @@ begin
 				end if;
 				
 			end if;
+			
+			opc_out <= opc_in;
 	
 	end process;
 
