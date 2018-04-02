@@ -12,7 +12,7 @@ use IEEE.STD_LOGIC_1164.ALL;
 
 entity exe_mux is
 	Port(
-		data_select : IN std_logic_vector(2 downto 0);
+		data_select : IN std_logic_vector(1 downto 0);
 		pc_val : IN std_logic_vector(6 downto 0);
 		alu_in1 : IN std_logic_vector(15 downto 0);
 		alu_result : IN std_logic_vector(15 downto 0);

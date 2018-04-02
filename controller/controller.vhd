@@ -311,7 +311,7 @@ begin
 					mux2_select <= "001";
 					-- end when SHR or SHL case
 				
-				-- TEST
+				-- TEST, OUT
 				when "0000111" | "0100000" =>
 					-- Check for write back
 					case trackHazard_1 is

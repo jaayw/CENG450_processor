@@ -52,7 +52,7 @@ component controller is
 		mux2_select : OUT std_logic_vector(2 downto 0);
 		loadimm_data : OUT std_logic_vector(7 downto 0);
 		displacement : OUT std_logic_vector(8 downto 0);
-		mux_ex_select : OUT std_logic_vector(2 downto 0)
+		mux_ex_select : OUT std_logic_vector(1 downto 0)
 	);
 end component;
 
@@ -177,7 +177,7 @@ end component;
 
 component exe_mux is
 	port(
-		data_select : IN std_logic_vector(2 downto 0);
+		data_select : IN std_logic_vector(1 downto 0);
 		pc_val : IN std_logic_vector(6 downto 0);
 		alu_in1 : IN std_logic_vector(15 downto 0);
 		alu_result : IN std_logic_vector(15 downto 0);
@@ -253,7 +253,7 @@ signal ra_ex : std_logic_vector(2 downto 0);
 signal displacement : std_logic_vector(8 downto 0); -- CU -> BRANCH
 signal result_alu : std_logic_vector(15 downto 0);
 signal mux_ex_result : std_logic_vector(15 downto 0); -- Data forwarding from EXE to ID
-signal mux_ex_select : std_logic_vector(2 downto 0);
+signal mux_ex_select : std_logic_vector(1 downto 0); -- From CU
 signal z_flag_alu : std_logic;
 signal n_flag_alu : std_logic;
 signal z_flag : std_logic;
