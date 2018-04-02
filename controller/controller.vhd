@@ -17,7 +17,8 @@ entity controller is
 		
 		-- Input
 		-- EXE
-		opc_exe : IN std_logic_vector(6 downto 0);
+		instr_exe : IN std_logic_vector(15 downto 0);
+		--opc_exe : IN std_logic_vector(6 downto 0);
 		ra_exe : IN std_logic_vector(2 downto 0);
 		
 		-- MEM
@@ -52,6 +53,7 @@ signal trackHazard_3 : std_logic_vector(1 downto 0) := (others => '0');
 -- Alias
 
 alias op_code is instr(15 downto 9);
+alias opc_exe is instr_exe(15 downto 9);
 
 -- Format A
 alias instr_ra is instr(8 downto 6); -- ra = r.dest (Format L)
@@ -503,7 +505,14 @@ begin
 	-- Enable PC overwrite if branching
 	pc_overwrite_en <=
 		-- BRR, BRR.N, BRR.Z, BR, BR.N, BR.Z, BR.SUB, RETURN
-		'1' when (opc_exe = ("1000000" or "1000001" or "1000010" or "1000011" or "1000100" or "1000101" or "1000110" or "1000111")) else
+		'1' when opc_exe = "1000000" else
+		'1' when opc_exe = "1000001" else
+		'1' when opc_exe = "1000010" else
+		'1' when opc_exe = "1000011" else
+		'1' when opc_exe = "1000100" else
+		'1' when opc_exe = "1000101" else
+		'1' when opc_exe = "1000110" else
+		'1' when opc_exe = "1000111" else
 		'0';
 		
 	-- Select data for EXE stage output

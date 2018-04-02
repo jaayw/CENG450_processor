@@ -34,7 +34,8 @@ component controller is
 		
 		-- Input
 		-- EXE
-		opc_exe : IN std_logic_vector(6 downto 0);
+		instr_exe : IN std_logic_vector(15 downto 0);
+		--opc_exe : IN std_logic_vector(6 downto 0);
 		ra_exe : IN std_logic_vector(2 downto 0);
 		
 		-- MEM
@@ -260,7 +261,7 @@ signal counter_exe : std_logic_vector(6 downto 0);
 signal op_code_exe : std_logic_vector(6 downto 0);
 signal out_data1 : std_logic_vector(15 downto 0);
 signal out_data2 : std_logic_vector(15 downto 0);
-signal ra_ex : std_logic_vector(2 downto 0);
+signal ra_exe : std_logic_vector(2 downto 0);
 signal displacement : std_logic_vector(8 downto 0); -- CU -> BRANCH
 signal result_alu : std_logic_vector(15 downto 0); -- ALU -> MUX or PC -> MEM
 signal mux_ex_result : std_logic_vector(15 downto 0); -- Data forwarding from EXE to ID
@@ -282,9 +283,9 @@ signal mux_mem_result : std_logic_vector(15 downto 0); -- Data forwarding from M
 -- WB SIGNALS
 signal op_code_wb : std_logic_vector(6 downto 0);
 signal wr_index : std_logic_vector(2 downto 0);
-signal wr_data :  std_logic_vector(15 downto 0); --*******************
+signal wr_data :  std_logic_vector(15 downto 0);
 signal wr_enable : std_logic;
-signal mux_wb_result : std_logic_vector(15 downto 0); -- Data forwarding from WB to ID **************
+--signal mux_wb_result : std_logic_vector(15 downto 0); -- Data forwarding from WB to ID **************
 
 
 -- TEMPORARY FOR OPEN INPUTS AND OUTPUTS
@@ -302,8 +303,9 @@ CU0: controller port map(
 				clk => clk,
 				-- Inputs
 				instr => instr_ifid,
-				opc_exe => op_code_exe,
-				ra_exe => ra_ex,
+				instr_exe => instr_exe,
+				--opc_exe => op_code_exe,
+				ra_exe => ra_exe,
 				opc_mem => op_code_mem,
 				ra_mem => ra_mem,
 				opc_wb => op_code_wb,
@@ -375,7 +377,7 @@ MUX1_REG: reg_mux1 port map(
 			data_reg => rd_data1, -- Data read from reg (op1)
 			data_exe => mux_ex_result, -- Data forwarded from EXE
 			data_mem => mux_mem_result, -- Data forwarded from MEM
-			data_wb => mux_wb_result, -- Data forwarded from WB
+			data_wb => wr_data, -- Data forwarded from WB
 			-- Outputs
 			data_out => mux1_data
 			);
@@ -388,7 +390,7 @@ MUX2_REG: reg_mux2 port map(
 			data_reg => rd_data2, -- Data read from reg (op2)
 			data_exe => mux_ex_result, -- Data forwarded from EXE
 			data_mem => mux_mem_result, -- Data forwarded from MEM
-			data_wb => mux_wb_result, -- Data forwarded from WB
+			data_wb => wr_data, -- Data forwarded from WB
 			-- Outputs
 			data_out => mux2_data
 			);
@@ -412,7 +414,7 @@ EX0: execute port map (
 			opc_out => op_code_exe,
 			out_data1 => out_data1,
 			out_data2 => out_data2,
-			ra_out => ra_ex
+			ra_out => ra_exe
 			);
 			
 -- EXECUTE STAGE
@@ -445,7 +447,7 @@ MEM0: mem port map (
 			rst => rst,
 			-- Inputs
 			instr_in => instr_exe,
-			ra_in => ra_ex,
+			ra_in => ra_exe,
 			result_in => result_alu,
 			z_in => z_flag_alu,
 			n_in => n_flag_alu,
