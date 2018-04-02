@@ -168,6 +168,7 @@ begin
 								
 								when others =>
 									-- Forward data from EXE
+									stall <= '0';
 									mux1_select <= "101";
 							end case; -- end opc_exe case select
 						
@@ -181,14 +182,17 @@ begin
 									
 								when others =>
 									-- Forward data from MEM
+									stall <= '0';
 									mux1_select <= "110";
 							end case; -- end opc_mem case select
 						
 						when "11" =>
 							-- Forwarded data from WB
+							stall <= '0';
 							mux1_select <= "111";
 						
 						when others =>
+							stall <= '0';
 							mux1_select <= "000";	
 					end case; -- end trackHazard_2
 					
@@ -209,6 +213,7 @@ begin
 								
 								when others =>
 									-- Forward data from EXE
+									stall <= '0';
 									mux2_select <= "101";	
 							end case; -- end opc_exe case select
 						
@@ -222,14 +227,17 @@ begin
 							
 								when others =>
 								-- Forward data from MEM
+								stall <= '0';
 								mux2_select <= "110";
 							end case; -- end opc_mem case select
 					
 						when "11" =>
 							-- Forward data from WB
+							stall <= '0';
 							mux2_select <= "111";
 						
 						when others =>
+							stall <= '0';
 							mux2_select <= "000";
 					end case; -- end trackHazard_3
 					-- end when ADD, SUB, MUL, NAND case
@@ -260,6 +268,7 @@ begin
 								
 								when others =>
 									-- Forward data from EXE
+									stall <= '0';
 									mux1_select <= "101";				
 							end case; -- end opc_exe case select
 						
@@ -279,6 +288,7 @@ begin
 
 								when others =>
 									-- Forward data from MEM
+									stall <= '0';
 									mux1_select <= "110";
 							end case; -- end opc_mem case select
 						
@@ -293,10 +303,12 @@ begin
 								
 								when others =>
 									-- Forward data from WB
+									stall <= '0';
 									mux1_select <= "111";
 							end case;
 						
 						when others =>
+							stall <= '0';
 							mux1_select <= "000";
 					end case; -- end trackHazard_1
 					
@@ -330,6 +342,7 @@ begin
 								
 								when others =>
 									-- Forward data from EXE
+									stall <= '0';
 									mux1_select <= "101";	
 							end case; -- end opc_exe case select
 						
@@ -349,6 +362,7 @@ begin
 									
 								when others =>
 									-- Forward data from MEM
+									stall <= '0';
 									mux1_select <= "110";
 							end case; -- end opc_mem case select
 						
@@ -362,10 +376,12 @@ begin
 								
 								when others =>
 									-- Forward data from WB
+									stall <= '0';
 									mux1_select <= "111";
 							end case;
 						
 						when others =>
+							stall <= '0';
 							mux1_select <= "000";
 					end case; -- end trackHazard_1
 					
@@ -375,11 +391,13 @@ begin
 				
 				-- IN
 				when "0100001" =>
+					stall <= '0';
 					mux1_select <= "000";
 					mux2_select <= "000";
 				
 				-- BRR, BRR.N, BRR.Z
 				when "1000000" | "1000001" | "1000010" =>
+					stall <= '0';
 					mux1_select <= "001"; -- Use PC value for mux 1
 					mux2_select <= "010"; -- Use displacement data for mux 2
 				
@@ -409,6 +427,7 @@ begin
 								
 								when others =>
 									-- Forward data from EXE
+									stall <= '0';
 									mux1_select <= "101";
 							end case; -- end opc_exe case select
 						
@@ -428,6 +447,7 @@ begin
 									
 								when others =>
 									-- Forward data from MEM
+									stall <= '0';
 									mux1_select <= "110";
 							end case; -- end opc_mem case select
 						
@@ -436,15 +456,17 @@ begin
 								-- LOADIMM @ MEM
 								-- Stall to allow WB to finish
 								when "0100010" =>
-								stall <= '1';
-								mux1_select <= "000";
+									stall <= '1';
+									mux1_select <= "000";
 								
 								when others =>
 									-- Forward data from WB
+									stall <= '0';
 									mux1_select <= "111";
 							end case;
 						
 						when others =>
+							stall <= '0';
 							mux1_select <= "000";
 					end case; -- end trackHazard_1
 					
@@ -454,6 +476,7 @@ begin
 					-- end when BR or BR.N or BR.Z or BR.SUB or RETURN case
 					
 				when others =>
+					stall <= '0';
 					mux1_select <= "000";
 					mux2_select <= "000";
 			end case; -- end op_code is case
@@ -464,7 +487,7 @@ begin
 					stall <= '1';
 					
 				when others =>
-					NULL;
+					stall <= '0';
 			end case;
 			
 		-- Process instructions for stalling and/or data forwarding
@@ -490,8 +513,6 @@ begin
 		-- LOAD, STORE, LOADIMM, MOV, OUT
 		"10" when (opc_exe = ("0010000" or "0010001" or "0010010" or "0010011" or "0100000")) else
 		"00";
-	
-
 
 end Behavioral;
 

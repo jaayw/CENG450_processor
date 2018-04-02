@@ -19,9 +19,9 @@ entity pc is
 		rst : IN std_logic;
 		
 		-- Input
-		en : IN std_logic; -- From CU for stall
+		hold : IN std_logic; -- From CU for stall
 		br : IN std_logic; -- From CU for PC overwrite
-		Q_in : IN std_logic_vector(6 downto 0); -- From ALU (?) for PC overwrite value
+		Q_in : IN std_logic_vector(15 downto 0); -- From ALU for PC overwrite value
 		
 		-- Output
 		Q : out std_logic_vector(6 downto 0) -- Counter out
@@ -31,13 +31,16 @@ end pc;
 
 architecture Behavioral of pc is
 
+signal overwrite_val : std_logic_vector(6 downto 0);
+
 signal Pre_Q : integer range 0 to 127;
 signal br_Q : integer range 0 to 127;
 
 begin
 
 -- Convert new PC value into integer
-br_Q <= conv_integer(Q_in);
+overwrite_val <= Q_in(6 downto 0);
+br_Q <= conv_integer(overwrite_val);
 
 	process(clk)
 		begin
@@ -45,10 +48,10 @@ br_Q <= conv_integer(Q_in);
 				if rst = '1' then
 					Pre_Q <= 0;
 				
-				elsif (en='1' and br='1') then
+				elsif (hold = '0' and br = '1') then
 					Pre_Q <= br_Q;
 					
-				elsif (en='1' and br='0') then
+				elsif (hold = '0' and br = '0') then
 					Pre_Q <= Pre_Q + 1;
 					
 				end if;

@@ -62,7 +62,7 @@ component pc is
 	port (
 			clk : IN  std_logic;
          rst : IN  std_logic;
-			en : IN std_logic;
+			hold : IN std_logic;
 			br : IN std_logic;
 			Q_in : IN std_logic_vector(15 downto 0); -- From ALU (Width change in PC)
          Q : OUT  std_logic_vector(6 downto 0)
@@ -224,8 +224,8 @@ end component;
 
 -- Fetch SIGNALS
 signal counter : std_logic_vector(6 downto 0);
-signal en_pc : std_logic := '1';
-signal br_en : std_logic := '0';
+signal pc_hold : std_logic;
+signal br_en : std_logic;
 
 -- DECODE SIGNALS
 signal instr : std_logic_vector (15 downto 0);
@@ -295,7 +295,7 @@ CU0: controller port map(
 				opc_wb => op_code_wb,
 				ra_wb => ra_ex,
 				-- Outputs
-				stall => en_pc,
+				stall => pc_hold,
 				pc_overwrite_en => br_en,
 				mux1_select => mux1_select,
 				mux2_select => mux2_select,
@@ -309,7 +309,7 @@ CU0: controller port map(
 PC0: pc port map (
 			clk => clk,
 			rst => rst,
-			en => en_pc,
+			hold => pc_hold,
 			br => br_en,
 			Q_in => result_alu,
 			Q => counter
