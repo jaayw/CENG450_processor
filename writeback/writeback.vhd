@@ -40,7 +40,7 @@ begin
 
 op_code <= opc_in;
 
-	process(clk, rst, wr_en_in, result_in)
+	process(clk, rst, op_code, wr_en_in, result_in)
 	
 		begin
 		
@@ -67,7 +67,7 @@ op_code <= opc_in;
 				
 			end if;
 			
-			opc_out <= opc_in;
+			opc_out <= op_code;
 	
 	end process;
 

@@ -64,7 +64,7 @@ component pc is
          rst : IN  std_logic;
 			en : IN std_logic;
 			br : IN std_logic;
-			Q_in : IN std_logic_vector(6 downto 0);
+			Q_in : IN std_logic_vector(15 downto 0); -- From ALU (Width change in PC)
          Q : OUT  std_logic_vector(6 downto 0)
 			);
 end component;
@@ -226,7 +226,6 @@ end component;
 signal counter : std_logic_vector(6 downto 0);
 signal en_pc : std_logic := '1';
 signal br_en : std_logic := '0';
-signal Q_in_PCtemp : std_logic_vector(6 downto 0) := (others => '0');
 
 -- DECODE SIGNALS
 signal instr : std_logic_vector (15 downto 0);
@@ -251,7 +250,7 @@ signal out_data1 : std_logic_vector(15 downto 0);
 signal out_data2 : std_logic_vector(15 downto 0);
 signal ra_ex : std_logic_vector(2 downto 0);
 signal displacement : std_logic_vector(8 downto 0); -- CU -> BRANCH
-signal result_alu : std_logic_vector(15 downto 0);
+signal result_alu : std_logic_vector(15 downto 0); -- ALU -> MUX or PC -> MEM
 signal mux_ex_result : std_logic_vector(15 downto 0); -- Data forwarding from EXE to ID
 signal mux_ex_select : std_logic_vector(1 downto 0); -- From CU
 signal z_flag_alu : std_logic;
@@ -312,7 +311,7 @@ PC0: pc port map (
 			rst => rst,
 			en => en_pc,
 			br => br_en,
-			Q_in => Q_in_PCtemp, -- Temp - Hook to signal later
+			Q_in => result_alu,
 			Q => counter
 			);
 
@@ -462,17 +461,5 @@ WB0: writeback port map(
 			wr_en_out => wr_enable,
 			wr_data_out => wr_data
 			);
-
-	process(clk)
-	
-		begin
-		
-			if rst='1' then
-				en_pc <= '0';
-			else
-				en_pc <= '1';
-			end if;
-		
-	end process;
 			
 end Behavioral;

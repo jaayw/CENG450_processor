@@ -3,7 +3,7 @@
    <wave_state>
    </wave_state>
    <db_ref_list>
-      <db_ref path="C:/Users/james/Documents/Xilinx Projects/CENG450_processor/cpu_b1_tb_isim_beh.wdb" id="1" type="auto">
+      <db_ref path="E:/Documents/Xilinx/CENG450_processor/cpu_b1_tb_isim_beh.wdb" id="1" type="auto">
          <top_modules>
             <top_module name="cpu_b1_tb" />
             <top_module name="numeric_std" />
@@ -13,7 +13,7 @@
          </top_modules>
       </db_ref>
    </db_ref_list>
-   <WVObjectSize size="31" />
+   <WVObjectSize size="30" />
    <wave_markers>
       <marker time="250000000000" label="" />
       <marker time="350000000000" label="" />
@@ -125,10 +125,6 @@
       <obj_property name="ElementShortName">rd_data2[15:0]</obj_property>
       <obj_property name="ObjectShortName">rd_data2[15:0]</obj_property>
       <obj_property name="Radix">HEXRADIX</obj_property>
-   </wvobject>
-   <wvobject fp_name="/cpu_b1_tb/uut/op_code" type="array" db_ref_id="1">
-      <obj_property name="ElementShortName">op_code[6:0]</obj_property>
-      <obj_property name="ObjectShortName">op_code[6:0]</obj_property>
    </wvobject>
    <wvobject fp_name="/cpu_b1_tb/uut/out_data1" type="array" db_ref_id="1">
       <obj_property name="ElementShortName">out_data1[15:0]</obj_property>

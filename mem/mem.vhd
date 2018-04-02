@@ -45,7 +45,7 @@ begin
 
 	op_code <= instr_in(15 downto 9);
 
-	process (clk, result_in, ra_in, z_in, n_in)
+	process (clk, op_code, result_in, ra_in, z_in, n_in)
 	
 		begin
 		
