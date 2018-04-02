@@ -47,13 +47,15 @@ begin
 					
 						data_out <= (others => '0');
 						
-				elsif(wr_en_mem='1') then
+				elsif(wr_en_memory = '1') then
+				
 					memory_content(conv_integer(unsigned(addr))) <= wr_data;
+					
 				end if;
 			
 			end if;
 			
-			if wr_en_mem = '0' then
+			if wr_en_memory = '0' then
 				data_fetch <= memory_content(conv_integer(unsigned(addr)));
 				data_out <= data_fetch;
 			end if;
