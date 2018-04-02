@@ -18,9 +18,6 @@ entity fetch_decode is
 			
 			-- input
 			instr_in : IN std_logic_vector(15 downto 0); -- take in inst from rom
-			-- #TODO
-			-- Create input for branch flag(s)
-			
 			
 			-- output
 			instr_out : OUT std_logic_vector(15 downto 0); -- Output instr to 
@@ -35,20 +32,16 @@ end fetch_decode;
 architecture Behavioral of fetch_decode is
 
 signal instr : std_logic_vector(15 downto 0);
-signal op_code : std_logic_vector(6 downto 0);
-signal ra_internal : std_logic_vector(2 downto 0);
-signal rb_internal : std_logic_vector(2 downto 0);
-signal rc_internal : std_logic_vector(2 downto 0);
-signal cl_internal : std_logic_vector(3 downto 0);
+
+alias op_code is instr_in(15 downto 9);
+alias ra_internal is instr_in(8 downto 6);
+alias rb_internal is instr_in(5 downto 3);
+alias rc_internal is instr_in(2 downto 0);
+alias cl_internal is instr_in(3 downto 0);
 
 begin
 	
 	instr <= instr_in;
-	op_code <= instr_in(15 downto 9);
-	ra_internal <= instr_in(8 downto 6);
-	rb_internal <= instr_in(5 downto 3);
-	rc_internal <= instr_in(2 downto 0);
-	cl_internal <= instr_in(3 downto 0);
 	
 	process(clk, rst, op_code, ra_internal, rb_internal, rc_internal, cl_internal)
 	
@@ -90,6 +83,27 @@ begin
 					when "0100001" =>
 						ra_out <= ra_internal;
 						rb_out <= (others => '0');
+						rc_out <= (others => '0');
+						cl_out <= (others => '0');
+					
+					-- BRR, BRR.N, BRR.Z, BR, BR.N, BR.Z 
+					when "1000000" | "1000001" | "1000010" | "1000011" | "1000100" | "1000101" =>
+						ra_out <= ra_internal;
+						rb_out <= ra_internal;
+						rc_out <= (others => '0');
+						cl_out <= (others => '0');
+						
+					-- BR.SUB
+					when "1000110" =>
+						ra_out <= "111";
+						rb_out <= ra_internal;
+						rc_out <= (others => '0');
+						cl_out <= (others => '0'); 
+					
+					-- RETURN
+					when "1000111" =>
+						ra_out <= (others => '0');
+						rb_out <= "111";
 						rc_out <= (others => '0');
 						cl_out <= (others => '0');
 						

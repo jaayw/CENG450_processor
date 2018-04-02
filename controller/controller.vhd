@@ -148,7 +148,7 @@ begin
 		begin
 		
 			case op_code is
-				-- ADD or SUB or MUL or NAND (i think)
+				-- ADD or SUB or MUL or NAND
 				-- Check for write back
 				when "0000001" | "0000010" | "0000011" | "0000100" =>
 					case trackHazard_2 is

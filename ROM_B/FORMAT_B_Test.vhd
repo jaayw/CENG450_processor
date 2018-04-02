@@ -46,7 +46,7 @@ architecture BHV of ROM_VHDL_B is
 		004 => "0100001100000000", -- IN R4 , 00
 		005 => "0100001101000000", -- IN R5 , 01 -- for absolute branching
 		006 => "0100001110000000", -- IN R6 , 05 -- r6 is counter for the loop and indicates the number of times the loop is done.
-		007 => "0100001111000000", -- IN R7 , 00
+		007 => "0100001111000000", -- IN R7 , 00 -- Register init complete - ALL COMPLETE
 		008 => "1000110100000001", -- BR.SUB R4, 1 -- Go to the subroutine
 		009 => "1000000111111111", -- BRR -1     -- Infinite loop (the end of the program)
 		010 => "0000001010001101", -- ADD R2, R1, R5  -- Start of the subroutine. It runs for 5 times. R2 <-- R1 + 1
