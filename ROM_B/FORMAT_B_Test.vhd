@@ -43,7 +43,7 @@ architecture BHV of ROM_VHDL_B is
 		001 => "0100001001000000", -- IN R1 , 03  -- The values to be loaded into the corresponding resgister.
 		002 => "0100001010000000", -- IN R2 , 01
 		003 => "0100001011000000", -- IN R3 , 05  --  End of initialization
-		004 => "0100001100000001", -- IN R4 , 01
+		004 => "0100001100000000", -- IN R4 , 00 -- Changed input to 01
 		005 => "0100001101000000", -- IN R5 , 01 -- for absolute branching
 		006 => "0100001110000000", -- IN R6 , 05 -- r6 is counter for the loop and indicates the number of times the loop is done.
 		007 => "0100001111000000", -- IN R7 , 00 -- Register init complete - ALL COMPLETE***

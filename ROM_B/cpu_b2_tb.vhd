@@ -84,7 +84,7 @@ BEGIN
 		
 		wait until (clk='1' and clk'event);
 		
-		in_data <= "0000000000000000"; -- IN 0 -> R4
+		in_data <= "0000000000001001"; -- IN 9 -> R4
 		
 		wait until (clk='1' and clk'event);
 		

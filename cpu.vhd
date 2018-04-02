@@ -54,7 +54,8 @@ component controller is
 		loadimm_data : OUT std_logic_vector(7 downto 0);
 		displacement : OUT std_logic_vector(8 downto 0);
 		mux_ex_select : OUT std_logic_vector(1 downto 0);
-		mux_mem_select : OUT std_logic
+		mux_mem_select : OUT std_logic;
+		memory_wr_en : OUT std_logic
 	);
 end component;
 
@@ -209,6 +210,17 @@ end component;
 
 -- MEM STAGE
 
+component memory is
+	Port(
+		clk : IN std_logic;
+		rst : IN std_logic;
+		addr : IN std_logic_vector(6 downto 0);
+		wr_en_memory : IN std_logic;
+		wr_data : IN std_logic_vector(15 downto 0);
+		data_out : OUT std_logic_vector(15 downto 0)
+		);
+end component;
+
 component mem_mux is
 	port (
 		data_select: IN std_logic;
@@ -276,6 +288,8 @@ signal op_code_mem : std_logic_vector(6 downto 0);
 signal ra_mem : std_logic_vector(2 downto 0);
 signal result_mem : std_logic_vector(15 downto 0);
 signal wr_en_mem : std_logic;
+signal mem_addr : std_logic_vector(6 downto 0);
+signal wr_en_memory : std_logic;
 signal rd_memory_data : std_logic_vector(15 downto 0);
 signal mux_mem_select : std_logic;
 signal mux_mem_result : std_logic_vector(15 downto 0); -- Data forwarding from MEM to ID
@@ -318,7 +332,8 @@ CU0: controller port map(
 				loadimm_data => loadimm_data,
 				displacement => displacement,
 				mux_ex_select => mux_ex_select,
-				mux_mem_select => mux_mem_select
+				mux_mem_select => mux_mem_select,
+				memory_wr_en => wr_en_memory
 			);
 
 -- FETCH STAGE
@@ -464,7 +479,14 @@ out_data <= result_mem;
 
 -- MEM STAGE
 
--- Add memory
+MEMORY: memory port map (
+		clk => clk,
+		rst => rst,
+		addr => mem_addr,
+		wr_en_memory => wr_en_memory,
+		wr_data => result_mem,
+		data_out => rd_memory_data
+		);
 
 MUX_MEM0: mem_mux port map (
 		data_select => mux_mem_select,
