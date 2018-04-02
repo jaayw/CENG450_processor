@@ -91,7 +91,9 @@ component fetch_decode is
 			clk : IN STD_LOGIC;
 			rst : IN STD_LOGIC;
 			instr_in : IN STD_LOGIC_VECTOR(15 downto 0);
+			pc_in : IN std_logic_vector(6 downto 0);
 			instr_out : OUT STD_LOGIC_VECTOR(15 downto 0);
+			pc_out : OUT std_logic_vector(6 downto 0);
 			ra_out : OUT STD_LOGIC_VECTOR(2 downto 0);
 			rb_out : OUT STD_LOGIC_VECTOR(2 downto 0);
 			rc_out : OUT STD_LOGIC_VECTOR(2 downto 0);
@@ -256,6 +258,7 @@ signal br_en : std_logic;
 signal instr : std_logic_vector (15 downto 0);
 signal instr_ifid : std_logic_vector (15 downto 0);
 signal instr_exe : std_logic_vector (15 downto 0);
+signal pc_ifid : std_logic_vector(6 downto 0); -- might remove testing
 signal ra_id : std_logic_vector(2 downto 0);
 signal rb : std_logic_vector(2 downto 0);
 signal rc : std_logic_vector(2 downto 0);
@@ -299,8 +302,6 @@ signal op_code_wb : std_logic_vector(6 downto 0);
 signal wr_index : std_logic_vector(2 downto 0);
 signal wr_data :  std_logic_vector(15 downto 0);
 signal wr_enable : std_logic;
---signal mux_wb_result : std_logic_vector(15 downto 0); -- Data forwarding from WB to ID **************
-
 
 -- TEMPORARY FOR OPEN INPUTS AND OUTPUTS
 -- TEMPORARY INPUTS
@@ -363,7 +364,9 @@ IF_ID: fetch_decode port map (
 			clk => clk,
 			rst => rst,
 			instr_in => instr,
+			pc_in => counter, -- might remove
 			instr_out => instr_ifid,
+			pc_out => pc_ifid, -- might remove testing
 			ra_out => ra_id,
 			rb_out => rb,
 			rc_out => rc,
@@ -387,7 +390,7 @@ REG0: register_file	port map (
 MUX1_REG: reg_mux1 port map(
 			-- Inputs
 			data_select => mux1_select, -- From CU
-			pc_val => counter, -- Counter value from PC
+			pc_val => pc_ifid, -- Counter value from IF/ID -- might remove testing and go back to direct from pc
 			data_imm => loadimm_data,-- LOADIMM data
 			data_reg => rd_data1, -- Data read from reg (op1)
 			data_exe => mux_ex_result, -- Data forwarded from EXE

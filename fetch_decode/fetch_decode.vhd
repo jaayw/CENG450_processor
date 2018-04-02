@@ -18,9 +18,11 @@ entity fetch_decode is
 			
 			-- input
 			instr_in : IN std_logic_vector(15 downto 0); -- take in inst from rom
+			pc_in : IN std_logic_vector(6 downto 0); -- might remove testing
 			
 			-- output
-			instr_out : OUT std_logic_vector(15 downto 0); -- Output instr to 
+			instr_out : OUT std_logic_vector(15 downto 0); -- Output instr to
+			pc_out : OUT std_logic_vector(6 downto 0); -- might remove testing
 			ra_out :	OUT std_logic_vector(2 downto 0);
 			rb_out :	OUT std_logic_vector(2 downto 0);
 			rc_out :	OUT std_logic_vector(2 downto 0);
@@ -43,7 +45,7 @@ begin
 	
 	instr <= instr_in;
 	
-	process(clk, rst, op_code, ra_internal, rb_internal, rc_internal, cl_internal)
+	process(clk, rst, pc_in, op_code, ra_internal, rb_internal, rc_internal, cl_internal)
 	
 		begin
 		
@@ -52,6 +54,7 @@ begin
 			if rst = '1' then
 				
 				instr_out <= (others => '0');
+				pc_out <= (others => '0');
 				ra_out <= (others => '0');
 				rb_out <= (others => '0');
 				rc_out <= (others => '0');
@@ -123,7 +126,7 @@ begin
 						
 					-- LOADIMM
 					when "0010010" =>
-						ra_out <= "0000111";
+						ra_out <= "111";
 						rb_out <= rb_internal;
 						rc_out <= (others => '0');
 						cl_out <= (others => '0');
@@ -143,10 +146,8 @@ begin
 					
 					end case;
 					
-					-- #TODO
-					-- Format L conditions
-					
 					instr_out <= instr;
+					pc_out <= pc_in;
 				
 			end if;
 			
