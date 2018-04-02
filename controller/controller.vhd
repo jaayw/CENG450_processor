@@ -69,6 +69,8 @@ alias imm is instr(7 downto 0);
 
 begin
 
+	
+
 	loadimm_data <=
 		-- when LOADIMM
 		imm when op_code = "0010010" else
@@ -167,7 +169,6 @@ begin
 								when others =>
 									-- Forward data from EXE
 									mux1_select <= "101";
-									
 							end case; -- end opc_exe case select
 						
 						when "10" =>
@@ -181,7 +182,6 @@ begin
 								when others =>
 									-- Forward data from MEM
 									mux1_select <= "110";
-							
 							end case; -- end opc_mem case select
 						
 						when "11" =>
@@ -189,8 +189,7 @@ begin
 							mux1_select <= "111";
 						
 						when others =>
-							mux1_select <= "000";
-							
+							mux1_select <= "000";	
 					end case; -- end trackHazard_2
 					
 					case trackHazard_3 is
@@ -210,8 +209,7 @@ begin
 								
 								when others =>
 									-- Forward data from EXE
-									mux2_select <= "101";
-									
+									mux2_select <= "101";	
 							end case; -- end opc_exe case select
 						
 						when "10" =>
@@ -225,7 +223,6 @@ begin
 								when others =>
 								-- Forward data from MEM
 								mux2_select <= "110";
-								
 							end case; -- end opc_mem case select
 					
 						when "11" =>
@@ -234,7 +231,6 @@ begin
 						
 						when others =>
 							mux2_select <= "000";
-						
 					end case; -- end trackHazard_3
 					-- end when ADD, SUB, MUL, NAND case
 				
@@ -264,8 +260,7 @@ begin
 								
 								when others =>
 									-- Forward data from EXE
-									mux1_select <= "101";
-									
+									mux1_select <= "101";				
 							end case; -- end opc_exe case select
 						
 						when "10" =>
@@ -281,11 +276,10 @@ begin
 								when "0100010" =>
 									stall <= '1';
 									mux1_select <= "000";
-									
+
 								when others =>
 									-- Forward data from MEM
 									mux1_select <= "110";
-							
 							end case; -- end opc_mem case select
 						
 						when "11" =>
@@ -304,7 +298,6 @@ begin
 						
 						when others =>
 							mux1_select <= "000";
-							
 					end case; -- end trackHazard_1
 					
 					-- IMM
@@ -337,8 +330,7 @@ begin
 								
 								when others =>
 									-- Forward data from EXE
-									mux1_select <= "101";
-									
+									mux1_select <= "101";	
 							end case; -- end opc_exe case select
 						
 						when "10" =>
@@ -358,7 +350,6 @@ begin
 								when others =>
 									-- Forward data from MEM
 									mux1_select <= "110";
-							
 							end case; -- end opc_mem case select
 						
 						when "11" =>
@@ -376,7 +367,6 @@ begin
 						
 						when others =>
 							mux1_select <= "000";
-							
 					end case; -- end trackHazard_1
 					
 					-- IMM
@@ -420,7 +410,6 @@ begin
 								when others =>
 									-- Forward data from EXE
 									mux1_select <= "101";
-									
 							end case; -- end opc_exe case select
 						
 						when "10" =>
@@ -440,7 +429,6 @@ begin
 								when others =>
 									-- Forward data from MEM
 									mux1_select <= "110";
-							
 							end case; -- end opc_mem case select
 						
 						when "11" =>
@@ -458,7 +446,6 @@ begin
 						
 						when others =>
 							mux1_select <= "000";
-							
 					end case; -- end trackHazard_1
 					
 					-- Displacement
@@ -469,7 +456,6 @@ begin
 				when others =>
 					mux1_select <= "000";
 					mux2_select <= "000";
-				
 			end case; -- end op_code is case
 			
 			case opc_wb is
