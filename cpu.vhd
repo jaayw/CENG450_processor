@@ -307,7 +307,7 @@ CU0: controller port map(
 				opc_mem => op_code_mem,
 				ra_mem => ra_mem,
 				opc_wb => op_code_wb,
-				ra_wb => ra_ex,
+				ra_wb => wr_index,
 				-- Outputs
 				stall => pc_hold,
 				pc_overwrite_en => br_en,
@@ -478,7 +478,7 @@ WB0: writeback port map(
 			rst => rst,
 			-- Inputs
 			opc_in => op_code_mem,
-			result_in => result_mem,
+			result_in => mux_mem_result,
 			ra_in => ra_mem,
 			wr_en_in => wr_en_mem,
 			-- Outputs

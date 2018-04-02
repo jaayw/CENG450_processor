@@ -16,7 +16,6 @@ entity controller is
 		instr : IN std_logic_vector(15 downto 0);
 		
 		-- Input
-		
 		-- EXE
 		opc_exe : IN std_logic_vector(6 downto 0);
 		ra_exe : IN std_logic_vector(2 downto 0);

@@ -116,7 +116,7 @@ begin
 					end case;
 					
 					-- #TODO
-					-- Create logic and conditions for branching
+					-- Format L conditions
 					
 					instr_out <= instr;
 				

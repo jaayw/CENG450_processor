@@ -13,7 +13,7 @@
          </top_modules>
       </db_ref>
    </db_ref_list>
-   <WVObjectSize size="34" />
+   <WVObjectSize size="37" />
    <wave_markers>
       <marker time="250000000000" label="" />
       <marker time="950000000000" label="" />
@@ -142,10 +142,25 @@
       <obj_property name="ObjectShortName">displacement[8:0]</obj_property>
       <obj_property name="Radix">UNSIGNEDDECRADIX</obj_property>
    </wvobject>
+   <wvobject fp_name="/cpu_b2_tb/uut/ALU0/opc_in" type="array" db_ref_id="1">
+      <obj_property name="ElementShortName">opc_in[6:0]</obj_property>
+      <obj_property name="ObjectShortName">opc_in[6:0]</obj_property>
+      <obj_property name="Radix">HEXRADIX</obj_property>
+   </wvobject>
+   <wvobject fp_name="/cpu_b2_tb/uut/ALU0/in1" type="array" db_ref_id="1">
+      <obj_property name="ElementShortName">in1[15:0]</obj_property>
+      <obj_property name="ObjectShortName">in1[15:0]</obj_property>
+      <obj_property name="Radix">SIGNEDDECRADIX</obj_property>
+   </wvobject>
+   <wvobject fp_name="/cpu_b2_tb/uut/ALU0/in2" type="array" db_ref_id="1">
+      <obj_property name="ElementShortName">in2[15:0]</obj_property>
+      <obj_property name="ObjectShortName">in2[15:0]</obj_property>
+      <obj_property name="Radix">SIGNEDDECRADIX</obj_property>
+   </wvobject>
    <wvobject fp_name="/cpu_b2_tb/uut/result_alu" type="array" db_ref_id="1">
       <obj_property name="ElementShortName">result_alu[15:0]</obj_property>
       <obj_property name="ObjectShortName">result_alu[15:0]</obj_property>
-      <obj_property name="Radix">UNSIGNEDDECRADIX</obj_property>
+      <obj_property name="Radix">SIGNEDDECRADIX</obj_property>
    </wvobject>
    <wvobject fp_name="/cpu_b2_tb/uut/counter_exe" type="array" db_ref_id="1">
       <obj_property name="ElementShortName">counter_exe[6:0]</obj_property>
