@@ -122,7 +122,7 @@ begin
 						ra_out <= ra_internal;
 						rb_out <= ra_internal;
 						rc_out <= rc_internal;
-						cl_out <= rb_internal;
+						cl_out <= '0' & rb_internal;
 						
 					-- LOADIMM
 					when "0010010" =>
