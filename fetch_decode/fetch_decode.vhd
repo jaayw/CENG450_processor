@@ -106,6 +106,27 @@ begin
 						rb_out <= "111";
 						rc_out <= (others => '0');
 						cl_out <= (others => '0');
+					
+					-- LOAD
+					when "0010000" =>
+						ra_out <= ra_internal;
+						rb_out <= rb_internal;
+						rc_out <= (others => '0');
+						cl_out <= (others => '0');
+						
+					-- STORE
+					when "0010001" =>
+						ra_out <= ra_internal;
+						rb_out <= ra_internal;
+						rc_out <= rc_internal;
+						cl_out <= rb_internal;
+						
+					-- MOV
+					when "0010011" =>
+						ra_out <= ra_internal;
+						rb_out <= rb_internal;
+						rc_out <= rc_internal;
+						cl_out <= (others => '0');
 						
 					when others =>
 						ra_out <= (others => '0');
