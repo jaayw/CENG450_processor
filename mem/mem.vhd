@@ -19,15 +19,16 @@ entity mem is
 		--input
 		instr_in : std_logic_vector(15 downto 0);
 		ra_in : in std_logic_vector(2 downto 0);
+		ml_in : IN std_logic;
 		result_in : in std_logic_vector(15 downto 0);
 		z_in : in std_logic;
 		n_in : in std_logic;
-		-- #TODO
-		-- Create input for branch and Format L
+		
 		
 		--output
 		opc_out : out std_logic_vector(6 downto 0);
 		ra_out : out std_logic_vector(2 downto 0);
+		ml_out : OUT std_logic;
 		result_out : out std_logic_vector(15 downto 0);
 		wr_en : out std_logic;
 		z_out : out std_logic;
@@ -45,7 +46,7 @@ begin
 
 	op_code <= instr_in(15 downto 9);
 
-	process (clk, op_code, result_in, ra_in, z_in, n_in)
+	process (clk, op_code, result_in, ra_in, ml_in, z_in, n_in)
 	
 		begin
 		
@@ -79,6 +80,7 @@ begin
 					-- write data out to WB stage AND out
 					result_out <= result_in; --alu_result to wb stage
 					ra_out <= ra_in; --ra register
+					ml_out <= ml_in;
 					z_out <= z_in;
 					n_out <= n_in;
 				end if;

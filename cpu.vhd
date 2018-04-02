@@ -52,6 +52,7 @@ component controller is
 		mux1_select : OUT std_logic_vector(2 downto 0);
 		mux2_select : OUT std_logic_vector(2 downto 0);
 		loadimm_data : OUT std_logic_vector(7 downto 0);
+		ml_out : OUT std_logic;
 		displacement : OUT std_logic_vector(8 downto 0);
 		mux_ex_select : OUT std_logic_vector(1 downto 0);
 		mux_mem_select : OUT std_logic;
@@ -76,7 +77,7 @@ end component;
 -- Format A: ROM_VHDL_16
 -- Format B: ROM_VHDL_B
 -- Format L: ROM_VHDL_L
-component ROM_VHDL_B is
+component ROM_VHDL_L is
 	port (
 			clk : IN STD_LOGIC;
 			addr : IN STD_LOGIC_VECTOR(6 downto 0);
@@ -156,12 +157,14 @@ component execute is
 			in_data2 : IN STD_LOGIC_VECTOR(15 downto 0);
 			ra_in : IN STD_LOGIC_VECTOR(2 downto 0);
 			cl_in : IN STD_LOGIC_VECTOR(3 downto 0);
+			ml_in : IN STD_LOGIC;
 			instr_out : OUT STD_LOGIC_VECTOR(15 downto 0);
 			pc_out : OUT STD_LOGIC_VECTOR(6 downto 0);
 			opc_out : OUT std_logic_vector(6 downto 0);
 			out_data1 : OUT STD_LOGIC_VECTOR(15 downto 0);
 			out_data2 : OUT STD_LOGIC_VECTOR(15 downto 0);
-			ra_out : out std_logic_vector(2 downto 0)
+			ra_out : out std_logic_vector(2 downto 0);
+			ml_out : OUT STD_LOGIC
 			);
 end component;
 
@@ -198,11 +201,13 @@ component mem is
 			rst : IN STD_LOGIC;
 			instr_in : IN STD_LOGIC_VECTOR(15 downto 0);
 			ra_in : IN STD_LOGIC_VECTOR(2 downto 0);
+			ml_in : IN STD_LOGIC;
 			result_in : IN STD_LOGIC_VECTOR(15 downto 0);
 			z_in : IN STD_LOGIC;
 			n_in : IN STD_LOGIC;
 			opc_out : OUT STD_LOGIC_VECTOR(6 downto 0);
 			ra_out : OUT STD_LOGIC_VECTOR(2 downto 0);
+			ml_out : OUT STD_LOGIC;
 			result_out : OUT STD_LOGIC_VECTOR(15 downto 0);
 			wr_en : OUT STD_LOGIC;
 			z_out : OUT STD_LOGIC;
@@ -241,9 +246,11 @@ component writeback is
 			opc_in : IN STD_LOGIC_VECTOR(6 downto 0);
 			result_in : IN STD_LOGIC_VECTOR(15 downto 0);
 			ra_in : IN STD_LOGIC_VECTOR(2 downto 0);
+			ml_in : IN STD_LOGIC;
 			wr_en_in : IN STD_LOGIC;
 			opc_out : OUT STD_LOGIC_VECTOR(6 downto 0);
 			ra_out : OUT STD_LOGIC_VECTOR(2 downto 0);
+			ml_out : OUT STD_LOGIC;
 			wr_en_out : OUT STD_LOGIC;
 			wr_data_out : OUT STD_LOGIC_VECTOR(15 downto 0)
 			);
@@ -270,6 +277,7 @@ signal mux2_select : std_logic_vector(2 downto 0);
 signal mux1_data : std_logic_vector(15 downto 0);
 signal mux2_data : std_logic_vector(15 downto 0);
 signal loadimm_data : std_logic_vector(7 downto 0);
+signal ml : std_logic;
 
 -- EXECUTE SIGNALS
 signal counter_exe : std_logic_vector(6 downto 0);
@@ -277,6 +285,7 @@ signal op_code_exe : std_logic_vector(6 downto 0);
 signal out_data1 : std_logic_vector(15 downto 0);
 signal out_data2 : std_logic_vector(15 downto 0);
 signal ra_exe : std_logic_vector(2 downto 0);
+signal ml_exe : std_logic;
 signal displacement : std_logic_vector(8 downto 0); -- CU -> BRANCH
 signal result_alu : std_logic_vector(15 downto 0); -- ALU -> MUX or PC -> MEM
 signal mux_ex_result : std_logic_vector(15 downto 0); -- Data forwarding from EXE to ID
@@ -289,6 +298,7 @@ signal n_flag : std_logic;
 -- MEM SIGNALS
 signal op_code_mem : std_logic_vector(6 downto 0);
 signal ra_mem : std_logic_vector(2 downto 0);
+signal ml_mem : std_logic;
 signal result_mem : std_logic_vector(15 downto 0);
 signal wr_en_mem : std_logic;
 signal mem_addr : std_logic_vector(6 downto 0);
@@ -299,6 +309,7 @@ signal mux_mem_result : std_logic_vector(15 downto 0); -- Data forwarding from M
 
 -- WB SIGNALS
 signal op_code_wb : std_logic_vector(6 downto 0);
+signal ml_wb : std_logic;
 signal wr_index : std_logic_vector(2 downto 0);
 signal wr_data :  std_logic_vector(15 downto 0);
 signal wr_enable : std_logic;
@@ -331,6 +342,7 @@ CU0: controller port map(
 				mux1_select => mux1_select,
 				mux2_select => mux2_select,
 				loadimm_data => loadimm_data,
+				ml_out => ml,
 				displacement => displacement,
 				mux_ex_select => mux_ex_select,
 				mux_mem_select => mux_mem_select,
@@ -352,7 +364,7 @@ PC0: pc port map (
 -- Format A: ROM_VHDL_16
 -- Format B: ROM_VHDL_B
 -- Format L: ROM_VHDL_L
-ROM: ROM_VHDL_B port map (
+ROM: ROM_VHDL_L port map (
 			clk => clk,
 			addr => counter,
 			data => instr
@@ -426,13 +438,15 @@ EX0: execute port map (
 			in_data2 => mux2_data,
 			ra_in => ra_id,
 			cl_in => cl,
+			ml_in => ml,
 			-- Ouputs
 			instr_out => instr_exe,
 			pc_out => counter_exe,
 			opc_out => op_code_exe,
 			out_data1 => out_data1,
 			out_data2 => out_data2,
-			ra_out => ra_exe
+			ra_out => ra_exe,
+			ml_out => ml_exe
 			);
 			
 -- EXECUTE STAGE
@@ -466,12 +480,14 @@ MEM0: mem port map (
 			-- Inputs
 			instr_in => instr_exe,
 			ra_in => ra_exe,
+			ml_in => ml_exe,
 			result_in => result_alu,
 			z_in => z_flag_alu,
 			n_in => n_flag_alu,
 			-- Outputs
 			opc_out => op_code_mem,
 			ra_out => ra_mem,
+			ml_out => ml_mem,
 			result_out => result_mem,
 			wr_en => wr_en_mem,
 			z_out => z_flag,
@@ -507,10 +523,12 @@ WB0: writeback port map(
 			opc_in => op_code_mem,
 			result_in => mux_mem_result,
 			ra_in => ra_mem,
+			ml_in => ml_mem,
 			wr_en_in => wr_en_mem,
 			-- Outputs
 			opc_out => op_code_wb,
 			ra_out => wr_index,
+			ml_out => ml_wb,
 			wr_en_out => wr_enable,
 			wr_data_out => wr_data
 			);

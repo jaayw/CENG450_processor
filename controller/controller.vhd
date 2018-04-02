@@ -18,7 +18,6 @@ entity controller is
 		-- Input
 		-- EXE
 		instr_exe : IN std_logic_vector(15 downto 0);
-		--opc_exe : IN std_logic_vector(6 downto 0);
 		ra_exe : IN std_logic_vector(2 downto 0);
 		
 		-- MEM
@@ -37,6 +36,7 @@ entity controller is
 		mux1_select : OUT std_logic_vector(2 downto 0);
 		mux2_select : OUT std_logic_vector(2 downto 0);
 		loadimm_data : OUT std_logic_vector(7 downto 0);
+		ml_out : OUT std_logic;
 		displacement : OUT std_logic_vector(8 downto 0);
 		mux_ex_select : OUT std_logic_vector(1 downto 0);
 		mux_mem_select : OUT std_logic;
@@ -72,12 +72,13 @@ alias imm is instr(7 downto 0);
 
 begin
 
-	
-
 	loadimm_data <=
 		-- when LOADIMM
 		imm when op_code = "0010010" else
 		("0000" & instr_cl);
+	
+	-- Output operand ml for store operation (signals for MSB or LSB in memory)
+	ml_out <= m_l;
 
 	-- Tracking Data Hazards
 	trackHazard_1 <= 

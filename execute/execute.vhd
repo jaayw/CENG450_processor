@@ -24,6 +24,7 @@ entity execute is
 		in_data2 : IN std_logic_vector(15 downto 0);
 		ra_in	: IN std_logic_vector(2 downto 0);
 		cl_in : IN std_logic_vector(3 downto 0);
+		ml_in : IN std_logic;
 		
 		--output
 		instr_out : OUT std_logic_vector(15 downto 0);
@@ -31,7 +32,8 @@ entity execute is
 		opc_out : OUT std_logic_vector(6 downto 0);
 		out_data1 : OUT std_logic_vector(15 downto 0);
 		out_data2 : OUT std_logic_vector(15 downto 0);
-		ra_out : out std_logic_vector(2 downto 0)
+		ra_out : out std_logic_vector(2 downto 0);
+		ml_out : OUT std_logic
 		
 	);
 	
@@ -46,7 +48,7 @@ begin
 
 	instr <= instr_in;
 	
-	process(clk, instr_in, pc_in, in_direct, in_data1, in_data2, cl_in, ra_in, op_code)
+	process(clk, instr_in, pc_in, ml_in, in_direct, in_data1, in_data2, cl_in, ra_in, op_code)
 	
 		begin
 			
@@ -84,16 +86,16 @@ begin
 						opc_out <= op_code;
 						out_data1 <= in_data1;
 						out_data2 <= "000000000000" & cl_in;
-						
---					-- Shift (6)
---					when "0000110" =>
---						opc_out <= op_code;
---						out_data1 <= in_data1;
---						out_data2 <= "000000000000" & cl_in;
 					
 					-- ALU Mode -> ADD when BRR, BRR.N, BRR.Z, BR, BR.N, BR.Z, BR.SUB, RETURN
 					when "1000000" | "1000001" | "1000010" | "1000011" | "1000100" | "1000101" | "1000110" | "1000111" =>
 						opc_out <= "0000001";
+						out_data1 <= in_data1;
+						out_data2 <= in_data2;
+						
+					-- LOAD, STORE, LOADIMM, MOV
+					when "0010000" | "0010001" | "0010010" | "0010011" =>
+						opc_out <= "0000000";
 						out_data1 <= in_data1;
 						out_data2 <= in_data2;
 					
@@ -109,6 +111,7 @@ begin
 					pc_out <= pc_in;
 					instr_out <= instr;
 					ra_out <= ra_in;
+					ml_out <= ml_in;
 					
 				end if;
 				
