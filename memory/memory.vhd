@@ -13,7 +13,7 @@ entity memory is
 		
 		-- inputs
 		addr : IN std_logic_vector(6 downto 0);
-		wr_en_mem : IN std_logic;
+		wr_en_memory : IN std_logic;
 		wr_data : IN std_logic_vector(15 downto 0);
 		
 		-- outputs

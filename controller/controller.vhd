@@ -39,7 +39,8 @@ entity controller is
 		loadimm_data : OUT std_logic_vector(7 downto 0);
 		displacement : OUT std_logic_vector(8 downto 0);
 		mux_ex_select : OUT std_logic_vector(1 downto 0);
-		mux_mem_select : OUT std_logic
+		mux_mem_select : OUT std_logic;
+		memory_wr_en : OUT std_logic
 	
 	);
 end controller;
@@ -527,6 +528,11 @@ begin
 	mux_mem_select <=
 		-- LOAD
 		'1' when opc_mem = "0010000" else
+		'0';
+		
+	memory_wr_en <=
+		-- STORE
+		'1' when opc_mem = "0010001" else
 		'0';
 
 end Behavioral;
