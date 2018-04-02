@@ -18,6 +18,7 @@ entity execute is
 		
 		--input
 		instr_in : IN std_logic_vector(15 downto 0);
+		pc_in : IN std_logic_vector(6 downto 0);
 		in_direct : IN std_logic_vector(15 downto 0);
 		in_data1 : IN std_logic_vector(15 downto 0);
 		in_data2 : IN std_logic_vector(15 downto 0);
@@ -26,6 +27,7 @@ entity execute is
 		
 		--output
 		instr_out : OUT std_logic_vector(15 downto 0);
+		pc_out : OUT std_logic_vector(6 downto 0);
 		opc_out : OUT std_logic_vector(6 downto 0);
 		out_data1 : OUT std_logic_vector(15 downto 0);
 		out_data2 : OUT std_logic_vector(15 downto 0);
@@ -45,7 +47,7 @@ begin
 	instr <= instr_in;
 	op_code <= instr_in(15 downto 9);
 	
-	process(clk, instr_in, in_direct, in_data1, in_data2, cl_in, ra_in, op_code)
+	process(clk, instr_in, pc_in, in_direct, in_data1, in_data2, cl_in, ra_in, op_code)
 	
 		begin
 			
@@ -93,6 +95,7 @@ begin
 				
 				end case;
 					
+					pc_out <= pc_in;
 					instr_out <= instr;
 					opc_out <= op_code;
 					ra_out <= ra_in;

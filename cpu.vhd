@@ -51,7 +51,8 @@ component controller is
 		mux1_select : OUT std_logic_vector(2 downto 0);
 		mux2_select : OUT std_logic_vector(2 downto 0);
 		loadimm_data : OUT std_logic_vector(7 downto 0);
-		displacement : OUT std_logic_vector(8 downto 0)
+		displacement : OUT std_logic_vector(8 downto 0);
+		mux_ex_select : OUT std_logic_vector(2 downto 0)
 	);
 end component;
 
@@ -144,12 +145,14 @@ component execute is
 			clk : IN STD_LOGIC;
 			rst : IN STD_LOGIC;
 			instr_in : IN STD_LOGIC_VECTOR(15 downto 0);
+			pc_in : IN STD_LOGIC_VECTOR(6 downto 0);
 			in_direct : IN STD_LOGIC_VECTOR(15 downto 0);
 			in_data1 : IN STD_LOGIC_VECTOR(15 downto 0);
 			in_data2 : IN STD_LOGIC_VECTOR(15 downto 0);
 			ra_in : IN STD_LOGIC_VECTOR(2 downto 0);
 			cl_in : IN STD_LOGIC_VECTOR(3 downto 0);
-			instr_out : OUT std_logic_vector(15 downto 0);
+			instr_out : OUT STD_LOGIC_VECTOR(15 downto 0);
+			pc_out : OUT STD_LOGIC_VECTOR(6 downto 0);
 			opc_out : OUT std_logic_vector(6 downto 0);
 			out_data1 : OUT STD_LOGIC_VECTOR(15 downto 0);
 			out_data2 : OUT STD_LOGIC_VECTOR(15 downto 0);
@@ -170,7 +173,17 @@ component alu is
 			z_flag : OUT STD_LOGIC;
 			n_flag : OUT STD_LOGIC
 			);
-end component;	
+end component;
+
+component exe_mux is
+	port(
+		data_select : IN std_logic_vector(2 downto 0);
+		pc_val : IN std_logic_vector(6 downto 0);
+		alu_in1 : IN std_logic_vector(15 downto 0);
+		alu_result : IN std_logic_vector(15 downto 0);
+		data_out : OUT std_logic_vector(15 downto 0)
+	);
+end component;
 
 -- EXE/MEM Latch
 
@@ -232,6 +245,7 @@ signal mux2_data : std_logic_vector(15 downto 0);
 signal loadimm_data : std_logic_vector(7 downto 0);
 
 -- EXECUTE SIGNALS
+signal counter_exe : std_logic_vector(6 downto 0);
 signal op_code_exe : std_logic_vector(6 downto 0);
 signal out_data1 : std_logic_vector(15 downto 0);
 signal out_data2 : std_logic_vector(15 downto 0);
@@ -239,6 +253,7 @@ signal ra_ex : std_logic_vector(2 downto 0);
 signal displacement : std_logic_vector(8 downto 0); -- CU -> BRANCH
 signal result_alu : std_logic_vector(15 downto 0);
 signal mux_ex_result : std_logic_vector(15 downto 0); -- Data forwarding from EXE to ID
+signal mux_ex_select : std_logic_vector(2 downto 0);
 signal z_flag_alu : std_logic;
 signal n_flag_alu : std_logic;
 signal z_flag : std_logic;
@@ -286,7 +301,8 @@ CU0: controller port map(
 				mux1_select => mux1_select,
 				mux2_select => mux2_select,
 				loadimm_data => loadimm_data,
-				displacement => displacement
+				displacement => displacement,
+				mux_ex_select => mux_ex_select
 			);
 
 -- FETCH STAGE
@@ -370,6 +386,7 @@ EX0: execute port map (
 			rst => rst,
 			-- Inputs
 			instr_in => instr_ifid,
+			pc_in => counter,
 			in_direct => in_data,
 			in_data1 => mux1_data,
 			in_data2 => mux2_data,
@@ -377,6 +394,7 @@ EX0: execute port map (
 			cl_in => cl,
 			-- Ouputs
 			instr_out => instr_exe,
+			pc_out => counter_exe,
 			opc_out => op_code_exe,
 			out_data1 => out_data1,
 			out_data2 => out_data2,
@@ -396,6 +414,14 @@ ALU0: alu port map (
 			result => result_alu,
 			z_flag => z_flag_alu,
 			n_flag => n_flag_alu
+			);
+			
+MUX_EXE0: exe_mux port map (
+			data_select => mux_ex_select,
+			pc_val => counter_exe,
+			alu_in1 => out_data1,
+			alu_result => result_alu,
+			data_out => mux_ex_result
 			);
 			
 -- EXE/MEM Latch

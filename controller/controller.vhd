@@ -37,7 +37,8 @@ entity controller is
 		mux1_select : OUT std_logic_vector(2 downto 0);
 		mux2_select : OUT std_logic_vector(2 downto 0);
 		loadimm_data : OUT std_logic_vector(7 downto 0);
-		displacement : OUT std_logic_vector(8 downto 0)
+		displacement : OUT std_logic_vector(8 downto 0);
+		mux_ex_select : OUT std_logic_vector(1 downto 0)
 	
 	);
 end controller;
@@ -492,8 +493,18 @@ begin
 	
 	-- Enable PC overwrite if branching
 	pc_overwrite_en <=
+		-- BRR, BRR.N, BRR.Z, BR, BR.N, BR.Z, BR.SUB, RETURN
 		'1' when (opc_exe = ("1000000" or "1000001" or "1000010" or "1000011" or "1000100" or "1000101" or "1000110" or "1000111")) else
 		'0';
+		
+	-- Select data for EXE stage output
+	mux_ex_select <=
+		-- BR.SUB
+		"01" when opc_exe = ("1000110") else
+		-- LOAD, STORE, LOADIMM, MOV, OUT
+		"10" when (opc_exe = ("0010000" or "0010001" or "0010010" or "0010011" or "0100000")) else
+		"00";
+	
 
 
 end Behavioral;
