@@ -12,7 +12,7 @@ entity memory is
 		rst : IN std_logic;
 		
 		-- inputs
-		addr : IN std_logic_vector(6 downto 0);
+		addr : IN std_logic_vector(15 downto 0);
 		wr_en_memory : IN std_logic;
 		wr_data : IN std_logic_vector(15 downto 0);
 		
@@ -24,16 +24,16 @@ end memory;
 
 architecture Behavioral of memory is
 
-	type MEM_ARRAY is array (0 to 2**8) of std_logic_vector(15 downto 0);
+	type MEM_ARRAY is array (0 to 2**8) of std_logic_vector(7 downto 0);
 	signal memory_content : MEM_ARRAY;
-	-- Data stored as big endian (2**12)
+	-- Data stored as big endian (2**8)
 	
 	signal data_fetch : std_logic_vector(15 downto 0);
 
 begin	
 
 	-- Write Process
-	mem_wr : process(clk)
+	mem_wr : process(clk, wr_en_memory, memory_content)
 	
 		begin
 		
@@ -49,14 +49,15 @@ begin
 						
 				elsif(wr_en_memory = '1') then
 				
-					memory_content(conv_integer(unsigned(addr))) <= wr_data;
+					memory_content(conv_integer(unsigned(addr(7 downto 0)))) <= wr_data(7 downto 0);
+					memory_content(conv_integer(unsigned(addr(7 downto 0))) + 1) <= wr_data(15 downto 8);
 					
 				end if;
 			
 			end if;
 			
 			if wr_en_memory = '0' then
-				data_fetch <= memory_content(conv_integer(unsigned(addr)));
+				data_fetch <= memory_content(conv_integer(unsigned(addr(7 downto 0)))) & memory_content(conv_integer(unsigned(addr(7 downto 0)))+1);
 				data_out <= data_fetch;
 			end if;
 		
