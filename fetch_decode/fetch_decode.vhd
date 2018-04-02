@@ -121,6 +121,13 @@ begin
 						rc_out <= rc_internal;
 						cl_out <= rb_internal;
 						
+					-- LOADIMM
+					when "0010010" =>
+						ra_out <= "0000111";
+						rb_out <= rb_internal;
+						rc_out <= (others => '0');
+						cl_out <= (others => '0');
+						
 					-- MOV
 					when "0010011" =>
 						ra_out <= ra_internal;
