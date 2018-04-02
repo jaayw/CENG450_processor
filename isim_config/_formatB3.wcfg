@@ -1,0 +1,201 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<wave_config>
+   <wave_state>
+   </wave_state>
+   <db_ref_list>
+      <db_ref path="C:/Users/james/Documents/Xilinx Projects/CENG450_processor/cpu_b3_tb_isim_beh.wdb" id="1" type="auto">
+         <top_modules>
+            <top_module name="cpu_b3_tb" />
+            <top_module name="numeric_std" />
+            <top_module name="std_logic_1164" />
+            <top_module name="std_logic_arith" />
+            <top_module name="std_logic_unsigned" />
+         </top_modules>
+      </db_ref>
+   </db_ref_list>
+   <WVObjectSize size="33" />
+   <wvobject fp_name="/cpu_b3_tb/clk" type="logic" db_ref_id="1">
+      <obj_property name="ElementShortName">clk</obj_property>
+      <obj_property name="ObjectShortName">clk</obj_property>
+   </wvobject>
+   <wvobject fp_name="/cpu_b3_tb/rst" type="logic" db_ref_id="1">
+      <obj_property name="ElementShortName">rst</obj_property>
+      <obj_property name="ObjectShortName">rst</obj_property>
+   </wvobject>
+   <wvobject fp_name="/cpu_b3_tb/uut/wr_enable" type="logic" db_ref_id="1">
+      <obj_property name="ElementShortName">wr_enable</obj_property>
+      <obj_property name="ObjectShortName">wr_enable</obj_property>
+   </wvobject>
+   <wvobject fp_name="/cpu_b3_tb/in_data" type="array" db_ref_id="1">
+      <obj_property name="ElementShortName">in_data[15:0]</obj_property>
+      <obj_property name="ObjectShortName">in_data[15:0]</obj_property>
+   </wvobject>
+   <wvobject fp_name="/cpu_b3_tb/out_data" type="array" db_ref_id="1">
+      <obj_property name="ElementShortName">out_data[15:0]</obj_property>
+      <obj_property name="ObjectShortName">out_data[15:0]</obj_property>
+   </wvobject>
+   <wvobject fp_name="/cpu_b3_tb/clk_period" type="other" db_ref_id="1">
+      <obj_property name="ElementShortName">clk_period</obj_property>
+      <obj_property name="ObjectShortName">clk_period</obj_property>
+   </wvobject>
+   <wvobject fp_name="/cpu_b3_tb/uut/counter" type="array" db_ref_id="1">
+      <obj_property name="ElementShortName">counter[6:0]</obj_property>
+      <obj_property name="ObjectShortName">counter[6:0]</obj_property>
+      <obj_property name="Radix">UNSIGNEDDECRADIX</obj_property>
+   </wvobject>
+   <wvobject fp_name="/cpu_b3_tb/uut/pc_ifid" type="array" db_ref_id="1">
+      <obj_property name="ElementShortName">pc_ifid[6:0]</obj_property>
+      <obj_property name="ObjectShortName">pc_ifid[6:0]</obj_property>
+      <obj_property name="Radix">UNSIGNEDDECRADIX</obj_property>
+   </wvobject>
+   <wvobject fp_name="/cpu_b3_tb/uut/counter_exe" type="array" db_ref_id="1">
+      <obj_property name="ElementShortName">counter_exe[6:0]</obj_property>
+      <obj_property name="ObjectShortName">counter_exe[6:0]</obj_property>
+      <obj_property name="Radix">UNSIGNEDDECRADIX</obj_property>
+   </wvobject>
+   <wvobject fp_name="/cpu_b3_tb/uut/pc_hold" type="logic" db_ref_id="1">
+      <obj_property name="ElementShortName">pc_hold</obj_property>
+      <obj_property name="ObjectShortName">pc_hold</obj_property>
+   </wvobject>
+   <wvobject fp_name="/cpu_b3_tb/uut/br_en" type="logic" db_ref_id="1">
+      <obj_property name="ElementShortName">br_en</obj_property>
+      <obj_property name="ObjectShortName">br_en</obj_property>
+   </wvobject>
+   <wvobject fp_name="/cpu_b3_tb/uut/instr" type="array" db_ref_id="1">
+      <obj_property name="ElementShortName">instr[15:0]</obj_property>
+      <obj_property name="ObjectShortName">instr[15:0]</obj_property>
+   </wvobject>
+   <wvobject fp_name="/cpu_b3_tb/uut/instr_ifid" type="array" db_ref_id="1">
+      <obj_property name="ElementShortName">instr_ifid[15:0]</obj_property>
+      <obj_property name="ObjectShortName">instr_ifid[15:0]</obj_property>
+   </wvobject>
+   <wvobject fp_name="/cpu_b3_tb/uut/instr_exe" type="array" db_ref_id="1">
+      <obj_property name="ElementShortName">instr_exe[15:0]</obj_property>
+      <obj_property name="ObjectShortName">instr_exe[15:0]</obj_property>
+   </wvobject>
+   <wvobject fp_name="/cpu_b3_tb/uut/ra_id" type="array" db_ref_id="1">
+      <obj_property name="ElementShortName">ra_id[2:0]</obj_property>
+      <obj_property name="ObjectShortName">ra_id[2:0]</obj_property>
+      <obj_property name="Radix">UNSIGNEDDECRADIX</obj_property>
+   </wvobject>
+   <wvobject fp_name="/cpu_b3_tb/uut/ra_exe" type="array" db_ref_id="1">
+      <obj_property name="ElementShortName">ra_exe[2:0]</obj_property>
+      <obj_property name="ObjectShortName">ra_exe[2:0]</obj_property>
+      <obj_property name="Radix">UNSIGNEDDECRADIX</obj_property>
+   </wvobject>
+   <wvobject fp_name="/cpu_b3_tb/uut/wr_index" type="array" db_ref_id="1">
+      <obj_property name="ElementShortName">wr_index[2:0]</obj_property>
+      <obj_property name="ObjectShortName">wr_index[2:0]</obj_property>
+      <obj_property name="Radix">UNSIGNEDDECRADIX</obj_property>
+   </wvobject>
+   <wvobject fp_name="/cpu_b3_tb/uut/rb" type="array" db_ref_id="1">
+      <obj_property name="ElementShortName">rb[2:0]</obj_property>
+      <obj_property name="ObjectShortName">rb[2:0]</obj_property>
+      <obj_property name="Radix">UNSIGNEDDECRADIX</obj_property>
+   </wvobject>
+   <wvobject fp_name="/cpu_b3_tb/uut/rc" type="array" db_ref_id="1">
+      <obj_property name="ElementShortName">rc[2:0]</obj_property>
+      <obj_property name="ObjectShortName">rc[2:0]</obj_property>
+      <obj_property name="Radix">UNSIGNEDDECRADIX</obj_property>
+   </wvobject>
+   <wvobject fp_name="/cpu_b3_tb/uut/rd_data1" type="array" db_ref_id="1">
+      <obj_property name="ElementShortName">rd_data1[15:0]</obj_property>
+      <obj_property name="ObjectShortName">rd_data1[15:0]</obj_property>
+   </wvobject>
+   <wvobject fp_name="/cpu_b3_tb/uut/rd_data2" type="array" db_ref_id="1">
+      <obj_property name="ElementShortName">rd_data2[15:0]</obj_property>
+      <obj_property name="ObjectShortName">rd_data2[15:0]</obj_property>
+   </wvobject>
+   <wvobject fp_name="/cpu_b3_tb/uut/mux1_select" type="array" db_ref_id="1">
+      <obj_property name="ElementShortName">mux1_select[2:0]</obj_property>
+      <obj_property name="ObjectShortName">mux1_select[2:0]</obj_property>
+   </wvobject>
+   <wvobject fp_name="/cpu_b3_tb/uut/mux2_select" type="array" db_ref_id="1">
+      <obj_property name="ElementShortName">mux2_select[2:0]</obj_property>
+      <obj_property name="ObjectShortName">mux2_select[2:0]</obj_property>
+   </wvobject>
+   <wvobject fp_name="/cpu_b3_tb/uut/mux1_data" type="array" db_ref_id="1">
+      <obj_property name="ElementShortName">mux1_data[15:0]</obj_property>
+      <obj_property name="ObjectShortName">mux1_data[15:0]</obj_property>
+   </wvobject>
+   <wvobject fp_name="/cpu_b3_tb/uut/mux2_data" type="array" db_ref_id="1">
+      <obj_property name="ElementShortName">mux2_data[15:0]</obj_property>
+      <obj_property name="ObjectShortName">mux2_data[15:0]</obj_property>
+   </wvobject>
+   <wvobject fp_name="/cpu_b3_tb/uut/out_data1" type="array" db_ref_id="1">
+      <obj_property name="ElementShortName">out_data1[15:0]</obj_property>
+      <obj_property name="ObjectShortName">out_data1[15:0]</obj_property>
+      <obj_property name="Radix">SIGNEDDECRADIX</obj_property>
+   </wvobject>
+   <wvobject fp_name="/cpu_b3_tb/uut/out_data2" type="array" db_ref_id="1">
+      <obj_property name="ElementShortName">out_data2[15:0]</obj_property>
+      <obj_property name="ObjectShortName">out_data2[15:0]</obj_property>
+      <obj_property name="Radix">SIGNEDDECRADIX</obj_property>
+   </wvobject>
+   <wvobject fp_name="/cpu_b3_tb/uut/displacement" type="array" db_ref_id="1">
+      <obj_property name="ElementShortName">displacement[8:0]</obj_property>
+      <obj_property name="ObjectShortName">displacement[8:0]</obj_property>
+   </wvobject>
+   <wvobject fp_name="/cpu_b3_tb/uut/result_alu" type="array" db_ref_id="1">
+      <obj_property name="ElementShortName">result_alu[15:0]</obj_property>
+      <obj_property name="ObjectShortName">result_alu[15:0]</obj_property>
+      <obj_property name="Radix">SIGNEDDECRADIX</obj_property>
+   </wvobject>
+   <wvobject fp_name="/cpu_b3_tb/uut/mux_ex_select" type="array" db_ref_id="1">
+      <obj_property name="ElementShortName">mux_ex_select[1:0]</obj_property>
+      <obj_property name="ObjectShortName">mux_ex_select[1:0]</obj_property>
+   </wvobject>
+   <wvobject fp_name="/cpu_b3_tb/uut/mux_ex_result" type="array" db_ref_id="1">
+      <obj_property name="ElementShortName">mux_ex_result[15:0]</obj_property>
+      <obj_property name="ObjectShortName">mux_ex_result[15:0]</obj_property>
+   </wvobject>
+   <wvobject fp_name="/cpu_b3_tb/uut/wr_data" type="array" db_ref_id="1">
+      <obj_property name="ElementShortName">wr_data[15:0]</obj_property>
+      <obj_property name="ObjectShortName">wr_data[15:0]</obj_property>
+   </wvobject>
+   <wvobject fp_name="/cpu_b3_tb/uut/REG0/reg_file" type="array" db_ref_id="1">
+      <obj_property name="ElementShortName">reg_file[0:7]</obj_property>
+      <obj_property name="ObjectShortName">reg_file[0:7]</obj_property>
+      <obj_property name="Radix">SIGNEDDECRADIX</obj_property>
+      <wvobject fp_name="/cpu_b3_tb/uut/REG0/reg_file[0]" type="array" db_ref_id="1">
+         <obj_property name="ElementShortName">[0]</obj_property>
+         <obj_property name="ObjectShortName">reg_file[0]</obj_property>
+         <obj_property name="Radix">SIGNEDDECRADIX</obj_property>
+      </wvobject>
+      <wvobject fp_name="/cpu_b3_tb/uut/REG0/reg_file[1]" type="array" db_ref_id="1">
+         <obj_property name="ElementShortName">[1]</obj_property>
+         <obj_property name="ObjectShortName">reg_file[1]</obj_property>
+         <obj_property name="Radix">SIGNEDDECRADIX</obj_property>
+      </wvobject>
+      <wvobject fp_name="/cpu_b3_tb/uut/REG0/reg_file[2]" type="array" db_ref_id="1">
+         <obj_property name="ElementShortName">[2]</obj_property>
+         <obj_property name="ObjectShortName">reg_file[2]</obj_property>
+         <obj_property name="Radix">SIGNEDDECRADIX</obj_property>
+      </wvobject>
+      <wvobject fp_name="/cpu_b3_tb/uut/REG0/reg_file[3]" type="array" db_ref_id="1">
+         <obj_property name="ElementShortName">[3]</obj_property>
+         <obj_property name="ObjectShortName">reg_file[3]</obj_property>
+         <obj_property name="Radix">SIGNEDDECRADIX</obj_property>
+      </wvobject>
+      <wvobject fp_name="/cpu_b3_tb/uut/REG0/reg_file[4]" type="array" db_ref_id="1">
+         <obj_property name="ElementShortName">[4]</obj_property>
+         <obj_property name="ObjectShortName">reg_file[4]</obj_property>
+         <obj_property name="Radix">SIGNEDDECRADIX</obj_property>
+      </wvobject>
+      <wvobject fp_name="/cpu_b3_tb/uut/REG0/reg_file[5]" type="array" db_ref_id="1">
+         <obj_property name="ElementShortName">[5]</obj_property>
+         <obj_property name="ObjectShortName">reg_file[5]</obj_property>
+         <obj_property name="Radix">SIGNEDDECRADIX</obj_property>
+      </wvobject>
+      <wvobject fp_name="/cpu_b3_tb/uut/REG0/reg_file[6]" type="array" db_ref_id="1">
+         <obj_property name="ElementShortName">[6]</obj_property>
+         <obj_property name="ObjectShortName">reg_file[6]</obj_property>
+         <obj_property name="Radix">SIGNEDDECRADIX</obj_property>
+      </wvobject>
+      <wvobject fp_name="/cpu_b3_tb/uut/REG0/reg_file[7]" type="array" db_ref_id="1">
+         <obj_property name="ElementShortName">[7]</obj_property>
+         <obj_property name="ObjectShortName">reg_file[7]</obj_property>
+         <obj_property name="Radix">SIGNEDDECRADIX</obj_property>
+      </wvobject>
+   </wvobject>
+</wave_config>
