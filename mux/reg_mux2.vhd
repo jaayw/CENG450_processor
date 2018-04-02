@@ -33,9 +33,9 @@ begin
 	data_out <=
 		("00000000" & data_imm) when data_select = "001" else
 		-- 2 * displacement
-		"000000" & data_displ & "0" when ((data_select = "010") and (data_displ(8) = '0')) else
+		("000000" & data_displ & "0") when ((data_select = "010") and (data_displ(8) = '0')) else
 		-- 2 * displacement (negative)
-		"111111" & data_displ & "0" when ((data_select = "010") and (data_displ(8) = '1')) else
+		("111111" & data_displ & "0") when ((data_select = "010") and (data_displ(8) = '1')) else
 		data_exe when data_select = "101" else
 		data_mem when data_select = "110" else
 		data_wb when data_select = "111" else

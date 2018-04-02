@@ -38,7 +38,8 @@ entity controller is
 		mux2_select : OUT std_logic_vector(2 downto 0);
 		loadimm_data : OUT std_logic_vector(7 downto 0);
 		displacement : OUT std_logic_vector(8 downto 0);
-		mux_ex_select : OUT std_logic_vector(1 downto 0)
+		mux_ex_select : OUT std_logic_vector(1 downto 0);
+		mux_mem_select : OUT std_logic
 	
 	);
 end controller;
@@ -513,6 +514,12 @@ begin
 		-- LOAD, STORE, LOADIMM, MOV, OUT
 		"10" when (opc_exe = ("0010000" or "0010001" or "0010010" or "0010011" or "0100000")) else
 		"00";
+	
+	-- Select data for MEM stage output
+	mux_mem_select <=
+		-- LOAD
+		'1' when opc_mem = "0010000" else
+		'0';
 
 end Behavioral;
 

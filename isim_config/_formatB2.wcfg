@@ -13,7 +13,7 @@
          </top_modules>
       </db_ref>
    </db_ref_list>
-   <WVObjectSize size="37" />
+   <WVObjectSize size="34" />
    <wave_markers>
       <marker time="250000000000" label="" />
       <marker time="950000000000" label="" />
@@ -92,78 +92,80 @@
    <wvobject fp_name="/cpu_b2_tb/uut/rb" type="array" db_ref_id="1">
       <obj_property name="ElementShortName">rb[2:0]</obj_property>
       <obj_property name="ObjectShortName">rb[2:0]</obj_property>
+      <obj_property name="Radix">UNSIGNEDDECRADIX</obj_property>
    </wvobject>
    <wvobject fp_name="/cpu_b2_tb/uut/rc" type="array" db_ref_id="1">
       <obj_property name="ElementShortName">rc[2:0]</obj_property>
       <obj_property name="ObjectShortName">rc[2:0]</obj_property>
-   </wvobject>
-   <wvobject fp_name="/cpu_b2_tb/uut/cl" type="array" db_ref_id="1">
-      <obj_property name="ElementShortName">cl[3:0]</obj_property>
-      <obj_property name="ObjectShortName">cl[3:0]</obj_property>
+      <obj_property name="Radix">UNSIGNEDDECRADIX</obj_property>
    </wvobject>
    <wvobject fp_name="/cpu_b2_tb/uut/rd_data1" type="array" db_ref_id="1">
       <obj_property name="ElementShortName">rd_data1[15:0]</obj_property>
       <obj_property name="ObjectShortName">rd_data1[15:0]</obj_property>
+      <obj_property name="Radix">UNSIGNEDDECRADIX</obj_property>
    </wvobject>
    <wvobject fp_name="/cpu_b2_tb/uut/rd_data2" type="array" db_ref_id="1">
       <obj_property name="ElementShortName">rd_data2[15:0]</obj_property>
       <obj_property name="ObjectShortName">rd_data2[15:0]</obj_property>
+      <obj_property name="Radix">UNSIGNEDDECRADIX</obj_property>
+   </wvobject>
+   <wvobject fp_name="/cpu_b2_tb/uut/mux1_select" type="array" db_ref_id="1">
+      <obj_property name="ElementShortName">mux1_select[2:0]</obj_property>
+      <obj_property name="ObjectShortName">mux1_select[2:0]</obj_property>
    </wvobject>
    <wvobject fp_name="/cpu_b2_tb/uut/mux1_data" type="array" db_ref_id="1">
       <obj_property name="ElementShortName">mux1_data[15:0]</obj_property>
       <obj_property name="ObjectShortName">mux1_data[15:0]</obj_property>
+      <obj_property name="Radix">UNSIGNEDDECRADIX</obj_property>
+   </wvobject>
+   <wvobject fp_name="/cpu_b2_tb/uut/mux2_select" type="array" db_ref_id="1">
+      <obj_property name="ElementShortName">mux2_select[2:0]</obj_property>
+      <obj_property name="ObjectShortName">mux2_select[2:0]</obj_property>
    </wvobject>
    <wvobject fp_name="/cpu_b2_tb/uut/mux2_data" type="array" db_ref_id="1">
       <obj_property name="ElementShortName">mux2_data[15:0]</obj_property>
       <obj_property name="ObjectShortName">mux2_data[15:0]</obj_property>
-   </wvobject>
-   <wvobject fp_name="/cpu_b2_tb/uut/displacement" type="array" db_ref_id="1">
-      <obj_property name="ElementShortName">displacement[8:0]</obj_property>
-      <obj_property name="ObjectShortName">displacement[8:0]</obj_property>
-   </wvobject>
-   <wvobject fp_name="/cpu_b2_tb/uut/loadimm_data" type="array" db_ref_id="1">
-      <obj_property name="ElementShortName">loadimm_data[7:0]</obj_property>
-      <obj_property name="ObjectShortName">loadimm_data[7:0]</obj_property>
+      <obj_property name="Radix">UNSIGNEDDECRADIX</obj_property>
    </wvobject>
    <wvobject fp_name="/cpu_b2_tb/uut/out_data1" type="array" db_ref_id="1">
       <obj_property name="ElementShortName">out_data1[15:0]</obj_property>
       <obj_property name="ObjectShortName">out_data1[15:0]</obj_property>
+      <obj_property name="Radix">UNSIGNEDDECRADIX</obj_property>
    </wvobject>
    <wvobject fp_name="/cpu_b2_tb/uut/out_data2" type="array" db_ref_id="1">
       <obj_property name="ElementShortName">out_data2[15:0]</obj_property>
       <obj_property name="ObjectShortName">out_data2[15:0]</obj_property>
+      <obj_property name="Radix">UNSIGNEDDECRADIX</obj_property>
+   </wvobject>
+   <wvobject fp_name="/cpu_b2_tb/uut/displacement" type="array" db_ref_id="1">
+      <obj_property name="ElementShortName">displacement[8:0]</obj_property>
+      <obj_property name="ObjectShortName">displacement[8:0]</obj_property>
+      <obj_property name="Radix">UNSIGNEDDECRADIX</obj_property>
    </wvobject>
    <wvobject fp_name="/cpu_b2_tb/uut/result_alu" type="array" db_ref_id="1">
       <obj_property name="ElementShortName">result_alu[15:0]</obj_property>
       <obj_property name="ObjectShortName">result_alu[15:0]</obj_property>
+      <obj_property name="Radix">UNSIGNEDDECRADIX</obj_property>
    </wvobject>
-   <wvobject fp_name="/cpu_b2_tb/uut/z_flag_alu" type="logic" db_ref_id="1">
-      <obj_property name="ElementShortName">z_flag_alu</obj_property>
-      <obj_property name="ObjectShortName">z_flag_alu</obj_property>
-   </wvobject>
-   <wvobject fp_name="/cpu_b2_tb/uut/n_flag_alu" type="logic" db_ref_id="1">
-      <obj_property name="ElementShortName">n_flag_alu</obj_property>
-      <obj_property name="ObjectShortName">n_flag_alu</obj_property>
-   </wvobject>
-   <wvobject fp_name="/cpu_b2_tb/uut/z_flag" type="logic" db_ref_id="1">
-      <obj_property name="ElementShortName">z_flag</obj_property>
-      <obj_property name="ObjectShortName">z_flag</obj_property>
-   </wvobject>
-   <wvobject fp_name="/cpu_b2_tb/uut/n_flag" type="logic" db_ref_id="1">
-      <obj_property name="ElementShortName">n_flag</obj_property>
-      <obj_property name="ObjectShortName">n_flag</obj_property>
+   <wvobject fp_name="/cpu_b2_tb/uut/counter_exe" type="array" db_ref_id="1">
+      <obj_property name="ElementShortName">counter_exe[6:0]</obj_property>
+      <obj_property name="ObjectShortName">counter_exe[6:0]</obj_property>
+      <obj_property name="Radix">UNSIGNEDDECRADIX</obj_property>
    </wvobject>
    <wvobject fp_name="/cpu_b2_tb/uut/mux_ex_result" type="array" db_ref_id="1">
       <obj_property name="ElementShortName">mux_ex_result[15:0]</obj_property>
       <obj_property name="ObjectShortName">mux_ex_result[15:0]</obj_property>
+      <obj_property name="Radix">UNSIGNEDDECRADIX</obj_property>
    </wvobject>
    <wvobject fp_name="/cpu_b2_tb/uut/result_mem" type="array" db_ref_id="1">
       <obj_property name="ElementShortName">result_mem[15:0]</obj_property>
       <obj_property name="ObjectShortName">result_mem[15:0]</obj_property>
+      <obj_property name="Radix">SIGNEDDECRADIX</obj_property>
    </wvobject>
    <wvobject fp_name="/cpu_b2_tb/uut/mux_mem_result" type="array" db_ref_id="1">
       <obj_property name="ElementShortName">mux_mem_result[15:0]</obj_property>
       <obj_property name="ObjectShortName">mux_mem_result[15:0]</obj_property>
+      <obj_property name="Radix">SIGNEDDECRADIX</obj_property>
    </wvobject>
    <wvobject fp_name="/cpu_b2_tb/uut/mux_wb_result" type="array" db_ref_id="1">
       <obj_property name="ElementShortName">mux_wb_result[15:0]</obj_property>
