@@ -67,28 +67,28 @@ begin
 					-- Format A3
 					-- IN (33)
 					when "0100001" =>
-						opc_out <= "0000000";
+						opc_out <= "0000001";
 						out_data1 <= in_direct;
 						out_data2 <= (others => '0');
 						
 					-- OUT (32)
 					when "0100000" =>
-						opc_out <= "0000000";
+						opc_out <= "0000001";
 						out_data1 <= in_data1;
 						out_data2 <= (others => '0');
 					
 					-- Format A2
 					-- Shift (5/6)
-					when "0000101" =>
+					when "0000101" | "0000110" =>
 						opc_out <= op_code;
 						out_data1 <= in_data1;
 						out_data2 <= "000000000000" & cl_in;
 						
-					-- Shift (6)
-					when "0000110" =>
-						opc_out <= op_code;
-						out_data1 <= in_data1;
-						out_data2 <= "000000000000" & cl_in;
+--					-- Shift (6)
+--					when "0000110" =>
+--						opc_out <= op_code;
+--						out_data1 <= in_data1;
+--						out_data2 <= "000000000000" & cl_in;
 					
 					-- ALU Mode -> ADD when BRR, BRR.N, BRR.Z, BR, BR.N, BR.Z, BR.SUB, RETURN
 					when "1000000" | "1000001" | "1000010" | "1000011" | "1000100" | "1000101" | "1000110" | "1000111" =>
