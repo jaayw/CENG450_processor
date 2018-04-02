@@ -74,8 +74,8 @@ end component;
 
 -- Change name according to Format testing
 -- Format A: ROM_VHDL_16
--- Format B:
--- Format L:
+-- Format B: ROM_VHDL_B
+-- Format L: ROM_VHDL_L
 component ROM_VHDL_B is
 	port (
 			clk : IN STD_LOGIC;
@@ -350,7 +350,7 @@ PC0: pc port map (
 -- Change name according to Format testing
 -- Format A: ROM_VHDL_16
 -- Format B: ROM_VHDL_B
--- Format L:
+-- Format L: ROM_VHDL_L
 ROM: ROM_VHDL_B port map (
 			clk => clk,
 			addr => counter,
@@ -479,7 +479,7 @@ out_data <= result_mem;
 
 -- MEM STAGE
 
-MEMORY: memory port map (
+RAM: memory port map (
 		clk => clk,
 		rst => rst,
 		addr => mem_addr,
@@ -493,7 +493,7 @@ MUX_MEM0: mem_mux port map (
 		mem_data => result_mem,
 		memory_data => rd_memory_data,
 		data_out => mux_mem_result
-	);
+		);
 
 -- MEM/WB Latch
 			
