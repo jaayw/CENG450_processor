@@ -30,10 +30,6 @@
       <obj_property name="ElementShortName">clk_period</obj_property>
       <obj_property name="ObjectShortName">clk_period</obj_property>
    </wvobject>
-   <wvobject fp_name="/cpu_b2_tb/uut/wr_enable" type="logic" db_ref_id="1">
-      <obj_property name="ElementShortName">wr_enable</obj_property>
-      <obj_property name="ObjectShortName">wr_enable</obj_property>
-   </wvobject>
    <wvobject fp_name="/cpu_b2_tb/in_data" type="array" db_ref_id="1">
       <obj_property name="ElementShortName">in_data[15:0]</obj_property>
       <obj_property name="ObjectShortName">in_data[15:0]</obj_property>
@@ -92,16 +88,6 @@
       <obj_property name="ElementShortName">ra_mem[2:0]</obj_property>
       <obj_property name="ObjectShortName">ra_mem[2:0]</obj_property>
       <obj_property name="Radix">UNSIGNEDDECRADIX</obj_property>
-   </wvobject>
-   <wvobject fp_name="/cpu_b2_tb/uut/wr_index" type="array" db_ref_id="1">
-      <obj_property name="ElementShortName">wr_index[2:0]</obj_property>
-      <obj_property name="ObjectShortName">wr_index[2:0]</obj_property>
-      <obj_property name="Radix">UNSIGNEDDECRADIX</obj_property>
-   </wvobject>
-   <wvobject fp_name="/cpu_b2_tb/uut/wr_data" type="array" db_ref_id="1">
-      <obj_property name="ElementShortName">wr_data[15:0]</obj_property>
-      <obj_property name="ObjectShortName">wr_data[15:0]</obj_property>
-      <obj_property name="Radix">SIGNEDDECRADIX</obj_property>
    </wvobject>
    <wvobject fp_name="/cpu_b2_tb/uut/rb" type="array" db_ref_id="1">
       <obj_property name="ElementShortName">rb[2:0]</obj_property>
@@ -179,6 +165,20 @@
    <wvobject fp_name="/cpu_b2_tb/uut/mux_mem_result" type="array" db_ref_id="1">
       <obj_property name="ElementShortName">mux_mem_result[15:0]</obj_property>
       <obj_property name="ObjectShortName">mux_mem_result[15:0]</obj_property>
+      <obj_property name="Radix">SIGNEDDECRADIX</obj_property>
+   </wvobject>
+   <wvobject fp_name="/cpu_b2_tb/uut/wr_enable" type="logic" db_ref_id="1">
+      <obj_property name="ElementShortName">wr_enable</obj_property>
+      <obj_property name="ObjectShortName">wr_enable</obj_property>
+   </wvobject>
+   <wvobject fp_name="/cpu_b2_tb/uut/wr_index" type="array" db_ref_id="1">
+      <obj_property name="ElementShortName">wr_index[2:0]</obj_property>
+      <obj_property name="ObjectShortName">wr_index[2:0]</obj_property>
+      <obj_property name="Radix">UNSIGNEDDECRADIX</obj_property>
+   </wvobject>
+   <wvobject fp_name="/cpu_b2_tb/uut/wr_data" type="array" db_ref_id="1">
+      <obj_property name="ElementShortName">wr_data[15:0]</obj_property>
+      <obj_property name="ObjectShortName">wr_data[15:0]</obj_property>
       <obj_property name="Radix">SIGNEDDECRADIX</obj_property>
    </wvobject>
    <wvobject fp_name="/cpu_b2_tb/uut/REG0/reg_file" type="array" db_ref_id="1">
