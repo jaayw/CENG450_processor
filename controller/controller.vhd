@@ -27,6 +27,7 @@ entity controller is
 		-- WB
 		opc_wb : IN std_logic_vector(6 downto 0);
 		ra_wb : IN std_logic_vector(2 downto 0);
+		ml_wb : IN std_logic;
 
 		-- Instruction from various stages
 		
@@ -36,6 +37,7 @@ entity controller is
 		mux1_select : OUT std_logic_vector(2 downto 0);
 		mux2_select : OUT std_logic_vector(2 downto 0);
 		loadimm_data : OUT std_logic_vector(7 downto 0);
+		loadimm_select : OUT std_logic_vector(1 downto 0);
 		ml_out : OUT std_logic;
 		displacement : OUT std_logic_vector(8 downto 0);
 		mux_ex_select : OUT std_logic_vector(1 downto 0);
@@ -535,6 +537,14 @@ begin
 		-- STORE
 		'1' when opc_mem = "0010001" else
 		'0';
+		
+	loadimm_select <=
+		-- LOADIMM LSB
+		"01" when opc_wb = "0010010" and ml_wb = '0' else
+		-- LOADIMM MSB
+		"10" when opc_wb = "0010010" and ml_wb = '1' else
+		"00";
+		
 
 end Behavioral;
 

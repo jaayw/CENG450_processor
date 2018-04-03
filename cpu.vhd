@@ -45,6 +45,7 @@ component controller is
 		-- WB
 		opc_wb : IN std_logic_vector(6 downto 0);
 		ra_wb : IN std_logic_vector(2 downto 0);
+		ml_wb : IN std_logic;
 		
 		-- Output
 		stall : OUT std_logic;
@@ -52,6 +53,7 @@ component controller is
 		mux1_select : OUT std_logic_vector(2 downto 0);
 		mux2_select : OUT std_logic_vector(2 downto 0);
 		loadimm_data : OUT std_logic_vector(7 downto 0);
+		loadimm_select : OUT std_logic_vector(1 downto 0);
 		ml_out : OUT std_logic;
 		displacement : OUT std_logic_vector(8 downto 0);
 		mux_ex_select : OUT std_logic_vector(1 downto 0);
@@ -113,6 +115,7 @@ component register_file is
 			wr_index : IN STD_LOGIC_VECTOR(2 downto 0);
 			wr_data_reg : IN STD_LOGIC_VECTOR(15 downto 0);
 			wr_enable_reg : IN STD_LOGIC;
+			loadimm_select : IN STD_LOGIC_VECTOR(1 downto 0);
 			rd_data1 : OUT STD_LOGIC_VECTOR(15 downto 0);
 			rd_data2 : OUT STD_LOGIC_VECTOR(15 downto 0)
 			);
@@ -221,7 +224,7 @@ component memory is
 	Port(
 		clk : IN std_logic;
 		rst : IN std_logic;
-		addr : IN std_logic_vector(6 downto 0);
+		addr : IN std_logic_vector(15 downto 0);
 		wr_en_memory : IN std_logic;
 		wr_data : IN std_logic_vector(15 downto 0);
 		data_out : OUT std_logic_vector(15 downto 0)
@@ -301,11 +304,11 @@ signal ra_mem : std_logic_vector(2 downto 0);
 signal ml_mem : std_logic;
 signal result_mem : std_logic_vector(15 downto 0);
 signal wr_en_mem : std_logic;
-signal mem_addr : std_logic_vector(6 downto 0);
 signal wr_en_memory : std_logic;
 signal rd_memory_data : std_logic_vector(15 downto 0);
 signal mux_mem_select : std_logic;
 signal mux_mem_result : std_logic_vector(15 downto 0); -- Data forwarding from MEM to ID
+signal loadimm_select : std_logic_vector(1 downto 0); -- From CU for LOADIMM MSB or LSB
 
 -- WB SIGNALS
 signal op_code_wb : std_logic_vector(6 downto 0);
@@ -336,12 +339,14 @@ CU0: controller port map(
 				ra_mem => ra_mem,
 				opc_wb => op_code_wb,
 				ra_wb => wr_index,
+				ml_wb => ml_wb,
 				-- Outputs
 				stall => pc_hold,
 				pc_overwrite_en => br_en,
 				mux1_select => mux1_select,
 				mux2_select => mux2_select,
 				loadimm_data => loadimm_data,
+				loadimm_select => loadimm_select,
 				ml_out => ml,
 				displacement => displacement,
 				mux_ex_select => mux_ex_select,
@@ -395,6 +400,7 @@ REG0: register_file	port map (
 			wr_index => wr_index,
 			wr_data_reg => wr_data,
 			wr_enable_reg => wr_enable,
+			loadimm_select => loadimm_select,
 			rd_data1 => rd_data1,
 			rd_data2 =>	rd_data2
 			);
@@ -501,7 +507,7 @@ out_data <= result_mem;
 RAM: memory port map (
 		clk => clk,
 		rst => rst,
-		addr => mem_addr,
+		addr => result_mem,
 		wr_en_memory => wr_en_memory,
 		wr_data => result_mem,
 		data_out => rd_memory_data
