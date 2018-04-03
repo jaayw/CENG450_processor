@@ -51,6 +51,7 @@ op_code <= opc_in;
 				if rst = '1' then
 				
 					ra_out <= (others => '0');
+					ml_out <= '0';
 					wr_en_out <= '0';
 					wr_data_out <= (others => '0');
 					
@@ -70,8 +71,6 @@ op_code <= opc_in;
 				end if;
 				
 			end if;
-			
-			opc_out <= op_code;
 	
 	end process;
 

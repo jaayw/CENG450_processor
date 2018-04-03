@@ -55,6 +55,7 @@ begin
 				if rst = '1' then
 				
 					ra_out <= (others => '0');
+					ml_out <= '0';
 					result_out <= (others => '0');
 					wr_en <= '0';
 					z_out <= '0';
@@ -78,6 +79,7 @@ begin
 					-- Create logic for Format B and Format L
 					
 					-- write data out to WB stage AND out
+					opc_out <= op_code;
 					result_out <= result_in; --alu_result to wb stage
 					ra_out <= ra_in; --ra register
 					ml_out <= ml_in;
@@ -87,7 +89,7 @@ begin
 		
 			end if;
 			
-			opc_out <= op_code;
+			
 		
 	end process;
 	

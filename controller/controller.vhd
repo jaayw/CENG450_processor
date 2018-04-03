@@ -696,23 +696,24 @@ begin
 					case trackHazard_2 is
 						when "01" =>
 							case opc_exe is
-								-- IN @ EXE
+								-- IN @ EXE or LOADIMM @ EXE or LOAD @ EXE
 								-- Stall to allow WB to finish
-								when "0100001" =>
+								when "0100001" | "0010010" | "0010000" =>
 									stall <= '1';
 									mux1_select <= "000";
 									
-								-- LOADIMM @ EXE
-								-- Stall to allow WB to finish
-								when "0010010" =>
-									stall <= '1';
-									mux1_select <= "000";
-									
-								-- LOAD @ EXE
-								-- Stall to allow load from MEM
-								when "0010000" =>
-									stall <= '1';
-									mux1_select <= "000";
+--								-- LOADIMM @ EXE
+--								-- Stall to allow WB to finish
+--								when "0010010" =>
+--									
+--									mux1_select <= "010";
+--									stall <= '1';
+--									
+--								-- LOAD @ EXE
+--								-- Stall to allow load from MEM
+--								when "0010000" =>
+--									stall <= '1';
+--									mux1_select <= "000";
 								
 								when others =>
 									-- Forward data from EXE
@@ -759,7 +760,6 @@ begin
 							mux1_select <= "000";
 					end case; -- end trackHazard_2
 					
-					-- Reg output @ mux2 for LOADIMM
 					mux2_select <= "000"; 
 					
 					-- end when MOV case

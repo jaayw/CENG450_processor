@@ -24,7 +24,7 @@ end memory;
 
 architecture Behavioral of memory is
 
-	type MEM_ARRAY is array (0 to 63) of std_logic_vector(7 downto 0);
+	type MEM_ARRAY is array (0 to 2048) of std_logic_vector(7 downto 0);
 	signal memory_content : MEM_ARRAY;
 	-- Data stored as big endian (2**16 == 65536) -- Use 63 for testing
 	
@@ -41,7 +41,7 @@ begin
 			if rising_edge(clk) then
 				if rst = '1' then
 					
-						for i in 0 to 63 loop --(2**16 == 65536) -- Use 63 for testing
+						for i in 0 to 2048 loop --(2**16 == 65536) -- Use 63 for testing
 							memory_content(i) <= (others => '0'); 
 						end loop;
 					

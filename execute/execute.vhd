@@ -57,6 +57,7 @@ begin
 				if rst ='1' then
 				
 					instr_out <= (others => '0');
+					ml_out <= '0';
 					pc_out <= (others => '0');
 					opc_out <= (others => '0');
 					out_data1 <= (others => '0');

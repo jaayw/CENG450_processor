@@ -127,7 +127,7 @@ begin
 					-- LOADIMM
 					when "0010010" =>
 						ra_out <= "111";
-						rb_out <= rb_internal;
+						rb_out <= (others => '0');
 						rc_out <= (others => '0');
 						cl_out <= (others => '0');
 						
@@ -135,7 +135,7 @@ begin
 					when "0010011" =>
 						ra_out <= ra_internal;
 						rb_out <= rb_internal;
-						rc_out <= rc_internal;
+						rc_out <= (others => '0');
 						cl_out <= (others => '0');
 						
 					when others =>
