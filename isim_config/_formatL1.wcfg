@@ -13,7 +13,7 @@
          </top_modules>
       </db_ref>
    </db_ref_list>
-   <WVObjectSize size="46" />
+   <WVObjectSize size="47" />
    <wave_markers>
       <marker time="50000000000" label="" />
       <marker time="550000000000" label="" />
@@ -30,12 +30,6 @@
    <wvobject fp_name="/cpu_l1_tb/rst" type="logic" db_ref_id="1">
       <obj_property name="ElementShortName">rst</obj_property>
       <obj_property name="ObjectShortName">rst</obj_property>
-   </wvobject>
-   <wvobject fp_name="/cpu_l1_tb/uut/pc_hold" type="logic" db_ref_id="1">
-      <obj_property name="ElementShortName">pc_hold</obj_property>
-      <obj_property name="ObjectShortName">pc_hold</obj_property>
-      <obj_property name="UseCustomSignalColor">true</obj_property>
-      <obj_property name="CustomSignalColor">#ff0000</obj_property>
    </wvobject>
    <wvobject fp_name="/cpu_l1_tb/out_data" type="array" db_ref_id="1">
       <obj_property name="ElementShortName">out_data[15:0]</obj_property>
@@ -89,11 +83,23 @@
       <obj_property name="ElementShortName">stall</obj_property>
       <obj_property name="ObjectShortName">stall</obj_property>
    </wvobject>
+   <wvobject fp_name="/cpu_l1_tb/uut/CU0/pc_stall" type="logic" db_ref_id="1">
+      <obj_property name="ElementShortName">pc_stall</obj_property>
+      <obj_property name="ObjectShortName">pc_stall</obj_property>
+      <obj_property name="UseCustomSignalColor">true</obj_property>
+      <obj_property name="CustomSignalColor">#ffffff</obj_property>
+   </wvobject>
    <wvobject fp_name="divider49" type="divider">
       <obj_property name="label">IF</obj_property>
       <obj_property name="DisplayName">label</obj_property>
       <obj_property name="BkColor">128 128 255</obj_property>
       <obj_property name="TextColor">230 230 230</obj_property>
+   </wvobject>
+   <wvobject fp_name="/cpu_l1_tb/uut/pc_hold" type="logic" db_ref_id="1">
+      <obj_property name="ElementShortName">pc_hold</obj_property>
+      <obj_property name="ObjectShortName">pc_hold</obj_property>
+      <obj_property name="UseCustomSignalColor">true</obj_property>
+      <obj_property name="CustomSignalColor">#ffffff</obj_property>
    </wvobject>
    <wvobject fp_name="/cpu_l1_tb/uut/counter" type="array" db_ref_id="1">
       <obj_property name="ElementShortName">counter[6:0]</obj_property>

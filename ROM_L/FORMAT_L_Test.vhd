@@ -24,7 +24,7 @@ architecture BHV of ROM_VHDL_L is
 	-- Format L1
 	000 => "0010010000001111", -- LOADIMM.LOWER #15 -- works
 	001 => "0010010100000101", -- LOADIMM.UPPER #5 -- works
---	002 => "0010011001111000", -- MOV R1, R7 -- MOV 1295 (R7) -> R1 stall issues...
+	002 => "0010011001111000", -- MOV R1, R7 -- MOV 1295 (R7) -> R1 stall issues...
 --	003 => "0010010000000000", -- LOADIMM.LOWER #0 
 --	004 => "0010010100000110", -- LOADIMM.UPPER #6 
 --	005 => "0010011010111000", -- MOV R2, R7 -- MOV 

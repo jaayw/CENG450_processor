@@ -32,7 +32,7 @@ entity controller is
 		-- Instruction from various stages
 		
 		-- Output
-		stall : OUT std_logic;
+		pc_stall : OUT std_logic;
 		pc_overwrite_en : OUT std_logic;
 		mux1_select : OUT std_logic_vector(2 downto 0);
 		mux2_select : OUT std_logic_vector(2 downto 0);
@@ -52,6 +52,8 @@ architecture Behavioral of controller is
 signal trackHazard_1 : std_logic_vector(1 downto 0) := (others => '0');
 signal trackHazard_2 : std_logic_vector(1 downto 0) := (others => '0');
 signal trackHazard_3 : std_logic_vector(1 downto 0) := (others => '0');
+
+signal stall : std_logic := '0';
 
 -- Alias
 
@@ -646,6 +648,8 @@ begin
 					stall <= '0';
 			end case;
 			
+		pc_stall <= stall;
+			
 		-- Process instructions for stalling and/or data forwarding
 		
 		-- RAW Hazards
@@ -694,7 +698,6 @@ begin
 		-- LOADIMM MSB
 		"10" when opc_wb = "0010010" and ml_wb = '1' else
 		"00";
-		
 
 end Behavioral;
 

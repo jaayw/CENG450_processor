@@ -48,7 +48,7 @@ component controller is
 		ml_wb : IN std_logic;
 		
 		-- Output
-		stall : OUT std_logic;
+		pc_stall : OUT std_logic;
 		pc_overwrite_en : OUT std_logic;
 		mux1_select : OUT std_logic_vector(2 downto 0);
 		mux2_select : OUT std_logic_vector(2 downto 0);
@@ -341,7 +341,7 @@ CU0: controller port map(
 				ra_wb => wr_index,
 				ml_wb => ml_wb,
 				-- Outputs
-				stall => pc_hold,
+				pc_stall => pc_hold,
 				pc_overwrite_en => br_en,
 				mux1_select => mux1_select,
 				mux2_select => mux2_select,
