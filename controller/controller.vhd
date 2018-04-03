@@ -32,7 +32,7 @@ entity controller is
 		-- Instruction from various stages
 		
 		-- Output
-		pc_stall : OUT std_logic;
+		stall : OUT std_logic;
 		pc_overwrite_en : OUT std_logic;
 		mux1_select : OUT std_logic_vector(2 downto 0);
 		mux2_select : OUT std_logic_vector(2 downto 0);
@@ -53,7 +53,7 @@ signal trackHazard_1 : std_logic_vector(1 downto 0) := (others => '0');
 signal trackHazard_2 : std_logic_vector(1 downto 0) := (others => '0');
 signal trackHazard_3 : std_logic_vector(1 downto 0) := (others => '0');
 
-signal stall : std_logic := '0';
+--signal stall : std_logic;
 
 -- Alias
 
@@ -276,8 +276,8 @@ begin
 								-- LOADIMM @ MEM
 								-- Stall to allow WB to finish
 								when "0100010" =>
-								stall <= '1';
-								mux1_select <= "000";
+									stall <= '1';
+									mux1_select <= "000";
 								
 								when others =>
 									-- Forward data from WB
@@ -639,16 +639,16 @@ begin
 					mux2_select <= "000";
 			end case; -- end op_code is case
 			
-			case opc_wb is
-				-- OUT
-				when "0100000" =>
-					stall <= '1';
-					
-				when others =>
-					stall <= '0';
-			end case;
-			
-		pc_stall <= stall;
+--			case opc_wb is -- BIG FUCKING PROBLEM RIGHT HERE
+--				-- OUT
+--				when "0100000" =>
+--					stall <= '1';
+--					
+--				when others =>
+--					stall <= '1';
+--			end case;
+		
+		--pc_stall <= stall;
 			
 		-- Process instructions for stalling and/or data forwarding
 		

@@ -3,7 +3,7 @@
    <wave_state>
    </wave_state>
    <db_ref_list>
-      <db_ref path="E:/Documents/Xilinx/CENG450_processor/cpu_l1_tb_isim_beh.wdb" id="1" type="auto">
+      <db_ref path="C:/Users/james/Documents/Xilinx Projects/CENG450_processor/cpu_l1_tb_isim_beh.wdb" id="1" type="auto">
          <top_modules>
             <top_module name="cpu_l1_tb" />
             <top_module name="numeric_std" />
@@ -13,7 +13,7 @@
          </top_modules>
       </db_ref>
    </db_ref_list>
-   <WVObjectSize size="47" />
+   <WVObjectSize size="46" />
    <wave_markers>
       <marker time="50000000000" label="" />
       <marker time="550000000000" label="" />
@@ -83,12 +83,6 @@
       <obj_property name="ElementShortName">stall</obj_property>
       <obj_property name="ObjectShortName">stall</obj_property>
    </wvobject>
-   <wvobject fp_name="/cpu_l1_tb/uut/CU0/pc_stall" type="logic" db_ref_id="1">
-      <obj_property name="ElementShortName">pc_stall</obj_property>
-      <obj_property name="ObjectShortName">pc_stall</obj_property>
-      <obj_property name="UseCustomSignalColor">true</obj_property>
-      <obj_property name="CustomSignalColor">#ffffff</obj_property>
-   </wvobject>
    <wvobject fp_name="divider49" type="divider">
       <obj_property name="label">IF</obj_property>
       <obj_property name="DisplayName">label</obj_property>
@@ -110,7 +104,7 @@
       <obj_property name="ElementShortName">instr[15:0]</obj_property>
       <obj_property name="ObjectShortName">instr[15:0]</obj_property>
       <obj_property name="UseCustomSignalColor">true</obj_property>
-      <obj_property name="CustomSignalColor">#ff0000</obj_property>
+      <obj_property name="CustomSignalColor">#ffff00</obj_property>
       <obj_property name="Radix">BINARYRADIX</obj_property>
    </wvobject>
    <wvobject fp_name="divider50" type="divider">
@@ -279,7 +273,7 @@
       <wvobject fp_name="/cpu_l1_tb/uut/REG0/reg_file[7]" type="array" db_ref_id="1">
          <obj_property name="ElementShortName">[7]</obj_property>
          <obj_property name="ObjectShortName">reg_file[7]</obj_property>
-         <obj_property name="Radix">BINARYRADIX</obj_property>
+         <obj_property name="Radix">SIGNEDDECRADIX</obj_property>
       </wvobject>
    </wvobject>
 </wave_config>

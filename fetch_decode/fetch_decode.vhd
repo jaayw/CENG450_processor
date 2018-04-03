@@ -49,7 +49,7 @@ begin
 	
 		begin
 		
-		if rising_edge(clk) then
+		if (clk = '1' and clk'event) then
 			
 			if rst = '1' then
 				
