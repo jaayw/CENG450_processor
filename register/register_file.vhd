@@ -46,7 +46,17 @@ process(clk)
 				when "100" => reg_file(4) <= wr_data_reg;
 				when "101" => reg_file(5) <= wr_data_reg;
 				when "110" => reg_file(6) <= wr_data_reg;
-				when "111" => reg_file(7) <= wr_data_reg;
+				when "111" => 
+							case loadimm_select is
+								-- LOADIMM LSB wr_data_reg(7 downto 0) -> R7(7 downto 0)
+								when "01" =>
+									reg_file(7)(7 downto 0) <=wr_data_reg(7 downto 0);
+								-- LOADIMM MSB wr_data_reg(7 downto 0) -> R7(15 downto 8)
+								when "10" =>
+									reg_file(7)(15 downto 8) <=wr_data_reg(7 downto 0);
+								when others =>
+									reg_file(7) <= wr_data_reg;
+							end case;
 				when others => NULL; end case;
 		end if; 
     end if;
