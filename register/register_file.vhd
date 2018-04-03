@@ -13,6 +13,7 @@ entity register_file is
 		wr_index: in std_logic_vector(2 downto 0); 
 		wr_data_reg: in std_logic_vector(15 downto 0);
 		wr_enable_reg: in std_logic;
+		loadimm_select : IN std_logic_vector(1 downto 0);
 		
 		-- output
 		rd_data1: out std_logic_vector(15 downto 0); 
@@ -45,6 +46,7 @@ process(clk)
 				when "100" => reg_file(4) <= wr_data_reg;
 				when "101" => reg_file(5) <= wr_data_reg;
 				when "110" => reg_file(6) <= wr_data_reg;
+				when "111" => reg_file(7) <= wr_data_reg;
 				when others => NULL; end case;
 		end if; 
     end if;
