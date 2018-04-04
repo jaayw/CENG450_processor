@@ -79,7 +79,7 @@ end component;
 -- Format A: ROM_VHDL_16
 -- Format B: ROM_VHDL_B
 -- Format L: ROM_VHDL_L
-component ROM_VHDL_L is
+component ROM_VHDL_B is
 	port (
 			clk : IN STD_LOGIC;
 			addr : IN STD_LOGIC_VECTOR(6 downto 0);
@@ -369,7 +369,7 @@ PC0: pc port map (
 -- Format A: ROM_VHDL_16
 -- Format B: ROM_VHDL_B
 -- Format L: ROM_VHDL_L
-ROM: ROM_VHDL_L port map (
+ROM: ROM_VHDL_B port map (
 			clk => clk,
 			addr => counter,
 			data => instr
@@ -421,7 +421,7 @@ MUX1_REG: reg_mux1 port map(
 MUX2_REG: reg_mux2 port map(
 			-- Inputs
 			data_select => mux2_select, -- From CU
-			data_displ => displacement, -- displaced data for branching
+			data_displ => displacement, -- From CU displaced data for branching
 			data_imm => loadimm_data, -- LOADIMM data
 			data_reg => rd_data2, -- Data read from reg (op2)
 			data_exe => mux_ex_result, -- Data forwarded from EXE
