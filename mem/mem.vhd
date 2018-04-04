@@ -68,19 +68,15 @@ begin
 						-- DO NOT WRITE TO REGISTER WHEN
 						-- FORMAT A: OUT, TEST, NOP
 						-- FORMAT B: BRR, BRR,N, BRR.Z, BR, BR.N, BR.Z, RETURN
-						-- FORMAT L:
-						when "0100000" | "0000111" |"0000000" | "1000000" | "1000001" | "1000010" | "1000011" | "1000100" | "1000101" =>
+						when "0100000" | "0000111" | "0000000" | "1000000" | "1000001" | "1000010" | "1000011" | "1000100" | "1000101" =>
 							wr_en <= '0';
 						when others	 =>
 							wr_en <= '1';
 					end case;
-			
-					-- #TODO
-					-- Create logic for Format B and Format L
 					
 					-- write data out to WB stage AND out
 					opc_out <= op_code;
-					result_out <= result_in; --alu_result to wb stage
+					result_out <= result_in; -- ALU result to WB
 					ra_out <= ra_in; --ra register
 					ml_out <= ml_in;
 					z_out <= z_in;

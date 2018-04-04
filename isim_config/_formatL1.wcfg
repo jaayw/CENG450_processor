@@ -248,7 +248,7 @@
       <wvobject fp_name="/cpu_l1_tb/uut/REG0/reg_file[2]" type="array" db_ref_id="1">
          <obj_property name="ElementShortName">[2]</obj_property>
          <obj_property name="ObjectShortName">reg_file[2]</obj_property>
-         <obj_property name="Radix">SIGNEDDECRADIX</obj_property>
+         <obj_property name="Radix">BINARYRADIX</obj_property>
       </wvobject>
       <wvobject fp_name="/cpu_l1_tb/uut/REG0/reg_file[3]" type="array" db_ref_id="1">
          <obj_property name="ElementShortName">[3]</obj_property>
@@ -273,7 +273,7 @@
       <wvobject fp_name="/cpu_l1_tb/uut/REG0/reg_file[7]" type="array" db_ref_id="1">
          <obj_property name="ElementShortName">[7]</obj_property>
          <obj_property name="ObjectShortName">reg_file[7]</obj_property>
-         <obj_property name="Radix">SIGNEDDECRADIX</obj_property>
+         <obj_property name="Radix">BINARYRADIX</obj_property>
       </wvobject>
    </wvobject>
 </wave_config>

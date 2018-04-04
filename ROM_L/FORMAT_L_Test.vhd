@@ -18,7 +18,7 @@ end ROM_VHDL_L;
 
 architecture BHV of ROM_VHDL_L is
 
-    type ROM_TYPE is array (0 to 127 ) of std_logic_vector (15 downto 0);
+    type ROM_TYPE is array (0 to 127) of std_logic_vector (15 downto 0);
 
     constant rom_content : ROM_TYPE := (
 	-- Format L1
@@ -28,10 +28,13 @@ architecture BHV of ROM_VHDL_L is
 	003 => X"0000", -- NOP TEST
 	004 => X"0000", -- NOP TEST
 	005 => "0010011001111000", -- MOV R1, R7 -- MOV 1295 (R7) -> R1 stall issues...
---	003 => "0010010000000000", -- LOADIMM.LOWER #0 
---	004 => "0010010100000110", -- LOADIMM.UPPER #6 
---	005 => "0010011010111000", -- MOV R2, R7 -- MOV 
---	006 => "0010001010001000", -- STORE R2, R1
+	006 => "0010010000000000", -- LOADIMM.LOWER #0 
+	007 => "0010010100000110", -- LOADIMM.UPPER #6
+	008 => X"0000", -- NOP TEST
+	009 => X"0000", -- NOP TEST
+	010 => X"0000", -- NOP TEST
+	011 => "0010011010111000", -- MOV R2, R7 -- MOV 
+	006 => "0010001010001000", -- STORE R2, R1
 --	007 => "0010000011001000", -- LOAD R3, R1
 	others => x"0000" ); -- NOP
 	
