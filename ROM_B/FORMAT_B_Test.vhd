@@ -23,14 +23,14 @@ architecture BHV of ROM_VHDL_B is
     constant rom_content : ROM_TYPE := (
 	 
 		-- Format B1 - COMPLETE
-		000 => "0100001000000000", -- IN R0 , 02  -- This example tests how data dependencies are handled
-		001 => "0100001001000000", -- IN R1 , 03  -- The values to be loaded into the corresponding resgister.
-		002 => "0100001010000000", -- IN R2 , 01
-		003 => "0100001011000000", -- IN R3 , 05  --  End of initialization
-		004 => "0000001001001010", -- ADD R1, R1, R2 -- R1 = R1 + R2 --> 3(R1) + 1(R2) = 4(R1)
-		005 => "0000010010001000", -- SUB R2, R1, R0 -- R2 = R1 + R0 --> 4(R1) - 2(R0) = 2(R2)
-		006 => "0000010001011010", -- SUB R1, R3, R2 -- R1 = R3 - R2 --> 5(R3) - 2(R2) = 3(R1)
-		others => x"0000" ); -- NOP
+--		000 => "0100001000000000", -- IN R0 , 02  -- This example tests how data dependencies are handled
+--		001 => "0100001001000000", -- IN R1 , 03  -- The values to be loaded into the corresponding resgister.
+--		002 => "0100001010000000", -- IN R2 , 01
+--		003 => "0100001011000000", -- IN R3 , 05  --  End of initialization
+--		004 => "0000001001001010", -- ADD R1, R1, R2 -- R1 = R1 + R2 --> 3(R1) + 1(R2) = 4(R1)
+--		005 => "0000010010001000", -- SUB R2, R1, R0 -- R2 = R1 + R0 --> 4(R1) - 2(R0) = 2(R2)
+--		006 => "0000010001011010", -- SUB R1, R3, R2 -- R1 = R3 - R2 --> 5(R3) - 2(R2) = 3(R1)
+--		others => x"0000" ); -- NOP
 		
 		-- Format B2
 --		000 => "0100001000000000", -- IN R0 , 02  -- This example tests the branching capabilities of the design.No data dependencies.
@@ -52,13 +52,13 @@ architecture BHV of ROM_VHDL_B is
 --		others => x"0000" ); -- NOP
 		
 		-- Format B3
---		000 => "0100001000000000", -- IN R0 , -2  -- This example tests how fast a multiplication operation is performed.
---		001 => "0100001001000000", -- IN R1 , 03  -- The values to be loaded into the corresponding resgister.
---		002 => "0100001010000000", -- IN R2 , 01
---		003 => "0100001011000000", -- IN R3 , 05  --  End of initialization
---		004 => "0000011110000011", -- MUL R6, R0, R3
---		005 => "1000000111111111", -- BRR -1
---		others => x"0000" ); -- NOP
+		000 => "0100001000000000", -- IN R0 , -2  -- This example tests how fast a multiplication operation is performed.
+		001 => "0100001001000000", -- IN R1 , 03  -- The values to be loaded into the corresponding resgister.
+		002 => "0100001010000000", -- IN R2 , 01
+		003 => "0100001011000000", -- IN R3 , 05  --  End of initialization
+		004 => "0000011110000011", -- MUL R6, R0, R3
+		005 => "1000000111111111", -- BRR -1
+		others => x"0000" ); -- NOP
 		
 begin
 
