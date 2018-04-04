@@ -8,15 +8,15 @@ use IEEE.STD_LOGIC_1164.all;
 use IEEE.STD_LOGIC_ARITH.all;
 
 
-entity ROM_VHDL_F1 is
+entity ROM_VHDL_F2 is
     port(
          clk      : in  std_logic;
          addr     : in  std_logic_vector (6 downto 0);
          data     : out std_logic_vector (15 downto 0)
          );
-end ROM_VHDL_F1;
+end ROM_VHDL_F2;
 
-architecture BHV of ROM_VHDL_F1 is
+architecture BHV of ROM_VHDL_F2 is
 
     type ROM_TYPE is array (0 to 127 ) of std_logic_vector (15 downto 0);
 

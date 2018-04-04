@@ -80,7 +80,7 @@ end component;
 -- Format B: ROM_VHDL_B
 -- Format L: ROM_VHDL_L
 -- Format Final: ROM_VHDL_F1 ROM_VHDL_F2
-component ROM_VHDL_F1 is
+component ROM_VHDL_F2 is
 	port (
 			clk : IN STD_LOGIC;
 			addr : IN STD_LOGIC_VECTOR(6 downto 0);
@@ -372,7 +372,7 @@ PC0: pc port map (
 -- Format B: ROM_VHDL_B
 -- Format L: ROM_VHDL_L
 -- Format Final: ROM_VHDL_F1 ROM_VHDL_F2
-ROM: ROM_VHDL_F1 port map (
+ROM: ROM_VHDL_F2 port map (
 			clk => clk,
 			addr => counter,
 			data => instr
