@@ -93,6 +93,7 @@ component fetch_decode is
 	port (
 			clk : IN STD_LOGIC;
 			rst : IN STD_LOGIC;
+			bubble : IN STD_LOGIC;
 			instr_in : IN STD_LOGIC_VECTOR(15 downto 0);
 			pc_in : IN std_logic_vector(6 downto 0);
 			instr_out : OUT STD_LOGIC_VECTOR(15 downto 0);
@@ -380,6 +381,7 @@ ROM: ROM_VHDL_B port map (
 IF_ID: fetch_decode port map (
 			clk => clk,
 			rst => rst,
+			bubble => pc_hold,
 			instr_in => instr,
 			pc_in => counter, -- might remove
 			instr_out => instr_ifid,

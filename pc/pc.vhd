@@ -49,6 +49,9 @@ br_Q <= conv_integer(overwrite_val);
 			if rising_edge(clk) then --rising_edge(clk)
 				if rst = '1' then
 					Pre_Q <= 0;
+					
+				elsif hold = '1' then
+					Pre_Q <= Pre_Q - 2;
 				
 				elsif (hold = '0' and br = '1') then
 					Pre_Q <= br_Q;

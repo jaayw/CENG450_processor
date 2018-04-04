@@ -27,12 +27,10 @@ architecture BHV of ROM_VHDL_B is
 		001 => "0100001001000000", -- IN R1 , 03  -- The values to be loaded into the corresponding resgister.
 		002 => "0100001010000000", -- IN R2 , 01
 		003 => "0100001011000000", -- IN R3 , 05  --  End of initialization
-		004 => X"0000", -- NOP - FOR TESTING
-		005 => "0000001001001010", -- ADD R1, R1, R2 -- R1 = R1 + R2 --> 3(R1) + 1(R2) = 4(R1)
-		006 => X"0000", -- NOP - FOR TESTING
-		007 => "0000010010001000", -- SUB R2, R1, R0 -- R2 = R1 + R0 --> 4(R1) - 2(R0) = 2(R2)
-		008 => X"0000", -- NOP - FOR TESTING
-		009 => "0000010001011010", -- SUB R1, R3, R2 -- R1 = R3 - R2 --> 5(R3) - 2(R2) = 3(R1)
+		004 => "0000001001001010", -- ADD R1, R1, R2 -- R1 = R1 + R2 --> 3(R1) + 1(R2) = 4(R1)
+		005 => "0000010010001000", -- SUB R2, R1, R0 -- R2 = R1 + R0 --> 4(R1) - 2(R0) = 2(R2)
+--		008 => X"0000", -- NOP - FOR TESTING
+		006 => "0000010001011010", -- SUB R1, R3, R2 -- R1 = R3 - R2 --> 5(R3) - 2(R2) = 3(R1)
 		others => x"0000" ); -- NOP
 		
 		-- Format B2

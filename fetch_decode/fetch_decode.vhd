@@ -15,6 +15,7 @@ entity fetch_decode is
 	PORT(
 			clk : IN std_logic;
 			rst : IN std_logic;
+			bubble : IN std_logic;
 			
 			-- input
 			instr_in : IN std_logic_vector(15 downto 0); -- take in inst from rom
@@ -49,7 +50,7 @@ begin
 	
 		begin
 		
-		if (clk = '1' and clk'event) then
+		if rising_edge(clk) then --(clk = '1' and clk'event)
 			
 			if rst = '1' then
 				
@@ -152,6 +153,19 @@ begin
 			end if;
 			
 		end if;
+		
+--		case bubble is
+--			when '1' =>
+--				instr_out <= (others => '0');
+--				pc_out <= '0' & pc_in(6 downto 1);
+--				ra_out <= (others => '0');
+--				rb_out <= (others => '0');
+--				rc_out <= (others => '0');
+--				cl_out <= (others => '0');
+--			when others =>
+--				NULL;
+--		end case;
+		
 			
 	end process;
 
