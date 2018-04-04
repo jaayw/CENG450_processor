@@ -79,6 +79,7 @@ end component;
 -- Format A: ROM_VHDL_16
 -- Format B: ROM_VHDL_B
 -- Format L: ROM_VHDL_L
+-- Format Final: ROM_VHDL_F1 ROM_VHDL_F2
 component ROM_VHDL_B is
 	port (
 			clk : IN STD_LOGIC;
