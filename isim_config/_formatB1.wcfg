@@ -3,7 +3,7 @@
    <wave_state>
    </wave_state>
    <db_ref_list>
-      <db_ref path="E:/Documents/Xilinx/CENG450_processor/cpu_b1_tb_isim_beh.wdb" id="1" type="auto">
+      <db_ref path="C:/Users/jawong.UVIC.001/Xilinx/CENG450_processor/cpu_b1_tb_isim_beh.wdb" id="1" type="auto">
          <top_modules>
             <top_module name="cpu_b1_tb" />
             <top_module name="numeric_std" />
@@ -13,7 +13,7 @@
          </top_modules>
       </db_ref>
    </db_ref_list>
-   <WVObjectSize size="45" />
+   <WVObjectSize size="44" />
    <wave_markers>
       <marker time="250000000000" label="" />
       <marker time="350000000000" label="" />
@@ -81,10 +81,6 @@
       <obj_property name="ElementShortName">pc_hold</obj_property>
       <obj_property name="ObjectShortName">pc_hold</obj_property>
    </wvobject>
-   <wvobject fp_name="/cpu_b1_tb/uut/IF_ID/bubble" type="logic" db_ref_id="1">
-      <obj_property name="ElementShortName">bubble</obj_property>
-      <obj_property name="ObjectShortName">bubble</obj_property>
-   </wvobject>
    <wvobject fp_name="/cpu_b1_tb/uut/counter" type="array" db_ref_id="1">
       <obj_property name="ElementShortName">counter[6:0]</obj_property>
       <obj_property name="ObjectShortName">counter[6:0]</obj_property>
@@ -96,11 +92,27 @@
       <obj_property name="ElementShortName">instr[15:0]</obj_property>
       <obj_property name="ObjectShortName">instr[15:0]</obj_property>
    </wvobject>
+   <wvobject fp_name="/cpu_b1_tb/in_data" type="array" db_ref_id="1">
+      <obj_property name="DisplayName">label</obj_property>
+      <obj_property name="ElementShortName">in_data[15:0]</obj_property>
+      <obj_property name="ObjectShortName">in_data[15:0]</obj_property>
+      <obj_property name="Radix">SIGNEDDECRADIX</obj_property>
+      <obj_property name="label">in_data[15:0]</obj_property>
+   </wvobject>
+   <wvobject fp_name="/cpu_b1_tb/out_data" type="array" db_ref_id="1">
+      <obj_property name="ElementShortName">out_data[15:0]</obj_property>
+      <obj_property name="ObjectShortName">out_data[15:0]</obj_property>
+      <obj_property name="Radix">SIGNEDDECRADIX</obj_property>
+   </wvobject>
    <wvobject fp_name="divider45" type="divider">
       <obj_property name="label">ID</obj_property>
       <obj_property name="DisplayName">label</obj_property>
       <obj_property name="BkColor">128 128 255</obj_property>
       <obj_property name="TextColor">230 230 230</obj_property>
+   </wvobject>
+   <wvobject fp_name="/cpu_b1_tb/uut/IF_ID/bubble" type="logic" db_ref_id="1">
+      <obj_property name="ElementShortName">bubble</obj_property>
+      <obj_property name="ObjectShortName">bubble</obj_property>
    </wvobject>
    <wvobject fp_name="/cpu_b1_tb/uut/IF_ID/pc_out" type="array" db_ref_id="1">
       <obj_property name="ElementShortName">pc_out[6:0]</obj_property>
@@ -174,16 +186,6 @@
       <obj_property name="ElementShortName">instr_exe[15:0]</obj_property>
       <obj_property name="ObjectShortName">instr_exe[15:0]</obj_property>
    </wvobject>
-   <wvobject fp_name="/cpu_b1_tb/in_data" type="array" db_ref_id="1">
-      <obj_property name="ElementShortName">in_data[15:0]</obj_property>
-      <obj_property name="ObjectShortName">in_data[15:0]</obj_property>
-      <obj_property name="Radix">SIGNEDDECRADIX</obj_property>
-   </wvobject>
-   <wvobject fp_name="/cpu_b1_tb/out_data" type="array" db_ref_id="1">
-      <obj_property name="ElementShortName">out_data[15:0]</obj_property>
-      <obj_property name="ObjectShortName">out_data[15:0]</obj_property>
-      <obj_property name="Radix">SIGNEDDECRADIX</obj_property>
-   </wvobject>
    <wvobject fp_name="/cpu_b1_tb/uut/result_alu" type="array" db_ref_id="1">
       <obj_property name="ElementShortName">result_alu[15:0]</obj_property>
       <obj_property name="ObjectShortName">result_alu[15:0]</obj_property>
@@ -199,10 +201,6 @@
       <obj_property name="ElementShortName">ra_mem[2:0]</obj_property>
       <obj_property name="ObjectShortName">ra_mem[2:0]</obj_property>
       <obj_property name="Radix">UNSIGNEDDECRADIX</obj_property>
-   </wvobject>
-   <wvobject fp_name="/cpu_b1_tb/uut/wr_en_mem" type="logic" db_ref_id="1">
-      <obj_property name="ElementShortName">wr_en_mem</obj_property>
-      <obj_property name="ObjectShortName">wr_en_mem</obj_property>
    </wvobject>
    <wvobject fp_name="/cpu_b1_tb/uut/result_mem" type="array" db_ref_id="1">
       <obj_property name="ElementShortName">result_mem[15:0]</obj_property>

@@ -1,9 +1,11 @@
 library IEEE;
 use IEEE.STD_LOGIC_1164.ALL;
+use IEEE.STD_LOGIC_ARITH.ALL;
+USE IEEE.STD_LOGIC_UNSIGNED.ALL;
 
 -- Uncomment the following library declaration if using
 -- arithmetic functions with Signed or Unsigned values
---use IEEE.NUMERIC_STD.ALL;
+use IEEE.NUMERIC_STD.ALL;
 
 -- Uncomment the following library declaration if instantiating
 -- any Xilinx primitives in this code.
@@ -36,6 +38,12 @@ architecture Behavioral of fetch_decode is
 
 signal instr : std_logic_vector(15 downto 0);
 
+signal pc_new : std_logic_vector(6 downto 0);
+
+signal pc_q : integer range 0 to 127;
+
+signal pc_temp : integer range 0 to 127;
+
 alias op_code is instr_in(15 downto 9);
 alias ra_internal is instr_in(8 downto 6);
 alias rb_internal is instr_in(5 downto 3);
@@ -46,11 +54,13 @@ begin
 	
 	instr <= instr_in;
 	
-	process(clk, rst, pc_in, op_code, ra_internal, rb_internal, rc_internal, cl_internal)
+	pc_q <= conv_integer(pc_in);
+	
+	process(clk, rst, pc_in, pc_q, op_code, ra_internal, rb_internal, rc_internal, cl_internal)
 	
 		begin
 		
-		if rising_edge(clk) then --(clk = '1' and clk'event)
+		if rising_edge(clk) then
 			
 			if rst = '1' then
 				
@@ -152,6 +162,21 @@ begin
 				
 			end if;
 			
+		end if;
+		
+		if falling_edge(clk) then
+			if bubble = '1' then
+				
+				pc_temp <= pc_q - 1;
+				pc_out <= conv_std_logic_vector(pc_temp, 7);
+				
+				instr_out <= (others => '0');
+				ra_out <= (others => '0');
+				rb_out <= (others => '0');
+				rc_out <= (others => '0');
+				cl_out <= (others => '0');
+		
+			end if;
 		end if;
 		
 --		case bubble is
