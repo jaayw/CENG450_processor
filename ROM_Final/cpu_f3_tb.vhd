@@ -1,3 +1,30 @@
+--------------------------------------------------------------------------------
+-- Company: 
+-- Engineer:
+--
+-- Create Date:   16:56:53 04/04/2018
+-- Design Name:   
+-- Module Name:   C:/Users/jawong.UVIC.001/Xilinx/CENG450_processor/ROM_Final/cpu_f3_tb.vhd
+-- Project Name:  CENG450_processor_old
+-- Target Device:  
+-- Tool versions:  
+-- Description:   
+-- 
+-- VHDL Test Bench Created by ISE for module: cpu
+-- 
+-- Dependencies:
+-- 
+-- Revision:
+-- Revision 0.01 - File Created
+-- Additional Comments:
+--
+-- Notes: 
+-- This testbench has been automatically generated using types std_logic and
+-- std_logic_vector for the ports of the unit under test.  Xilinx recommends
+-- that these types always be used for the top-level I/O of a design in order
+-- to guarantee that the testbench will bind correctly to the post-implementation 
+-- simulation model.
+--------------------------------------------------------------------------------
 LIBRARY ieee;
 USE ieee.std_logic_1164.ALL;
  
@@ -5,10 +32,10 @@ USE ieee.std_logic_1164.ALL;
 -- arithmetic functions with Signed or Unsigned values
 --USE ieee.numeric_std.ALL;
  
-ENTITY cpu_f2_tb IS
-END cpu_f2_tb;
+ENTITY cpu_f3_tb IS
+END cpu_f3_tb;
  
-ARCHITECTURE behavior OF cpu_f2_tb IS 
+ARCHITECTURE behavior OF cpu_f3_tb IS 
  
     -- Component Declaration for the Unit Under Test (UUT)
  
@@ -56,7 +83,6 @@ BEGIN
    -- Stimulus process
    stim_proc: process
    begin		
-	
       -- hold reset state for 100 us.
 		rst <= '1';
       wait for 100 us;
@@ -66,21 +92,6 @@ BEGIN
 		
 		rst <= '0';
 		
-		wait until (clk='1' and clk'event);
-		wait until (clk='1' and clk'event);
-		wait until (clk='1' and clk'event);
-		wait until (clk='1' and clk'event);
-		wait until (clk='1' and clk'event);
-		wait until (clk='1' and clk'event);
-		wait until (clk='1' and clk'event);
-		wait until (clk='1' and clk'event);
-		wait until (clk='1' and clk'event);
-		wait until (clk='1' and clk'event);
-		
-		in_data <= "0000000000000010";
-		
-		-- Wait until process finished
-		-- No required stimulus
 
       wait;
    end process;
