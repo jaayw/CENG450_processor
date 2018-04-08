@@ -94,9 +94,15 @@ begin
 						out_data1 <= in_data1;
 						out_data2 <= in_data2;
 						
-					-- LOAD, STORE, LOADIMM, MOV
-					when "0010000" | "0010001" | "0010010" | "0010011" =>
+					-- LOAD, LOADIMM, MOV
+					when "0010000" | "0010010" | "0010011" =>
 						opc_out <= "0000001";
+						out_data1 <= in_data1;
+						out_data2 <= in_data2;
+					
+					-- STORE
+					when "0010001" =>
+						opc_out <= "1111111";
 						out_data1 <= in_data1;
 						out_data2 <= in_data2;
 					
