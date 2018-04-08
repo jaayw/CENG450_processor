@@ -223,7 +223,7 @@
    <wvobject fp_name="/cpu_l1_tb/uut/result_mem" type="array" db_ref_id="1">
       <obj_property name="ElementShortName">result_mem[15:0]</obj_property>
       <obj_property name="ObjectShortName">result_mem[15:0]</obj_property>
-      <obj_property name="Radix">SIGNEDDECRADIX</obj_property>
+      <obj_property name="Radix">BINARYRADIX</obj_property>
    </wvobject>
    <wvobject fp_name="/cpu_l1_tb/uut/RAM/wr_en_memory" type="logic" db_ref_id="1">
       <obj_property name="ElementShortName">wr_en_memory</obj_property>
