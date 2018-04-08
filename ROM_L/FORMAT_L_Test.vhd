@@ -22,18 +22,18 @@ architecture BHV of ROM_VHDL_L is
 
     constant rom_content : ROM_TYPE := (
 	-- Format L1
-	000 => "0010010000001111", -- LOADIMM.LOWER #15 -- works
-	001 => "0010010100000101", -- LOADIMM.UPPER #5 -- works
+--	000 => "0010010000001111", -- LOADIMM.LOWER #15 -- works
+--	001 => "0010010100000101", -- LOADIMM.UPPER #5 -- works
 --	002 => X"0000", -- NOP TEST
 --	003 => X"0000", -- NOP TEST
-	002 => "0010011001111000", -- MOV R1, R7 -- MOV 1295 (R7) -> R1 stall issues...
+--	000 => "0010011001111000", -- MOV R1, R7 -- MOV 1295 (R7) -> R1 stall issues...
 --	005 => "0010010000000000", -- LOADIMM.LOWER #0 
 --	006 => "0010010100000110", -- LOADIMM.UPPER #6
 --	007 => X"0000", -- NOP TEST
 --	008 => X"0000", -- NOP TEST
 --	009 => X"0000", -- NOP TEST
 --	010 => "0010011010111000", -- MOV R2, R7 -- MOV 
---	006 => "0010001010001000", -- STORE R2, R1
+	000 => "0010001010001000", -- STORE R2, R1
 --	007 => "0010000011001000", -- LOAD R3, R1
 	others => x"0000" ); -- NOP
 	

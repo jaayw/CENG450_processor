@@ -27,7 +27,12 @@ architecture behavioural of register_file is
 type reg_array is array (integer range 0 to 7) of std_logic_vector(15 downto 0);
 
 --internals signals
-signal reg_file : reg_array; begin
+signal reg_file : reg_array := (x"0000", x"0101", x"0A0A", x"0F0F", x"00AA", x"FF00", x"1111", x"FFFF");
+
+-- FOR TESTING
+--:= (x"0000", x"0101", x"0A0A", x"0F0F", x"00AA", x"FF00", x"1111", x"FFFF");
+
+begin
 
 --write operation 
 process(clk)
@@ -35,7 +40,7 @@ process(clk)
 	begin
 		if(clk='0' and clk'event) then if(rst='1') then
 			for i in 0 to 7 loop
-				reg_file(i)<= (others => '0'); 
+				reg_file(i)<= reg_file(i);--(others => '0'); 
 			end loop;
 		elsif(wr_enable_reg='1') then
 			case wr_index(2 downto 0) is

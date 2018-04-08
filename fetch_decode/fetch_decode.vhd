@@ -131,8 +131,8 @@ begin
 					-- STORE
 					when "0010001" =>
 						ra_out <= ra_internal;
-						rb_out <= ra_internal;
-						rc_out <= rc_internal;
+						rb_out <= rb_internal;
+						rc_out <= ra_internal;
 						cl_out <= (others => '0');--'0' & rb_internal;
 						
 					-- LOADIMM

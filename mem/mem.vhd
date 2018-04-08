@@ -21,6 +21,7 @@ entity mem is
 		ra_in : in std_logic_vector(2 downto 0);
 		ml_in : IN std_logic;
 		result_in : in std_logic_vector(15 downto 0);
+		in2_in : in std_logic_vector(15 downto 0);
 		z_in : in std_logic;
 		n_in : in std_logic;
 		
@@ -30,6 +31,7 @@ entity mem is
 		ra_out : out std_logic_vector(2 downto 0);
 		ml_out : OUT std_logic;
 		result_out : out std_logic_vector(15 downto 0);
+		in2_out : OUT std_logic_vector(15 downto 0);
 		wr_en : out std_logic;
 		z_out : out std_logic;
 		n_out : out std_logic
@@ -68,7 +70,8 @@ begin
 						-- DO NOT WRITE TO REGISTER WHEN
 						-- FORMAT A: OUT, TEST, NOP
 						-- FORMAT B: BRR, BRR,N, BRR.Z, BR, BR.N, BR.Z, RETURN
-						when "0100000" | "0000111" | "0000000" | "1000000" | "1000001" | "1000010" | "1000011" | "1000100" | "1000101" =>
+						-- FORMAT L: STORE
+						when "0100000" | "0000111" | "0000000" | "1000000" | "1000001" | "1000010" | "1000011" | "1000100" | "1000101" | "0010001" =>
 							wr_en <= '0';
 						when others	 =>
 							wr_en <= '1';
@@ -77,6 +80,7 @@ begin
 					-- write data out to WB stage AND out
 					opc_out <= op_code;
 					result_out <= result_in; -- ALU result to WB
+					in2_out <= in2_in;
 					ra_out <= ra_in; --ra register
 					ml_out <= ml_in;
 					z_out <= z_in;

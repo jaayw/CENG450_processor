@@ -80,7 +80,7 @@ end component;
 -- Format B: ROM_VHDL_B
 -- Format L: ROM_VHDL_L
 -- Format Final: ROM_VHDL_F1 ROM_VHDL_F2 ROM_VHDL_F3
-component ROM_VHDL_F1 is
+component ROM_VHDL_L is
 	port (
 			clk : IN STD_LOGIC;
 			addr : IN STD_LOGIC_VECTOR(6 downto 0);
@@ -208,12 +208,14 @@ component mem is
 			ra_in : IN STD_LOGIC_VECTOR(2 downto 0);
 			ml_in : IN STD_LOGIC;
 			result_in : IN STD_LOGIC_VECTOR(15 downto 0);
+			in2_in : IN STD_LOGIC_VECTOR(15 downto 0);
 			z_in : IN STD_LOGIC;
 			n_in : IN STD_LOGIC;
 			opc_out : OUT STD_LOGIC_VECTOR(6 downto 0);
 			ra_out : OUT STD_LOGIC_VECTOR(2 downto 0);
 			ml_out : OUT STD_LOGIC;
 			result_out : OUT STD_LOGIC_VECTOR(15 downto 0);
+			in2_out : OUT STD_LOGIC_VECTOR(15 downto 0);
 			wr_en : OUT STD_LOGIC;
 			z_out : OUT STD_LOGIC;
 			n_out : OUT STD_LOGIC
@@ -307,6 +309,7 @@ signal ml_mem : std_logic;
 signal result_mem : std_logic_vector(15 downto 0);
 signal wr_en_mem : std_logic;
 signal wr_en_memory : std_logic;
+signal memory_addr : std_logic_vector(15 downto 0);
 signal rd_memory_data : std_logic_vector(15 downto 0);
 signal mux_mem_select : std_logic;
 signal mux_mem_result : std_logic_vector(15 downto 0); -- Data forwarding from MEM to ID
@@ -372,7 +375,7 @@ PC0: pc port map (
 -- Format B: ROM_VHDL_B
 -- Format L: ROM_VHDL_L
 -- Format Final: ROM_VHDL_F1 ROM_VHDL_F2 ROM_VHDL_F3
-ROM: ROM_VHDL_F1 port map (
+ROM: ROM_VHDL_L port map (
 			clk => clk,
 			addr => counter,
 			data => instr
@@ -492,6 +495,7 @@ MEM0: mem port map (
 			ra_in => ra_exe,
 			ml_in => ml_exe,
 			result_in => result_alu,
+			in2_in => out_data2,
 			z_in => z_flag_alu,
 			n_in => n_flag_alu,
 			-- Outputs
@@ -499,6 +503,7 @@ MEM0: mem port map (
 			ra_out => ra_mem,
 			ml_out => ml_mem,
 			result_out => result_mem,
+			in2_out => memory_addr,
 			wr_en => wr_en_mem,
 			z_out => z_flag,
 			n_out => n_flag
@@ -511,7 +516,7 @@ out_data <= result_mem;
 RAM: memory port map (
 		clk => clk,
 		rst => rst,
-		addr => result_mem,
+		addr => memory_addr,
 		wr_en_memory => wr_en_memory,
 		wr_data => result_mem,
 		data_out => rd_memory_data
