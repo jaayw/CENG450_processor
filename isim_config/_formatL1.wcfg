@@ -13,7 +13,7 @@
          </top_modules>
       </db_ref>
    </db_ref_list>
-   <WVObjectSize size="54" />
+   <WVObjectSize size="56" />
    <wave_markers>
       <marker time="50000000000" label="" />
       <marker time="550000000000" label="" />
@@ -260,6 +260,15 @@
    <wvobject fp_name="/cpu_l1_tb/uut/rd_memory_data" type="array" db_ref_id="1">
       <obj_property name="ElementShortName">rd_memory_data[15:0]</obj_property>
       <obj_property name="ObjectShortName">rd_memory_data[15:0]</obj_property>
+      <obj_property name="Radix">SIGNEDDECRADIX</obj_property>
+   </wvobject>
+   <wvobject fp_name="/cpu_l1_tb/uut/mux_mem_select" type="logic" db_ref_id="1">
+      <obj_property name="ElementShortName">mux_mem_select</obj_property>
+      <obj_property name="ObjectShortName">mux_mem_select</obj_property>
+   </wvobject>
+   <wvobject fp_name="/cpu_l1_tb/uut/mux_mem_result" type="array" db_ref_id="1">
+      <obj_property name="ElementShortName">mux_mem_result[15:0]</obj_property>
+      <obj_property name="ObjectShortName">mux_mem_result[15:0]</obj_property>
    </wvobject>
    <wvobject fp_name="divider54" type="divider">
       <obj_property name="label">WB</obj_property>
