@@ -1,4 +1,3 @@
-
 --
 -- Created on Thu Mar 24 13:46:54 PDT 2016
 -- 
@@ -39,9 +38,7 @@ architecture BHV of ROM_VHDL_L is
 	014 => X"0000", -- NOP TEST
 	015 => "0010001010001000", -- STORE R2, R1
 	016 => X"0000", -- NOP TEST
-	017 => X"0000", -- NOP TEST
-	018 => X"0000", -- NOP TEST
-	019 => "0010000011001000", -- LOAD R3, R1
+	017 => "0010000011001000", -- LOAD R3, R1
 	others => x"0000" ); -- NOP
 	
 	-- Format L (Final Test 1)

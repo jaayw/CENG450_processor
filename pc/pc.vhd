@@ -61,14 +61,14 @@ br_Q <= conv_integer(overwrite_val);
 			
 	end process;	
 	
-	process(clk)
-		begin
-			if falling_edge(clk) then
-				if hold = '1' then
-					Pre_Q <= Pre_Q - 2;
-				end if;
-			end if;
-	end process;
+--	process(clk)
+--		begin
+--			if falling_edge(clk) then
+--				if hold = '1' then
+--					Pre_Q <= Pre_Q - 2;
+--				end if;
+--			end if;
+--	end process;
  
 	-- Convert counter value back to binary for output
 	Q <= conv_std_logic_vector(Pre_Q,7);
