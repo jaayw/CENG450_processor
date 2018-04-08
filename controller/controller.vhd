@@ -33,6 +33,7 @@ entity controller is
 		
 		-- Output
 		stall : OUT std_logic;
+		out_en : OUT std_logic;
 		pc_overwrite_en : OUT std_logic;
 		mux1_select : OUT std_logic_vector(2 downto 0);
 		mux2_select : OUT std_logic_vector(2 downto 0);
@@ -690,6 +691,11 @@ begin
 	memory_wr_en <=
 		-- STORE
 		'1' when opc_mem = "0010001" else
+		'0';
+	
+	out_en <=
+		-- OUT
+		'1' when opc_mem = "0100000" else
 		'0';
 		
 	loadimm_select <=

@@ -50,6 +50,7 @@ component controller is
 		-- Output
 		stall : OUT std_logic;
 		pc_overwrite_en : OUT std_logic;
+		out_en : OUT std_logic;
 		mux1_select : OUT std_logic_vector(2 downto 0);
 		mux2_select : OUT std_logic_vector(2 downto 0);
 		loadimm_data : OUT std_logic_vector(7 downto 0);
@@ -244,6 +245,16 @@ component mem_mux is
 	);
 end component;
 
+component output_mux is
+	Port (
+		clk : IN std_logic;
+		rst : IN std_logic;
+		out_en : IN std_logic;
+		data_in : IN std_logic_vector(15 downto 0);
+		data_out : OUT std_logic_vector(15 downto 0)
+	);
+end component;
+
 -- MEM/WB Latch
 
 component writeback is
@@ -307,6 +318,7 @@ signal op_code_mem : std_logic_vector(6 downto 0);
 signal ra_mem : std_logic_vector(2 downto 0);
 signal ml_mem : std_logic;
 signal result_mem : std_logic_vector(15 downto 0);
+signal outCPU_en : std_logic;
 signal wr_en_mem : std_logic;
 signal wr_en_memory : std_logic;
 signal memory_addr : std_logic_vector(15 downto 0);
@@ -348,6 +360,7 @@ CU0: controller port map(
 				-- Outputs
 				stall => pc_hold,
 				pc_overwrite_en => br_en,
+				out_en => outCPU_en,
 				mux1_select => mux1_select,
 				mux2_select => mux2_select,
 				loadimm_data => loadimm_data,
@@ -508,8 +521,6 @@ MEM0: mem port map (
 			z_out => z_flag,
 			n_out => n_flag
 			);
-			
-out_data <= result_mem;
 
 -- MEM STAGE
 
@@ -527,6 +538,14 @@ MUX_MEM0: mem_mux port map (
 		mem_data => result_mem,
 		memory_data => rd_memory_data,
 		data_out => mux_mem_result
+		);
+		
+MUX_OUT0: output_mux port map (
+		clk => clk,
+		rst => rst,
+		out_en => outCPU_en,
+		data_in => result_mem,
+		data_out => out_data
 		);
 
 -- MEM/WB Latch
