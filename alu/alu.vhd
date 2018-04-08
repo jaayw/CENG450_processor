@@ -114,7 +114,7 @@ begin
 							end if;
 							
 						when others =>
-							NULL;
+							result <= in1;
 							
 					end case;
 			
