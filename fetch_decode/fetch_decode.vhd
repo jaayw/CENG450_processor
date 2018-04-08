@@ -124,8 +124,8 @@ begin
 					-- LOAD
 					when "0010000" =>
 						ra_out <= ra_internal;
-						rb_out <= rb_internal;
-						rc_out <= (others => '0');
+						rb_out <= (others => '0');
+						rc_out <= rb_internal;
 						cl_out <= (others => '0');
 						
 					-- STORE

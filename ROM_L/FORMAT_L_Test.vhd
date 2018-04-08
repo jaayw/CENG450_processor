@@ -33,8 +33,8 @@ architecture BHV of ROM_VHDL_L is
 --	008 => X"0000", -- NOP TEST
 --	009 => X"0000", -- NOP TEST
 --	010 => "0010011010111000", -- MOV R2, R7 -- MOV 
-	000 => "0010001010001000", -- STORE R2, R1
---	007 => "0010000011001000", -- LOAD R3, R1
+--	000 => "0010001010001000", -- STORE R2, R1
+	000 => "0010000011001000", -- LOAD R3, R1
 	others => x"0000" ); -- NOP
 	
 	-- Format L (Final Test 1)

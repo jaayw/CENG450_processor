@@ -13,7 +13,7 @@
          </top_modules>
       </db_ref>
    </db_ref_list>
-   <WVObjectSize size="53" />
+   <WVObjectSize size="54" />
    <wave_markers>
       <marker time="50000000000" label="" />
       <marker time="550000000000" label="" />
@@ -132,11 +132,12 @@
    <wvobject fp_name="/cpu_l1_tb/uut/rd_data1" type="array" db_ref_id="1">
       <obj_property name="ElementShortName">rd_data1[15:0]</obj_property>
       <obj_property name="ObjectShortName">rd_data1[15:0]</obj_property>
-      <obj_property name="Radix">SIGNEDDECRADIX</obj_property>
+      <obj_property name="Radix">BINARYRADIX</obj_property>
    </wvobject>
    <wvobject fp_name="/cpu_l1_tb/uut/rd_data2" type="array" db_ref_id="1">
       <obj_property name="ElementShortName">rd_data2[15:0]</obj_property>
       <obj_property name="ObjectShortName">rd_data2[15:0]</obj_property>
+      <obj_property name="Radix">BINARYRADIX</obj_property>
    </wvobject>
    <wvobject fp_name="/cpu_l1_tb/uut/loadimm_select" type="array" db_ref_id="1">
       <obj_property name="ElementShortName">loadimm_select[1:0]</obj_property>
@@ -154,7 +155,7 @@
    <wvobject fp_name="/cpu_l1_tb/uut/mux1_data" type="array" db_ref_id="1">
       <obj_property name="ElementShortName">mux1_data[15:0]</obj_property>
       <obj_property name="ObjectShortName">mux1_data[15:0]</obj_property>
-      <obj_property name="Radix">SIGNEDDECRADIX</obj_property>
+      <obj_property name="Radix">BINARYRADIX</obj_property>
    </wvobject>
    <wvobject fp_name="/cpu_l1_tb/uut/mux2_select" type="array" db_ref_id="1">
       <obj_property name="ElementShortName">mux2_select[2:0]</obj_property>
@@ -243,6 +244,10 @@
          <obj_property name="ElementShortName">wr_data[15:0]</obj_property>
          <obj_property name="ObjectShortName">wr_data[15:0]</obj_property>
       </wvobject>
+      <wvobject fp_name="/cpu_l1_tb/uut/RAM/data_fetch" type="array" db_ref_id="1">
+         <obj_property name="ElementShortName">data_fetch[15:0]</obj_property>
+         <obj_property name="ObjectShortName">data_fetch[15:0]</obj_property>
+      </wvobject>
       <wvobject fp_name="/cpu_l1_tb/uut/RAM/data_out" type="array" db_ref_id="1">
          <obj_property name="ElementShortName">data_out[15:0]</obj_property>
          <obj_property name="ObjectShortName">data_out[15:0]</obj_property>
@@ -251,6 +256,10 @@
          <obj_property name="ElementShortName">memory_content[0:128]</obj_property>
          <obj_property name="ObjectShortName">memory_content[0:128]</obj_property>
       </wvobject>
+   </wvobject>
+   <wvobject fp_name="/cpu_l1_tb/uut/rd_memory_data" type="array" db_ref_id="1">
+      <obj_property name="ElementShortName">rd_memory_data[15:0]</obj_property>
+      <obj_property name="ObjectShortName">rd_memory_data[15:0]</obj_property>
    </wvobject>
    <wvobject fp_name="divider54" type="divider">
       <obj_property name="label">WB</obj_property>
