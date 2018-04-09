@@ -38,12 +38,13 @@ entity controller is
 		loadimm_en : OUT std_logic; -- To Register
 		loadimm_data : OUT std_logic_vector(7 downto 0); -- To Register
 		loadimm_select : OUT std_logic_vector(1 downto 0); -- To Register
+		mov_en : OUT std_logic; -- To Register
 		mux1_select : OUT std_logic_vector(2 downto 0); -- To MUX1 @ [ID]
 		mux2_select : OUT std_logic_vector(2 downto 0); -- To MUX2 @ [ID]
 		displacement : OUT std_logic_vector(8 downto 0);
 		mux_ex_select : OUT std_logic_vector(1 downto 0); -- To MUX @ [EXE]
 		mux_mem_select : OUT std_logic; -- To result MUX @ [MEM]
-		memory_wr_en : OUT std_logic
+		memory_wr_en : OUT std_logic -- To RAM @ [MEM]
 	
 	);
 end controller;
@@ -82,7 +83,8 @@ begin
 
 	loadimm_data <=
 		-- when LOADIMM
-		imm when op_code = "0010010";
+		imm when op_code = "0010010" else
+		(others => '0');
 	
 	-- Output operand ml for store operation (signals for MSB or LSB in memory)
 	--ml_out <= m_l;
@@ -683,6 +685,10 @@ begin
 		-- LOADIMM MSB
 		"10" when op_code = "0010010" and m_l = '1' else
 		"00";
+		
+	mov_en <=
+		'1' when op_code = "0010011" else
+		'0';
 		
 	-- Select data for EXE stage output
 	mux_ex_select <=

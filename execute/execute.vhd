@@ -95,15 +95,15 @@ begin
 						out_data1 <= in_data1;
 						out_data2 <= in_data2;
 						
-					-- LOAD MOV
-					when "0010000" | "0010011" =>
+					-- LOAD
+					when "0010000" =>
 						instr_out <= instr;
 						opc_out <= "0000001";
 						out_data1 <= in_data1;
 						out_data2 <= in_data2;
 						
-					-- LOADIMM
-					when "0010010" =>
+					-- LOADIMM, MOV
+					when "0010010" | "0010011"=>
 						instr_out <= (others => '0');
 						opc_out <= (others => '0');
 						out_data1 <= (others => '0');

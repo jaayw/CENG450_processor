@@ -45,15 +45,15 @@ component controller is
 		-- WB
 		opc_wb : IN std_logic_vector(6 downto 0);
 		ra_wb : IN std_logic_vector(2 downto 0);
-		--ml_wb : IN std_logic;
 		
 		-- Output
 		stall : OUT std_logic;
 		out_en : OUT std_logic;
 		pc_overwrite_en : OUT std_logic;
-		loadimm_en : OUT std_logic; -- load imm change
-		loadimm_data : OUT std_logic_vector(7 downto 0); -- load imm change
+		loadimm_en : OUT std_logic;
+		loadimm_data : OUT std_logic_vector(7 downto 0);
 		loadimm_select : OUT std_logic_vector(1 downto 0);
+		mov_en : OUT std_logic;
 		mux1_select : OUT std_logic_vector(2 downto 0);
 		mux2_select : OUT std_logic_vector(2 downto 0);
 		displacement : OUT std_logic_vector(8 downto 0);
@@ -121,6 +121,9 @@ component register_file is
 			loadimm_en : IN std_logic;
 			loadimm_select : IN std_logic_vector(1 downto 0);
 			loadimm_data : IN std_logic_vector(7 downto 0);
+			mov_en : IN std_logic;
+			src_reg : IN std_logic_vector(2 downto 0);
+			dest_reg : IN std_logic_vector(2 downto 0);
 			rd_data1 : OUT STD_LOGIC_VECTOR(15 downto 0);
 			rd_data2 : OUT STD_LOGIC_VECTOR(15 downto 0)
 			);
@@ -293,6 +296,7 @@ signal mux2_data : std_logic_vector(15 downto 0);
 signal loadimm_en : std_logic; -- From CU -> Register
 signal loadimm_select : std_logic_vector(1 downto 0); -- From CU for LOADIMM MSB or LSB
 signal loadimm_data : std_logic_vector(7 downto 0); -- From CU -> Register
+signal mov_en : std_logic;
 
 -- EXECUTE SIGNALS
 signal counter_exe : std_logic_vector(6 downto 0);
@@ -359,6 +363,7 @@ CU0: controller port map(
 				loadimm_en => loadimm_en,
 				loadimm_data => loadimm_data,
 				loadimm_select => loadimm_select,
+				mov_en => mov_en,
 				mux1_select => mux1_select,
 				mux2_select => mux2_select,
 				displacement => displacement,
@@ -418,6 +423,9 @@ REG0: register_file	port map (
 			loadimm_en => loadimm_en,
 			loadimm_select => loadimm_select,
 			loadimm_data => loadimm_data,
+			mov_en => mov_en,
+			src_reg => rb,
+			dest_reg => ra_id,
 			rd_data1 => rd_data1,
 			rd_data2 =>	rd_data2
 			);
@@ -426,7 +434,6 @@ MUX1_REG: reg_mux1 port map(
 			-- Inputs
 			data_select => mux1_select, -- From CU
 			pc_val => pc_ifid, -- Counter value from IF/ID -- might remove testing and go back to direct from pc
-			--data_imm => loadimm_data,-- LOADIMM data
 			data_reg => rd_data1, -- Data read from reg (op1)
 			data_exe => mux_ex_result, -- Data forwarded from EXE
 			data_mem => mux_mem_result, -- Data forwarded from MEM
@@ -439,7 +446,6 @@ MUX2_REG: reg_mux2 port map(
 			-- Inputs
 			data_select => mux2_select, -- From CU
 			data_displ => displacement, -- From CU displaced data for branching
-			--data_imm => loadimm_data, -- LOADIMM data
 			data_reg => rd_data2, -- Data read from reg (op2)
 			data_exe => mux_ex_result, -- Data forwarded from EXE
 			data_mem => mux_mem_result, -- Data forwarded from MEM

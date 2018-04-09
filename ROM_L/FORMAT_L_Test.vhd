@@ -21,21 +21,17 @@ architecture BHV of ROM_VHDL_L is
 
     constant rom_content : ROM_TYPE := (
 	-- Format L1
-	000 => "0010010000001111", -- LOADIMM.LOWER #15 -- works
-	001 => "0010010100000101", -- LOADIMM.UPPER #5 -- works
-	002 => "0010011001111000", -- MOV R1, R7 -- MOV 1295 (R7) -> R1 stall issues...
+	000 => "0010010000001111", -- LOADIMM.LOWER #15
+	001 => "0010010100000101", -- LOADIMM.UPPER #5
+	002 => "0010011001111000", -- MOV R1, R7
 	003 => "0010010000000000", -- LOADIMM.LOWER #0 
 	004 => "0010010100000110", -- LOADIMM.UPPER #6
-	--005 => X"0000", -- NOP TEST
-	--009 => X"0000", -- NOP TEST
-	--010 => X"0000", -- NOP TEST
-	--005 => "0010011010111000", -- MOV R2, R7 -- MOV
+	005 => "0010011010111000", -- MOV R2, R7
 	--006 => X"0000", -- NOP TEST
 	--007 => X"0000", -- NOP TEST
-	--008 => X"0000", -- NOP TEST
-	--006 => "0010001010001000", -- STORE R2, R1
---	016 => X"0000", -- NOP TEST
---	017 => "0010000011001000", -- LOAD R3, R1
+	006 => "0010001010001000", -- STORE R2, R1 -- 2 Cycle issue with reading from this register
+--	009 => X"0000", -- NOP TEST
+	007 => "0010000011001000", -- LOAD R3, R1
 	others => x"0000" ); -- NOP
 	
 	-- Format L (Final Test 1)

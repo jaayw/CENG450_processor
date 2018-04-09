@@ -16,6 +16,9 @@ entity register_file is
 		loadimm_en : IN std_logic;
 		loadimm_select : IN std_logic_vector(1 downto 0);
 		loadimm_data : IN std_logic_vector(7 downto 0);
+		mov_en : IN std_logic;
+		src_reg : IN std_logic_vector(2 downto 0);
+		dest_reg : IN std_logic_vector(2 downto 0);
 		
 		-- output
 		rd_data1: out std_logic_vector(15 downto 0); 
@@ -28,7 +31,6 @@ architecture behavioural of register_file is
 
 type reg_array is array (integer range 0 to 7) of std_logic_vector(15 downto 0);
 
---internals signals
 signal reg_file : reg_array := (x"0000", x"0101", x"0A0A", x"0F0F", x"00AA", x"FF00", x"1111", x"FFFF");
 
 -- FOR TESTING
@@ -54,19 +56,33 @@ process(clk)
 				when "101" => reg_file(5) <= wr_data_reg;
 				when "110" => reg_file(6) <= wr_data_reg;
 				when "111" => reg_file(7) <= wr_data_reg;
-				when others => NULL; end case;
-		elsif (wr_enable_reg = '0' and loadimm_en = '1') then -- INSERT MOV COND
+				when others => NULL;
+			end case;
+		elsif (wr_enable_reg = '0' and loadimm_en = '1' and mov_en = '0') then -- INSERT MOV COND
 			if loadimm_select = "01" then
 				reg_file(7)(7 downto 0) <=loadimm_data;
 			elsif loadimm_select = "10" then
 				reg_file(7)(15 downto 8) <= loadimm_data;
 			end if;
-		
-		-- elsif FOR MOV
-		end if; -- end write operation
+		 
+		 elsif (wr_enable_reg = '0' and loadimm_en = '0' and mov_en = '1') then
+			case dest_reg is
+				when "000" => reg_file(0) <= reg_file(conv_integer(src_reg));
+				when "001" => reg_file(1) <= reg_file(conv_integer(src_reg));
+				when "010" => reg_file(2) <= reg_file(conv_integer(src_reg));
+				when "011" => reg_file(3) <= reg_file(conv_integer(src_reg));
+				when "100" => reg_file(4) <= reg_file(conv_integer(src_reg));
+				when "101" => reg_file(5) <= reg_file(conv_integer(src_reg));
+				when "110" => reg_file(6) <= reg_file(conv_integer(src_reg));
+				when "111" => reg_file(7) <= reg_file(conv_integer(src_reg));
+				when others => NULL;
+			end case;
+			
+--			case dest_reg is
+--			end case;
+		end if; 
     end if;
-	 
-end process;
+end process;-- end write operation
 
 	--read operation
 	rd_data1 <=	
