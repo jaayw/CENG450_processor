@@ -13,36 +13,36 @@ use IEEE.NUMERIC_STD.ALL;
 entity controller is
 	Port (
 		clk : IN std_logic;
-		instr : IN std_logic_vector(15 downto 0);
+		
 		
 		-- Input
+		-- ID
+		instr : IN std_logic_vector(15 downto 0); -- From IF/ID
+		
 		-- EXE
-		instr_exe : IN std_logic_vector(15 downto 0);
-		ra_exe : IN std_logic_vector(2 downto 0);
+		instr_exe : IN std_logic_vector(15 downto 0); -- From ID/EXE
+		ra_exe : IN std_logic_vector(2 downto 0); -- From ID/EXE
 		
 		-- MEM
-		opc_mem : IN std_logic_vector(6 downto 0);
-		ra_mem : IN std_logic_vector(2 downto 0);
+		opc_mem : IN std_logic_vector(6 downto 0); -- From EXE/MEM
+		ra_mem : IN std_logic_vector(2 downto 0); -- From EXE/MEM
 		
 		-- WB
-		opc_wb : IN std_logic_vector(6 downto 0);
-		ra_wb : IN std_logic_vector(2 downto 0);
-		ml_wb : IN std_logic;
-
-		-- Instruction from various stages
+		opc_wb : IN std_logic_vector(6 downto 0); -- From MEM/WB
+		ra_wb : IN std_logic_vector(2 downto 0); -- From MEM/WB
 		
 		-- Output
 		stall : OUT std_logic;
-		out_en : OUT std_logic;
+		out_en : OUT std_logic; -- To OUT mux @ [MEM]
 		pc_overwrite_en : OUT std_logic;
-		mux1_select : OUT std_logic_vector(2 downto 0);
-		mux2_select : OUT std_logic_vector(2 downto 0);
-		loadimm_data : OUT std_logic_vector(7 downto 0);
-		loadimm_select : OUT std_logic_vector(1 downto 0);
-		ml_out : OUT std_logic;
+		loadimm_en : OUT std_logic; -- To Register
+		loadimm_data : OUT std_logic_vector(7 downto 0); -- To Register
+		loadimm_select : OUT std_logic_vector(1 downto 0); -- To Register
+		mux1_select : OUT std_logic_vector(2 downto 0); -- To MUX1 @ [ID]
+		mux2_select : OUT std_logic_vector(2 downto 0); -- To MUX2 @ [ID]
 		displacement : OUT std_logic_vector(8 downto 0);
-		mux_ex_select : OUT std_logic_vector(1 downto 0);
-		mux_mem_select : OUT std_logic;
+		mux_ex_select : OUT std_logic_vector(1 downto 0); -- To MUX @ [EXE]
+		mux_mem_select : OUT std_logic; -- To result MUX @ [MEM]
 		memory_wr_en : OUT std_logic
 	
 	);
@@ -50,8 +50,11 @@ end controller;
 
 architecture Behavioral of controller is
 
+-- Track Hazards @ [EXE]
 signal trackHazard_1 : std_logic_vector(1 downto 0) := (others => '0');
+-- Track Hazards @ [MEM]
 signal trackHazard_2 : std_logic_vector(1 downto 0) := (others => '0');
+-- Track Hazards @ [WB]
 signal trackHazard_3 : std_logic_vector(1 downto 0) := (others => '0');
 
 --signal stall : std_logic;
@@ -79,11 +82,10 @@ begin
 
 	loadimm_data <=
 		-- when LOADIMM
-		imm when op_code = "0010010" else
-		("0000" & instr_cl);
+		imm when op_code = "0010010";
 	
 	-- Output operand ml for store operation (signals for MSB or LSB in memory)
-	ml_out <= m_l;
+	--ml_out <= m_l;
 
 	-- Tracking Data Hazards
 	trackHazard_1 <= 
@@ -290,9 +292,7 @@ begin
 							stall <= '0';
 							mux1_select <= "000";
 					end case; -- end trackHazard_1
-					
-					-- IMM
-					mux2_select <= "001";
+
 					-- end when SHR or SHL case
 				
 				-- TEST, OUT
@@ -574,11 +574,6 @@ begin
 					
 					-- end when STORE case
 					
-				-- LOADIMM
-				when "0010010" =>
-					mux1_select <= "010";
-					mux2_select <= "000";
-					
 				-- MOV
 				when "0010011" =>
 					-- Check for write back
@@ -640,7 +635,7 @@ begin
 					mux2_select <= "000";
 			end case; -- end op_code is case
 			
---			case opc_wb is -- BIG FUCKING PROBLEM RIGHT HERE
+--			case opc_wb is 
 --				-- OUT
 --				when "0100000" =>
 --					stall <= '1';
@@ -661,6 +656,8 @@ begin
 	
 	end process hazardDetect;
 	
+-- Data control and selections	
+	
 	-- Enable PC overwrite if branching
 	pc_overwrite_en <=
 		-- BRR, BRR.N, BRR.Z, BR, BR.N, BR.Z, BR.SUB, RETURN
@@ -673,13 +670,26 @@ begin
 		'1' when opc_exe = "1000110" else
 		'1' when opc_exe = "1000111" else
 		'0';
+	
+	-- Enable LOADIMM write into register at Decode stage
+	loadimm_en <=
+		'1' when op_code = "0010010" else
+		'0';
+	
+	-- Select LSB or MSB LOADIMM
+	loadimm_select <=
+		-- LOADIMM LSB
+		"01" when op_code = "0010010" and m_l = '0' else
+		-- LOADIMM MSB
+		"10" when op_code = "0010010" and m_l = '1' else
+		"00";
 		
 	-- Select data for EXE stage output
 	mux_ex_select <=
 		-- BR.SUB
 		"01" when opc_exe = ("1000110") else
-		-- LOAD, STORE, LOADIMM, MOV, OUT
-		"10" when (opc_exe = ("0010000" or "0010001" or "0010010" or "0010011" or "0100000")) else
+		-- OUT, RETURN, LOAD, STORE, LOADIMM, MOV, 
+		"10" when (opc_exe = ("0100000" or "1000111" or "0010000" or "0010001" or "0010010" or "0010011")) else
 		"00";
 	
 	-- Select data for MEM stage output
@@ -697,13 +707,6 @@ begin
 		-- OUT
 		'1' when opc_mem = "0100000" else
 		'0';
-		
-	loadimm_select <=
-		-- LOADIMM LSB
-		"01" when opc_wb = "0010010" and ml_wb = '0' else
-		-- LOADIMM MSB
-		"10" when opc_wb = "0010010" and ml_wb = '1' else
-		"00";
 
 end Behavioral;
 

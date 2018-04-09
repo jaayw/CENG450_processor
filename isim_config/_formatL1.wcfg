@@ -3,7 +3,7 @@
    <wave_state>
    </wave_state>
    <db_ref_list>
-      <db_ref path="E:/Documents/Xilinx/CENG450_processor/cpu_l1_tb_isim_beh.wdb" id="1" type="auto">
+      <db_ref path="C:/Users/james/Documents/Xilinx Projects/CENG450_processor/cpu_l1_tb_isim_beh.wdb" id="1" type="auto">
          <top_modules>
             <top_module name="cpu_l1_tb" />
             <top_module name="numeric_std" />
@@ -13,7 +13,7 @@
          </top_modules>
       </db_ref>
    </db_ref_list>
-   <WVObjectSize size="56" />
+   <WVObjectSize size="53" />
    <wave_markers>
       <marker time="50000000000" label="" />
       <marker time="550000000000" label="" />
@@ -48,10 +48,6 @@
    <wvobject fp_name="/cpu_l1_tb/uut/CU0/instr_exe" type="array" db_ref_id="1">
       <obj_property name="ElementShortName">instr_exe[15:0]</obj_property>
       <obj_property name="ObjectShortName">instr_exe[15:0]</obj_property>
-   </wvobject>
-   <wvobject fp_name="/cpu_l1_tb/uut/CU0/ml_wb" type="logic" db_ref_id="1">
-      <obj_property name="ElementShortName">ml_wb</obj_property>
-      <obj_property name="ObjectShortName">ml_wb</obj_property>
    </wvobject>
    <wvobject fp_name="/cpu_l1_tb/uut/CU0/opc_mem" type="array" db_ref_id="1">
       <obj_property name="ElementShortName">opc_mem[6:0]</obj_property>
@@ -139,6 +135,10 @@
       <obj_property name="ObjectShortName">rd_data2[15:0]</obj_property>
       <obj_property name="Radix">BINARYRADIX</obj_property>
    </wvobject>
+   <wvobject fp_name="/cpu_l1_tb/uut/loadimm_en" type="logic" db_ref_id="1">
+      <obj_property name="ElementShortName">loadimm_en</obj_property>
+      <obj_property name="ObjectShortName">loadimm_en</obj_property>
+   </wvobject>
    <wvobject fp_name="/cpu_l1_tb/uut/loadimm_select" type="array" db_ref_id="1">
       <obj_property name="ElementShortName">loadimm_select[1:0]</obj_property>
       <obj_property name="ObjectShortName">loadimm_select[1:0]</obj_property>
@@ -179,10 +179,6 @@
       <obj_property name="ElementShortName">ra_exe[2:0]</obj_property>
       <obj_property name="ObjectShortName">ra_exe[2:0]</obj_property>
    </wvobject>
-   <wvobject fp_name="/cpu_l1_tb/uut/EX0/ml_out" type="logic" db_ref_id="1">
-      <obj_property name="ElementShortName">ml_out</obj_property>
-      <obj_property name="ObjectShortName">ml_out</obj_property>
-   </wvobject>
    <wvobject fp_name="/cpu_l1_tb/uut/out_data1" type="array" db_ref_id="1">
       <obj_property name="ElementShortName">out_data1[15:0]</obj_property>
       <obj_property name="ObjectShortName">out_data1[15:0]</obj_property>
@@ -215,10 +211,6 @@
    <wvobject fp_name="/cpu_l1_tb/uut/ra_mem" type="array" db_ref_id="1">
       <obj_property name="ElementShortName">ra_mem[2:0]</obj_property>
       <obj_property name="ObjectShortName">ra_mem[2:0]</obj_property>
-   </wvobject>
-   <wvobject fp_name="/cpu_l1_tb/uut/MEM0/ml_out" type="logic" db_ref_id="1">
-      <obj_property name="ElementShortName">ml_out</obj_property>
-      <obj_property name="ObjectShortName">ml_out</obj_property>
    </wvobject>
    <wvobject fp_name="/cpu_l1_tb/uut/result_mem" type="array" db_ref_id="1">
       <obj_property name="ElementShortName">result_mem[15:0]</obj_property>
@@ -275,10 +267,6 @@
       <obj_property name="DisplayName">label</obj_property>
       <obj_property name="BkColor">128 128 255</obj_property>
       <obj_property name="TextColor">230 230 230</obj_property>
-   </wvobject>
-   <wvobject fp_name="/cpu_l1_tb/uut/WB0/ml_out" type="logic" db_ref_id="1">
-      <obj_property name="ElementShortName">ml_out</obj_property>
-      <obj_property name="ObjectShortName">ml_out</obj_property>
    </wvobject>
    <wvobject fp_name="/cpu_l1_tb/uut/op_code_wb" type="array" db_ref_id="1">
       <obj_property name="ElementShortName">op_code_wb[6:0]</obj_property>

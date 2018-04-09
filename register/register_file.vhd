@@ -13,7 +13,9 @@ entity register_file is
 		wr_index: in std_logic_vector(2 downto 0); 
 		wr_data_reg: in std_logic_vector(15 downto 0);
 		wr_enable_reg: in std_logic;
+		loadimm_en : IN std_logic;
 		loadimm_select : IN std_logic_vector(1 downto 0);
+		loadimm_data : IN std_logic_vector(7 downto 0);
 		
 		-- output
 		rd_data1: out std_logic_vector(15 downto 0); 
@@ -42,7 +44,7 @@ process(clk)
 			for i in 0 to 7 loop
 				reg_file(i)<= reg_file(i);--(others => '0'); 
 			end loop;
-		elsif(wr_enable_reg='1') then
+		elsif(wr_enable_reg='1' and loadimm_en = '0') then
 			case wr_index(2 downto 0) is
 				when "000" => reg_file(0) <= wr_data_reg;
 				when "001" => reg_file(1) <= wr_data_reg;
@@ -51,19 +53,17 @@ process(clk)
 				when "100" => reg_file(4) <= wr_data_reg;
 				when "101" => reg_file(5) <= wr_data_reg;
 				when "110" => reg_file(6) <= wr_data_reg;
-				when "111" => 
-							case loadimm_select is
-								-- LOADIMM LSB wr_data_reg(7 downto 0) -> R7(7 downto 0)
-								when "01" =>
-									reg_file(7)(7 downto 0) <=wr_data_reg(7 downto 0);
-								-- LOADIMM MSB wr_data_reg(7 downto 0) -> R7(15 downto 8)
-								when "10" =>
-									reg_file(7)(15 downto 8) <=wr_data_reg(7 downto 0);
-								when others =>
-									reg_file(7) <= wr_data_reg;
-							end case;
+				when "111" => reg_file(7) <= wr_data_reg;
 				when others => NULL; end case;
-		end if; 
+		elsif (wr_enable_reg = '0' and loadimm_en = '1') then -- INSERT MOV COND
+			if loadimm_select = "01" then
+				reg_file(7)(7 downto 0) <=loadimm_data;
+			elsif loadimm_select = "10" then
+				reg_file(7)(15 downto 8) <= loadimm_data;
+			end if;
+		
+		-- elsif FOR MOV
+		end if; -- end write operation
     end if;
 	 
 end process;

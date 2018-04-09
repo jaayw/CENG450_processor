@@ -20,13 +20,11 @@ entity writeback is
 		opc_in : IN std_logic_vector(6 downto 0);
 		result_in : IN std_logic_vector(15 downto 0);
 		ra_in : IN std_logic_vector(2 downto 0);
-		ml_in : IN std_logic;
 		wr_en_in : in std_logic;
 		
 		-- output
 		opc_out : OUT std_logic_vector(6 downto 0);
 		ra_out : OUT std_logic_vector(2 downto 0); -- wr_index
-		ml_out : OUT std_logic;
 		wr_en_out : out std_logic;
 		wr_data_out : out std_logic_vector(15 downto 0) --wr_data
 		
@@ -51,7 +49,6 @@ op_code <= opc_in;
 				if rst = '1' then
 				
 					ra_out <= (others => '0');
-					ml_out <= '0';
 					wr_en_out <= '0';
 					wr_data_out <= (others => '0');
 					
@@ -66,7 +63,6 @@ op_code <= opc_in;
 					
 					opc_out <= op_code;
 					ra_out <= ra_in; --outputs to ra -> wr_index [rom]
-					ml_out <= ml_in;
 					
 				end if;
 				

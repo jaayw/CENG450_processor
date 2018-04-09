@@ -20,11 +20,11 @@ entity fetch_decode is
 			bubble : IN std_logic;
 			
 			-- input
-			instr_in : IN std_logic_vector(15 downto 0); -- take in inst from rom
+			instr_in : IN std_logic_vector(15 downto 0); -- From ROM
 			pc_in : IN std_logic_vector(6 downto 0); -- might remove testing
 			
 			-- output
-			instr_out : OUT std_logic_vector(15 downto 0); -- Output instr to
+			instr_out : OUT std_logic_vector(15 downto 0); -- To CU and ID/EXE
 			pc_out : OUT std_logic_vector(6 downto 0); -- might remove testing
 			ra_out :	OUT std_logic_vector(2 downto 0);
 			rb_out :	OUT std_logic_vector(2 downto 0);
@@ -44,6 +44,8 @@ signal pc_q : integer range 0 to 127;
 
 signal pc_temp : integer range 0 to 127;
 
+--signal pipeflush : std_logic_vector(x downto x) := (others => '0');
+
 alias op_code is instr_in(15 downto 9);
 alias ra_internal is instr_in(8 downto 6);
 alias rb_internal is instr_in(5 downto 3);
@@ -55,6 +57,24 @@ begin
 	instr <= instr_in;
 	
 	pc_q <= conv_integer(pc_in);
+	
+--	process(clk)
+--		begin
+--			if falling_edge(clk) then
+--			if bubble = '1' then
+--				
+--				pc_temp <= pc_q - 1;
+--				pc_out <= conv_std_logic_vector(pc_temp, 7);
+--				
+--				instr_out <= (others => '0');
+--				ra_out <= (others => '0');
+--				rb_out <= (others => '0');
+--				rc_out <= (others => '0');
+--				cl_out <= (others => '0');
+--		
+--			end if;
+--		end if;
+--	end process;
 	
 	process(clk, rst, pc_in, pc_q, op_code, ra_internal, rb_internal, rc_internal, cl_internal)
 	
@@ -164,20 +184,7 @@ begin
 			
 		end if;
 		
-		if falling_edge(clk) then
-			if bubble = '1' then
-				
-				pc_temp <= pc_q - 1;
-				pc_out <= conv_std_logic_vector(pc_temp, 7);
-				
-				instr_out <= (others => '0');
-				ra_out <= (others => '0');
-				rb_out <= (others => '0');
-				rc_out <= (others => '0');
-				cl_out <= (others => '0');
 		
-			end if;
-		end if;
 		
 --		case bubble is
 --			when '1' =>

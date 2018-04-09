@@ -15,7 +15,7 @@ entity reg_mux2 is
 		-- Inputs
 		data_select : IN std_logic_vector(2 downto 0);
 		data_displ : IN std_logic_vector(8 downto 0);
-		data_imm : IN std_logic_vector(7 downto 0);
+		--data_imm : IN std_logic_vector(7 downto 0);
 		data_reg : IN std_logic_vector(15 downto 0);
 		data_exe : IN std_logic_vector(15 downto 0);
 		data_mem : IN std_logic_vector(15 downto 0);
@@ -31,7 +31,7 @@ architecture Behavioral of reg_mux2 is
 begin
 
 	data_out <=
-		("00000000" & data_imm) when data_select = "001" else
+	--	("00000000" & data_imm) when data_select = "001" else
 		-- 2 * displacement
 		("000000" & data_displ & "0") when ((data_select = "010") and (data_displ(8) = '0')) else
 		-- 2 * displacement (negative)
