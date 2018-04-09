@@ -3,7 +3,7 @@
    <wave_state>
    </wave_state>
    <db_ref_list>
-      <db_ref path="C:/Users/james/Documents/Xilinx Projects/CENG450_processor/cpu_b2_tb_isim_beh.wdb" id="1" type="auto">
+      <db_ref path="E:/Documents/Xilinx/CENG450_processor/cpu_b2_tb_isim_beh.wdb" id="1" type="auto">
          <top_modules>
             <top_module name="cpu_b2_tb" />
             <top_module name="numeric_std" />
@@ -20,6 +20,7 @@
       <marker time="1050000000000" label="" />
       <marker time="1150000000000" label="" />
       <marker time="1250000000000" label="" />
+      <marker time="25000000000" label="" />
    </wave_markers>
    <wvobject fp_name="/cpu_b2_tb/clk_period" type="other" db_ref_id="1">
       <obj_property name="ElementShortName">clk_period</obj_property>
@@ -178,7 +179,7 @@
    <wvobject fp_name="/cpu_b2_tb/uut/result_alu" type="array" db_ref_id="1">
       <obj_property name="ElementShortName">result_alu[15:0]</obj_property>
       <obj_property name="ObjectShortName">result_alu[15:0]</obj_property>
-      <obj_property name="Radix">SIGNEDDECRADIX</obj_property>
+      <obj_property name="Radix">UNSIGNEDDECRADIX</obj_property>
       <obj_property name="UseCustomSignalColor">true</obj_property>
       <obj_property name="CustomSignalColor">#ffff00</obj_property>
    </wvobject>
@@ -292,7 +293,7 @@
       <wvobject fp_name="/cpu_b2_tb/uut/REG0/reg_file[7]" type="array" db_ref_id="1">
          <obj_property name="ElementShortName">[7]</obj_property>
          <obj_property name="ObjectShortName">reg_file[7]</obj_property>
-         <obj_property name="Radix">SIGNEDDECRADIX</obj_property>
+         <obj_property name="Radix">UNSIGNEDDECRADIX</obj_property>
       </wvobject>
    </wvobject>
 </wave_config>

@@ -31,7 +31,7 @@ architecture behavioural of register_file is
 
 type reg_array is array (integer range 0 to 7) of std_logic_vector(15 downto 0);
 
-signal reg_file : reg_array := (x"0000", x"0101", x"0A0A", x"0F0F", x"00AA", x"FF00", x"1111", x"FFFF");
+signal reg_file : reg_array := (x"0000", x"0101", x"0A0A", x"0F0F", x"00AA", x"FF00", x"1111", "0000000000000001");
 
 -- FOR TESTING
 --:= (x"0000", x"0101", x"0A0A", x"0F0F", x"00AA", x"FF00", x"1111", x"FFFF");

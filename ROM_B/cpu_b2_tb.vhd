@@ -31,7 +31,7 @@ ARCHITECTURE behavior OF cpu_b2_tb IS
    signal out_data : std_logic_vector(15 downto 0);
 
    -- Clock period definitions
-   constant clk_period : time := 10 us;
+   constant clk_period : time := 100 us;
  
 BEGIN
  
@@ -58,7 +58,7 @@ BEGIN
    begin		
       -- hold reset state for 100 us.
 		rst <= '1';
-      wait for 10 us;
+      wait for 100 us;
 		
 		wait until (clk='0' and clk'event);
 		wait until (clk='1' and clk'event);

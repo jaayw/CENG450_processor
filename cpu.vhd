@@ -49,14 +49,21 @@ component controller is
 		stall : OUT std_logic;
 		out_en : OUT std_logic;
 		pc_overwrite_en : OUT std_logic;
+		
+		-- ID
 		loadimm_en : OUT std_logic;
 		loadimm_data : OUT std_logic_vector(7 downto 0);
 		loadimm_select : OUT std_logic_vector(1 downto 0);
 		mov_en : OUT std_logic;
 		mux1_select : OUT std_logic_vector(2 downto 0);
 		mux2_select : OUT std_logic_vector(2 downto 0);
+		
+		-- EXE
+		br_flush : OUT std_logic;
 		displacement : OUT std_logic_vector(8 downto 0);
 		mux_ex_select : OUT std_logic_vector(1 downto 0);
+		
+		-- MEM
 		mux_mem_select : OUT std_logic;
 		memory_wr_en : OUT std_logic
 	);
@@ -94,7 +101,7 @@ component fetch_decode is
 	port (
 			clk : IN STD_LOGIC;
 			rst : IN STD_LOGIC;
-			bubble : IN STD_LOGIC;
+			br_flush : IN STD_LOGIC;
 			instr_in : IN STD_LOGIC_VECTOR(15 downto 0);
 			pc_in : IN std_logic_vector(6 downto 0);
 			instr_out : OUT STD_LOGIC_VECTOR(15 downto 0);
@@ -158,6 +165,7 @@ component execute is
 	port (
 			clk : IN STD_LOGIC;
 			rst : IN STD_LOGIC;
+			br_flush : IN STD_LOGIC;
 			instr_in : IN STD_LOGIC_VECTOR(15 downto 0);
 			pc_in : IN STD_LOGIC_VECTOR(6 downto 0);
 			in_direct : IN STD_LOGIC_VECTOR(15 downto 0);
@@ -310,6 +318,7 @@ signal z_flag_alu : std_logic;
 signal n_flag_alu : std_logic;
 signal z_flag : std_logic;
 signal n_flag : std_logic;
+signal br_flush : std_logic;
 
 -- MEM SIGNALS
 signal op_code_mem : std_logic_vector(6 downto 0);
@@ -395,7 +404,7 @@ ROM: ROM_VHDL_B port map (
 IF_ID: fetch_decode port map (
 			clk => clk,
 			rst => rst,
-			bubble => pc_hold,
+			br_flush => br_flush,
 			instr_in => instr,
 			pc_in => counter, -- might remove
 			instr_out => instr_ifid,
@@ -455,6 +464,7 @@ MUX2_REG: reg_mux2 port map(
 EX0: execute port map (
 			clk => clk,
 			rst => rst,
+			br_flush => br_flush,
 			-- Inputs
 			instr_in => instr_ifid,
 			pc_in => counter,

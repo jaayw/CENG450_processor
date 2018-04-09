@@ -15,6 +15,7 @@ entity execute is
 	PORT (
 		clk : IN std_logic;
 		rst : IN std_logic;
+		br_flush : IN std_logic;
 		
 		--input
 		instr_in : IN std_logic_vector(15 downto 0);
@@ -52,7 +53,7 @@ begin
 			
 			if rising_edge(clk) then
 			
-				if rst ='1' then
+				if (rst ='1' or br_flush = '1') then
 				
 					instr_out <= (others => '0');
 					pc_out <= (others => '0');

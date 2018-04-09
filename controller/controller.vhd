@@ -35,14 +35,21 @@ entity controller is
 		stall : OUT std_logic;
 		out_en : OUT std_logic; -- To OUT mux @ [MEM]
 		pc_overwrite_en : OUT std_logic;
+		
+		-- ID
 		loadimm_en : OUT std_logic; -- To Register
 		loadimm_data : OUT std_logic_vector(7 downto 0); -- To Register
 		loadimm_select : OUT std_logic_vector(1 downto 0); -- To Register
 		mov_en : OUT std_logic; -- To Register
 		mux1_select : OUT std_logic_vector(2 downto 0); -- To MUX1 @ [ID]
 		mux2_select : OUT std_logic_vector(2 downto 0); -- To MUX2 @ [ID]
+		
+		-- EXE
+		br_flush : OUT std_logic;
 		displacement : OUT std_logic_vector(8 downto 0);
 		mux_ex_select : OUT std_logic_vector(1 downto 0); -- To MUX @ [EXE]
+		
+		-- MEM
 		mux_mem_select : OUT std_logic; -- To result MUX @ [MEM]
 		memory_wr_en : OUT std_logic -- To RAM @ [MEM]
 	
@@ -57,8 +64,6 @@ signal trackHazard_1 : std_logic_vector(1 downto 0) := (others => '0');
 signal trackHazard_2 : std_logic_vector(1 downto 0) := (others => '0');
 -- Track Hazards @ [WB]
 signal trackHazard_3 : std_logic_vector(1 downto 0) := (others => '0');
-
---signal stall : std_logic;
 
 -- Alias
 
@@ -241,11 +246,9 @@ begin
 					case trackHazard_1 is
 						when "01" =>
 							case opc_exe is
-								-- #TODO:
-								-- Need to remove MOV and LOADIMM hazard detection
-								-- IN @ EXE or LOADIMM @ EXE or LOAD @ EXE
+								-- IN @ EXE or LOAD @ EXE
 								-- Stall to allow WB or LOAD to finish
-								when "0100001" | "0010010" | "0010000" =>
+								when "0100001" | "0010000" =>
 									stall <= '1';
 									mux1_select <= "000";
 								
@@ -257,11 +260,9 @@ begin
 						
 						when "10" =>
 							case opc_mem is
-								-- #TODO:
-								-- Need to remove MOV and LOADIMM hazard detection
-								-- IN @ MEM or LOADIMM @ MEM
+								-- IN @ MEM
 								-- Stall to allow WB or LOAD to finish
-								when "0100001" | "0100010" =>
+								when "0100001" =>
 									stall <= '1';
 									mux1_select <= "000";
 
@@ -277,9 +278,9 @@ begin
 								-- Need to remove MOV and LOADIMM hazard detection
 								-- LOADIMM @ MEM
 								-- Stall to allow WB to finish
-								when "0100010" =>
-									stall <= '1';
-									mux1_select <= "000";
+--								when "0100010" =>
+--									stall <= '1';
+--									mux1_select <= "000";
 								
 								when others =>
 									-- Forward data from WB
@@ -300,11 +301,9 @@ begin
 					case trackHazard_1 is
 						when "01" =>
 							case opc_exe is
-								-- #TODO:
-								-- Need to remove MOV and LOADIMM hazard detection
-								-- IN @ EXE or LOADIMM @ EXE or LOAD @ EXE
+								-- IN @ EXE or LOAD @ EXE
 								-- Stall to allow WB or LOAD to finish
-								when "0100001" | "0010010" | "0010000" =>
+								when "0100001" | "0010000" =>
 									stall <= '1';
 									mux1_select <= "000";
 								
@@ -316,11 +315,9 @@ begin
 						
 						when "10" =>
 							case opc_mem is
-								-- #TODO:
-								-- Need to remove MOV and LOADIMM hazard detection
-								-- IN @ MEM or LOADIMM @ MEM
+								-- IN @ MEM
 								-- Stall to allow WB or LOAD to finish
-								when "0100001" | "0100010" =>
+								when "0100001" =>
 									stall <= '1';
 									mux1_select <= "000";
 									
@@ -336,9 +333,9 @@ begin
 								-- Need to remove MOV and LOADIMM hazard detection
 								-- LOADIMM @ MEM
 								-- Stall to allow WB to finish
-								when "0100010" =>
-								stall <= '1';
-								mux1_select <= "000";
+--								when "0100010" =>
+--								stall <= '1';
+--								mux1_select <= "000";
 								
 								when others =>
 									-- Forward data from WB
@@ -374,11 +371,9 @@ begin
 					case trackHazard_1 is
 						when "01" =>
 							case opc_exe is
-								-- #TODO:
-								-- Need to remove MOV and LOADIMM hazard detection
-								-- IN @ EXE or LOADIMM @ EXE or LOAD @ EXE
+								-- IN @ EXE or LOAD @ EXE
 								-- Stall to allow WB or LOAD to finish
-								when "0100001" | "0010010" | "0010000" =>
+								when "0100001" | "0010000" =>
 									stall <= '1';
 									mux1_select <= "000";
 								
@@ -390,11 +385,9 @@ begin
 						
 						when "10" =>
 							case opc_mem is
-								-- #TODO:
-								-- Need to remove MOV and LOADIMM hazard detection
-								-- IN @ MEM or LOADIMM @ MEM
+								-- IN @ MEM
 								-- Stall to allow WB or LOAD to finish
-								when "0100001" | "0100010" =>
+								when "0100001" =>
 									stall <= '1';
 									mux1_select <= "000";
 									
@@ -410,9 +403,9 @@ begin
 								-- Need to remove MOV and LOADIMM hazard detection
 								-- LOADIMM @ MEM
 								-- Stall to allow WB to finish
-								when "0100010" =>
-									stall <= '1';
-									mux1_select <= "000";
+--								when "0100010" =>
+--									stall <= '1';
+--									mux1_select <= "000";
 								
 								when others =>
 									-- Forward data from WB
@@ -436,11 +429,9 @@ begin
 					case trackHazard_2 is
 						when "01" =>
 							case opc_exe is
-								-- #TODO:
-								-- Need to remove MOV and LOADIMM hazard detection
-								-- IN @ EXE or LOADIMM @ EXE or LOAD @ EXE
+								-- IN @ EXE or LOAD @ EXE
 								-- Stall to allow WB or LOAD to finish
-								when "0100001" | "0010010" | "0010000" =>
+								when "0100001" | "0010000" =>
 									stall <= '1';
 									mux1_select <= "000";
 								
@@ -452,11 +443,9 @@ begin
 						
 						when "10" =>
 							case opc_mem is
-								-- #TODO:
-								-- Need to remove MOV and LOADIMM hazard detection
-								-- IN @ MEM or LOADIMM @ MEM
+								-- IN @ MEM
 								-- Stall to allow WB or LOAD to finish
-								when "0100001" | "0100010" =>
+								when "0100001" =>
 									stall <= '1';
 									mux1_select <= "000";
 									
@@ -472,9 +461,9 @@ begin
 								-- Need to remove MOV and LOADIMM hazard detection
 								-- LOADIMM @ MEM
 								-- Stall to allow WB to finish
-								when "0100010" =>
-									stall <= '1';
-									mux1_select <= "000";
+--								when "0100010" =>
+--									stall <= '1';
+--									mux1_select <= "000";
 								
 								when others =>
 									-- Forward data from WB
@@ -497,11 +486,9 @@ begin
 					case trackHazard_1 is
 						when "01" =>
 							case opc_exe is
-								-- #TODO:
-								-- Need to remove MOV and LOADIMM hazard detection
-								-- IN @ EXE or LOADIMM @ EXE or LOAD @ EXE
+								-- IN @ EXE or LOAD @ EXE
 								-- Stall to allow WB or LOAD to finish
-								when "0100001" | "0010010" | "0010000" =>
+								when "0100001" | "0010000" =>
 									stall <= '1';
 									mux1_select <= "000";
 								
@@ -513,11 +500,9 @@ begin
 						
 						when "10" =>
 							case opc_mem is
-								-- #TODO:
-								-- Need to remove MOV and LOADIMM hazard detection
-								-- IN @ MEM or LOADIMM @ MEM
+								-- IN @ MEM
 								-- Stall to allow WB or LOAD to finish
-								when "0100001" | "0100010" =>
+								when "0100001" =>
 									stall <= '1';
 									mux1_select <= "000";
 									
@@ -533,9 +518,9 @@ begin
 								-- Need to remove MOV and LOADIMM hazard detection
 								-- LOADIMM @ MEM
 								-- Stall to allow WB to finish
-								when "0100010" =>
-									stall <= '1';
-									mux1_select <= "000";
+--								when "0100010" =>
+--									stall <= '1';
+--									mux1_select <= "000";
 								
 								when others =>
 									-- Forward data from WB
@@ -565,11 +550,9 @@ begin
 						
 						when "10" =>
 							case opc_mem is
-								-- #TODO:
-								-- Need to remove MOV and LOADIMM hazard detection
-								-- IN @ MEM or LOADIMM @ EXE
+								-- IN @ MEM
 								-- Stall to allow WB or LOAD to finish
-								when "0100001" | "0010010" =>
+								when "0100001" =>
 									stall <= '1';
 									mux1_select <= "000";
 								
@@ -585,10 +568,10 @@ begin
 								-- Need to remove MOV and LOADIMM hazard detection
 								-- LOADIMM @ MEM
 								-- Stall to allow WB to finish
-								when "0100010" =>
-									stall <= '1';
-									mux1_select <= "000";
-								
+--								when "0100010" =>
+--									stall <= '1';
+--									mux1_select <= "000";
+--								
 								when others =>
 									-- Forward data from WB
 									stall <= '0';
@@ -608,11 +591,9 @@ begin
 					case trackHazard_2 is
 						when "01" =>
 							case opc_exe is
-								-- #TODO:
-								-- Need to remove MOV and LOADIMM hazard detection
-								-- IN @ EXE or LOADIMM @ EXE or LOAD @ EXE
+								-- IN @ EXE or LOAD @ EXE
 								-- Stall to allow WB or LOAD to finish
-								when "0100001" | "0010010" | "0010000" =>
+								when "0100001" | "0010000" =>
 									stall <= '1';
 									mux1_select <= "000";
 								
@@ -624,11 +605,9 @@ begin
 						
 						when "10" =>
 							case opc_mem is
-								-- #TODO:
-								-- Need to remove MOV and LOADIMM hazard detection
-								-- IN @ MEM or LOADIMM @ MEM
+								-- IN @ MEM
 								-- Stall to allow WB or LOAD to finish
-								when "0100001" | "0100010" =>
+								when "0100001" =>
 									stall <= '1';
 									mux1_select <= "000";
 									
@@ -644,9 +623,9 @@ begin
 								-- Need to remove MOV and LOADIMM hazard detection
 								-- LOADIMM @ MEM
 								-- Stall to allow WB to finish
-								when "0100010" =>
-									stall <= '1';
-									mux1_select <= "000";
+--								when "0100010" =>
+--									stall <= '1';
+--									mux1_select <= "000";
 								
 								when others =>
 									-- Forward data from WB
@@ -732,11 +711,14 @@ begin
 	mux_ex_select <=
 		-- BR.SUB
 		"01" when opc_exe = ("1000110") else
-		-- #TODO:
-		-- Need to remove MOV and LOADIMM hazard detection
-		-- OUT, RETURN, LOAD, STORE, LOADIMM, MOV
-		"10" when (opc_exe = ("0100000" or "1000111" or "0010000" or "0010001" or "0010010" or "0010011")) else
+		-- OUT, RETURN, LOAD, STORE
+		"10" when (opc_exe = ("0100000" or "1000111" or "0010000" or "0010001")) else
 		"00";
+		
+	br_flush <=
+		-- RETURN
+		'1' when opc_exe = "1000111" else
+		'0';
 	
 	-- Select data for MEM stage output
 	mux_mem_select <=

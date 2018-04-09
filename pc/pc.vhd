@@ -31,7 +31,7 @@ end pc;
 
 architecture Behavioral of pc is
 
-signal Q_mask : std_logic_vector(15 downto 0);
+--signal Q_mask : std_logic_vector(15 downto 0);
 signal overwrite_val : std_logic_vector(6 downto 0);
 
 signal Pre_Q : integer range 0 to 127;
@@ -40,8 +40,8 @@ signal br_Q : integer range 0 to 127;
 begin
 
 -- Convert new PC value into integer
-Q_mask <= Q_in(15 downto 1) & '0';
-overwrite_val <= Q_mask(6 downto 0);
+--Q_mask <= Q_in(15 downto 0);
+overwrite_val <= Q_in(6 downto 0);
 br_Q <= conv_integer(overwrite_val);
 
 	process(clk)
