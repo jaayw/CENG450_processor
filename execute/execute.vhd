@@ -103,13 +103,13 @@ begin
 						out_data2 <= in_data2;
 						
 					-- LOADIMM, MOV
+					-- Send out NOPS to prevent erraneous writes
 					when "0010010" | "0010011"=>
 						instr_out <= (others => '0');
 						opc_out <= (others => '0');
 						out_data1 <= (others => '0');
 						out_data2 <= (others => '0');
 						
-					
 					-- STORE
 					when "0010001" =>
 						instr_out <= instr;

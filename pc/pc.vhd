@@ -46,7 +46,7 @@ br_Q <= conv_integer(overwrite_val);
 
 	process(clk)
 		begin
-			if rising_edge(clk) then --rising_edge(clk)
+			if rising_edge(clk) then
 				if rst = '1' then
 					Pre_Q <= 0;
 				

@@ -20,17 +20,14 @@ architecture BHV of ROM_VHDL_L is
     type ROM_TYPE is array (0 to 127) of std_logic_vector (15 downto 0);
 
     constant rom_content : ROM_TYPE := (
-	-- Format L1
+	-- Format L1 -- COMPLETE
 	000 => "0010010000001111", -- LOADIMM.LOWER #15
 	001 => "0010010100000101", -- LOADIMM.UPPER #5
 	002 => "0010011001111000", -- MOV R1, R7
 	003 => "0010010000000000", -- LOADIMM.LOWER #0 
 	004 => "0010010100000110", -- LOADIMM.UPPER #6
 	005 => "0010011010111000", -- MOV R2, R7
-	--006 => X"0000", -- NOP TEST
-	--007 => X"0000", -- NOP TEST
-	006 => "0010001010001000", -- STORE R2, R1 -- 2 Cycle issue with reading from this register
---	009 => X"0000", -- NOP TEST
+	006 => "0010001010001000", -- STORE R2, R1
 	007 => "0010000011001000", -- LOAD R3, R1
 	others => x"0000" ); -- NOP
 	

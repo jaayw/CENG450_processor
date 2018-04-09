@@ -35,7 +35,6 @@ component controller is
 		-- Input
 		-- EXE
 		instr_exe : IN std_logic_vector(15 downto 0);
-		--opc_exe : IN std_logic_vector(6 downto 0);
 		ra_exe : IN std_logic_vector(2 downto 0);
 		
 		-- MEM
@@ -81,7 +80,7 @@ end component;
 -- Format B: ROM_VHDL_B
 -- Format L: ROM_VHDL_L
 -- Format Final: ROM_VHDL_F1 ROM_VHDL_F2 ROM_VHDL_F3
-component ROM_VHDL_L is
+component ROM_VHDL_B is
 	port (
 			clk : IN STD_LOGIC;
 			addr : IN STD_LOGIC_VECTOR(6 downto 0);
@@ -133,7 +132,6 @@ component reg_mux1 is
 	port (
 		data_select : IN std_logic_vector(2 downto 0);
 		pc_val : IN std_logic_vector(6 downto 0);
-		--data_imm : IN std_logic_vector(7 downto 0);
 		data_reg : IN std_logic_vector(15 downto 0);
 		data_exe : IN std_logic_vector(15 downto 0);
 		data_mem : IN std_logic_vector(15 downto 0);
@@ -146,7 +144,6 @@ component reg_mux2 is
 	port (
 		data_select : IN std_logic_vector(2 downto 0);
 		data_displ : IN std_logic_vector(8 downto 0);
-		--data_imm : IN std_logic_vector(7 downto 0);
 		data_reg : IN std_logic_vector(15 downto 0);
 		data_exe : IN std_logic_vector(15 downto 0);
 		data_mem : IN std_logic_vector(15 downto 0);
@@ -350,7 +347,6 @@ CU0: controller port map(
 				-- Inputs
 				instr => instr_ifid,
 				instr_exe => instr_exe,
-				--opc_exe => op_code_exe,
 				ra_exe => ra_exe,
 				opc_mem => op_code_mem,
 				ra_mem => ra_mem,
@@ -388,7 +384,7 @@ PC0: pc port map (
 -- Format B: ROM_VHDL_B
 -- Format L: ROM_VHDL_L
 -- Format Final: ROM_VHDL_F1 ROM_VHDL_F2 ROM_VHDL_F3
-ROM: ROM_VHDL_L port map (
+ROM: ROM_VHDL_B port map (
 			clk => clk,
 			addr => counter,
 			data => instr

@@ -26,10 +26,10 @@ entity fetch_decode is
 			-- output
 			instr_out : OUT std_logic_vector(15 downto 0); -- To CU and ID/EXE
 			pc_out : OUT std_logic_vector(6 downto 0); -- might remove testing
-			ra_out :	OUT std_logic_vector(2 downto 0);
-			rb_out :	OUT std_logic_vector(2 downto 0);
-			rc_out :	OUT std_logic_vector(2 downto 0);
-			cl_out :	OUT std_logic_vector(3 downto 0)
+			ra_out :	OUT std_logic_vector(2 downto 0); -- To ID/EXE
+			rb_out :	OUT std_logic_vector(2 downto 0); -- To Register
+			rc_out :	OUT std_logic_vector(2 downto 0); -- To Register
+			cl_out :	OUT std_logic_vector(3 downto 0) -- To ID/EXE
 		);
 		
 end fetch_decode;
@@ -37,11 +37,9 @@ end fetch_decode;
 architecture Behavioral of fetch_decode is
 
 signal instr : std_logic_vector(15 downto 0);
-
 signal pc_new : std_logic_vector(6 downto 0);
 
 signal pc_q : integer range 0 to 127;
-
 signal pc_temp : integer range 0 to 127;
 
 --signal pipeflush : std_logic_vector(x downto x) := (others => '0');

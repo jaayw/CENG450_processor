@@ -47,6 +47,7 @@ process(clk)
 				reg_file(i)<= reg_file(i);--(others => '0'); 
 			end loop;
 		elsif(wr_enable_reg='1' and loadimm_en = '0') then
+		
 			case wr_index(2 downto 0) is
 				when "000" => reg_file(0) <= wr_data_reg;
 				when "001" => reg_file(1) <= wr_data_reg;
@@ -58,7 +59,9 @@ process(clk)
 				when "111" => reg_file(7) <= wr_data_reg;
 				when others => NULL;
 			end case;
-		elsif (wr_enable_reg = '0' and loadimm_en = '1' and mov_en = '0') then -- INSERT MOV COND
+			
+		elsif (wr_enable_reg = '0' and loadimm_en = '1' and mov_en = '0') then
+		
 			if loadimm_select = "01" then
 				reg_file(7)(7 downto 0) <=loadimm_data;
 			elsif loadimm_select = "10" then
@@ -66,6 +69,7 @@ process(clk)
 			end if;
 		 
 		 elsif (wr_enable_reg = '0' and loadimm_en = '0' and mov_en = '1') then
+		 
 			case dest_reg is
 				when "000" => reg_file(0) <= reg_file(conv_integer(src_reg));
 				when "001" => reg_file(1) <= reg_file(conv_integer(src_reg));
@@ -77,9 +81,7 @@ process(clk)
 				when "111" => reg_file(7) <= reg_file(conv_integer(src_reg));
 				when others => NULL;
 			end case;
-			
---			case dest_reg is
---			end case;
+		
 		end if; 
     end if;
 end process;-- end write operation

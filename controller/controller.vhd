@@ -81,14 +81,6 @@ alias imm is instr(7 downto 0);
 
 begin
 
-	loadimm_data <=
-		-- when LOADIMM
-		imm when op_code = "0010010" else
-		(others => '0');
-	
-	-- Output operand ml for store operation (signals for MSB or LSB in memory)
-	--ml_out <= m_l;
-
 	-- Tracking Data Hazards
 	trackHazard_1 <= 
 		-- When (current ra == ra@exe) && (op_code@exe /= nop) && (current op_code /= return)
@@ -249,6 +241,8 @@ begin
 					case trackHazard_1 is
 						when "01" =>
 							case opc_exe is
+								-- #TODO:
+								-- Need to remove MOV and LOADIMM hazard detection
 								-- IN @ EXE or LOADIMM @ EXE or LOAD @ EXE
 								-- Stall to allow WB or LOAD to finish
 								when "0100001" | "0010010" | "0010000" =>
@@ -263,6 +257,8 @@ begin
 						
 						when "10" =>
 							case opc_mem is
+								-- #TODO:
+								-- Need to remove MOV and LOADIMM hazard detection
 								-- IN @ MEM or LOADIMM @ MEM
 								-- Stall to allow WB or LOAD to finish
 								when "0100001" | "0100010" =>
@@ -277,7 +273,8 @@ begin
 						
 						when "11" =>
 							case opc_wb is
-								
+								-- #TODO:
+								-- Need to remove MOV and LOADIMM hazard detection
 								-- LOADIMM @ MEM
 								-- Stall to allow WB to finish
 								when "0100010" =>
@@ -303,6 +300,8 @@ begin
 					case trackHazard_1 is
 						when "01" =>
 							case opc_exe is
+								-- #TODO:
+								-- Need to remove MOV and LOADIMM hazard detection
 								-- IN @ EXE or LOADIMM @ EXE or LOAD @ EXE
 								-- Stall to allow WB or LOAD to finish
 								when "0100001" | "0010010" | "0010000" =>
@@ -317,6 +316,8 @@ begin
 						
 						when "10" =>
 							case opc_mem is
+								-- #TODO:
+								-- Need to remove MOV and LOADIMM hazard detection
 								-- IN @ MEM or LOADIMM @ MEM
 								-- Stall to allow WB or LOAD to finish
 								when "0100001" | "0100010" =>
@@ -331,6 +332,8 @@ begin
 						
 						when "11" =>
 							case opc_wb is
+								-- #TODO:
+								-- Need to remove MOV and LOADIMM hazard detection
 								-- LOADIMM @ MEM
 								-- Stall to allow WB to finish
 								when "0100010" =>
@@ -347,9 +350,10 @@ begin
 							stall <= '0';
 							mux1_select <= "000";
 					end case; -- end trackHazard_1
-					
+					-- #TODO:
+					-- Need to remove MOV and LOADIMM hazard detection
 					-- IMM
-					mux2_select <= "000";
+					--mux2_select <= "000";
 					-- end when TEST or OUT case
 				
 				-- IN
@@ -370,6 +374,8 @@ begin
 					case trackHazard_1 is
 						when "01" =>
 							case opc_exe is
+								-- #TODO:
+								-- Need to remove MOV and LOADIMM hazard detection
 								-- IN @ EXE or LOADIMM @ EXE or LOAD @ EXE
 								-- Stall to allow WB or LOAD to finish
 								when "0100001" | "0010010" | "0010000" =>
@@ -384,6 +390,8 @@ begin
 						
 						when "10" =>
 							case opc_mem is
+								-- #TODO:
+								-- Need to remove MOV and LOADIMM hazard detection
 								-- IN @ MEM or LOADIMM @ MEM
 								-- Stall to allow WB or LOAD to finish
 								when "0100001" | "0100010" =>
@@ -398,6 +406,8 @@ begin
 						
 						when "11" =>
 							case opc_wb is
+								-- #TODO:
+								-- Need to remove MOV and LOADIMM hazard detection
 								-- LOADIMM @ MEM
 								-- Stall to allow WB to finish
 								when "0100010" =>
@@ -426,6 +436,8 @@ begin
 					case trackHazard_2 is
 						when "01" =>
 							case opc_exe is
+								-- #TODO:
+								-- Need to remove MOV and LOADIMM hazard detection
 								-- IN @ EXE or LOADIMM @ EXE or LOAD @ EXE
 								-- Stall to allow WB or LOAD to finish
 								when "0100001" | "0010010" | "0010000" =>
@@ -440,6 +452,8 @@ begin
 						
 						when "10" =>
 							case opc_mem is
+								-- #TODO:
+								-- Need to remove MOV and LOADIMM hazard detection
 								-- IN @ MEM or LOADIMM @ MEM
 								-- Stall to allow WB or LOAD to finish
 								when "0100001" | "0100010" =>
@@ -454,6 +468,8 @@ begin
 						
 						when "11" =>
 							case opc_wb is
+								-- #TODO:
+								-- Need to remove MOV and LOADIMM hazard detection
 								-- LOADIMM @ MEM
 								-- Stall to allow WB to finish
 								when "0100010" =>
@@ -481,6 +497,8 @@ begin
 					case trackHazard_1 is
 						when "01" =>
 							case opc_exe is
+								-- #TODO:
+								-- Need to remove MOV and LOADIMM hazard detection
 								-- IN @ EXE or LOADIMM @ EXE or LOAD @ EXE
 								-- Stall to allow WB or LOAD to finish
 								when "0100001" | "0010010" | "0010000" =>
@@ -495,6 +513,8 @@ begin
 						
 						when "10" =>
 							case opc_mem is
+								-- #TODO:
+								-- Need to remove MOV and LOADIMM hazard detection
 								-- IN @ MEM or LOADIMM @ MEM
 								-- Stall to allow WB or LOAD to finish
 								when "0100001" | "0100010" =>
@@ -509,6 +529,8 @@ begin
 						
 						when "11" =>
 							case opc_wb is
+								-- #TODO:
+								-- Need to remove MOV and LOADIMM hazard detection
 								-- LOADIMM @ MEM
 								-- Stall to allow WB to finish
 								when "0100010" =>
@@ -543,6 +565,8 @@ begin
 						
 						when "10" =>
 							case opc_mem is
+								-- #TODO:
+								-- Need to remove MOV and LOADIMM hazard detection
 								-- IN @ MEM or LOADIMM @ EXE
 								-- Stall to allow WB or LOAD to finish
 								when "0100001" | "0010010" =>
@@ -557,6 +581,8 @@ begin
 						
 						when "11" =>
 							case opc_wb is
+								-- #TODO:
+								-- Need to remove MOV and LOADIMM hazard detection
 								-- LOADIMM @ MEM
 								-- Stall to allow WB to finish
 								when "0100010" =>
@@ -582,6 +608,8 @@ begin
 					case trackHazard_2 is
 						when "01" =>
 							case opc_exe is
+								-- #TODO:
+								-- Need to remove MOV and LOADIMM hazard detection
 								-- IN @ EXE or LOADIMM @ EXE or LOAD @ EXE
 								-- Stall to allow WB or LOAD to finish
 								when "0100001" | "0010010" | "0010000" =>
@@ -596,6 +624,8 @@ begin
 						
 						when "10" =>
 							case opc_mem is
+								-- #TODO:
+								-- Need to remove MOV and LOADIMM hazard detection
 								-- IN @ MEM or LOADIMM @ MEM
 								-- Stall to allow WB or LOAD to finish
 								when "0100001" | "0100010" =>
@@ -610,6 +640,8 @@ begin
 						
 						when "11" =>
 							case opc_wb is
+								-- #TODO:
+								-- Need to remove MOV and LOADIMM hazard detection
 								-- LOADIMM @ MEM
 								-- Stall to allow WB to finish
 								when "0100010" =>
@@ -678,6 +710,12 @@ begin
 		'1' when op_code = "0010010" else
 		'0';
 	
+	-- LOADIMM data to put into register
+	loadimm_data <=
+		-- when LOADIMM
+		imm when op_code = "0010010" else
+		(others => '0');
+	
 	-- Select LSB or MSB LOADIMM
 	loadimm_select <=
 		-- LOADIMM LSB
@@ -694,7 +732,9 @@ begin
 	mux_ex_select <=
 		-- BR.SUB
 		"01" when opc_exe = ("1000110") else
-		-- OUT, RETURN, LOAD, STORE, LOADIMM, MOV, 
+		-- #TODO:
+		-- Need to remove MOV and LOADIMM hazard detection
+		-- OUT, RETURN, LOAD, STORE, LOADIMM, MOV
 		"10" when (opc_exe = ("0100000" or "1000111" or "0010000" or "0010001" or "0010010" or "0010011")) else
 		"00";
 	
