@@ -25,7 +25,7 @@ architecture Behavioral of exe_mux is
 begin
 
 	data_out <=
-		("000000000" & pc_val) when data_select = "01" else
+		("000000000" & pc_val) when data_select = "01" else -- probably gonna remove this, don't need it
 		alu_in1 when data_select = "10" else
 		alu_result;
 

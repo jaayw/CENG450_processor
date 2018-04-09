@@ -118,8 +118,15 @@ begin
 						rc_out <= (others => '0');
 						cl_out <= (others => '0');
 					
+					-- BRR
+					when "1000000" =>
+						ra_out <= (others => '0');
+						rb_out <= (others => '0');
+						rc_out <= (others => '0');
+						cl_out <= (others => '0');
+					
 					-- BRR, BRR.N, BRR.Z, BR, BR.N, BR.Z 
-					when "1000000" | "1000001" | "1000010" | "1000011" | "1000100" | "1000101" =>
+					when "1000001" | "1000010" | "1000011" | "1000100" | "1000101" =>
 						ra_out <= ra_internal;
 						rb_out <= ra_internal;
 						rc_out <= (others => '0');
@@ -181,21 +188,6 @@ begin
 			end if;
 			
 		end if;
-		
-		
-		
---		case bubble is
---			when '1' =>
---				instr_out <= (others => '0');
---				pc_out <= '0' & pc_in(6 downto 1);
---				ra_out <= (others => '0');
---				rb_out <= (others => '0');
---				rc_out <= (others => '0');
---				cl_out <= (others => '0');
---			when others =>
---				NULL;
---		end case;
-		
 			
 	end process;
 

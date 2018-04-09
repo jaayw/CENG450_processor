@@ -30,6 +30,7 @@ architecture Behavioral of reg_mux2 is
 begin
 
 	data_out <=
+		-- need to review this displacement stuff
 		-- 2 * displacement
 		("000000" & data_displ & "0") when ((data_select = "010") and (data_displ(8) = '0')) else
 		-- 2 * displacement (negative)

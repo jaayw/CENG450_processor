@@ -146,7 +146,7 @@ begin
 		
 		-- Format A0
 		-- RETURN
-		"000000000" when op_code = "1000111" else
+		--"000000000" when op_code = "1000111" else
 		
 		-- Format B1
 		-- BRR, BRR.N, BRR.Z
@@ -362,7 +362,7 @@ begin
 				-- BRR, BRR.N, BRR.Z
 				when "1000000" | "1000001" | "1000010" =>
 					stall <= '0';
-					mux1_select <= "001"; -- Use PC value for mux 1
+					mux1_select <= "001"; -- Use PC val from IF/ID for mux 1
 					mux2_select <= "010"; -- Use displacement data for mux 2
 				
 				-- BR, BR.N, BR.Z, BRR.SUB, RETURN
