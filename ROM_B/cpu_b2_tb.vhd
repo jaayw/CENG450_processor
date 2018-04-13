@@ -65,38 +65,38 @@ BEGIN
 		
 		rst <= '0';
 		
-		wait until (clk='1' and clk'event);
-		wait until (clk='1' and clk'event);
-		
-		in_data <= "0000000000000010"; -- IN 2 -> R0
-		
-		wait until (clk='1' and clk'event);
-		
-		in_data <= "0000000000000011"; -- IN 3 -> R1
-		
-		wait until (clk='1' and clk'event);
-		
-		in_data <= "0000000000000001"; -- IN 1 -> R2
-		
-		wait until (clk='1' and clk'event);
-		
-		in_data <= "0000000000000101"; -- IN 5 -> R3
-		
-		wait until (clk='1' and clk'event);
-		
-		in_data <= "0000000000001000"; -- IN 0 -> R4
-		
-		wait until (clk='1' and clk'event);
-		
-		in_data <= "0000000000000001"; -- IN 1 -> R5
-		
-		wait until (clk='1' and clk'event);
-		
-		in_data <= "0000000000000101"; -- IN 5 -> R6
-		
-		wait until (clk='1' and clk'event);
-		
-		in_data <= "0000000000000000"; -- IN 0 -> R7
+--		wait until (clk='1' and clk'event);
+--		wait until (clk='1' and clk'event);
+--		
+--		in_data <= "0000000000000010"; -- IN 2 -> R0
+--		
+--		wait until (clk='1' and clk'event);
+--		
+--		in_data <= "0000000000000011"; -- IN 3 -> R1
+--		
+--		wait until (clk='1' and clk'event);
+--		
+--		in_data <= "0000000000000001"; -- IN 1 -> R2
+--		
+--		wait until (clk='1' and clk'event);
+--		
+--		in_data <= "0000000000000101"; -- IN 5 -> R3
+--		
+--		wait until (clk='1' and clk'event);
+--		
+--		in_data <= "0000000000001000"; -- IN 0 -> R4
+--		
+--		wait until (clk='1' and clk'event);
+--		
+--		in_data <= "0000000000000001"; -- IN 1 -> R5
+--		
+--		wait until (clk='1' and clk'event);
+--		
+--		in_data <= "0000000000000101"; -- IN 5 -> R6
+--		
+--		wait until (clk='1' and clk'event);
+--		
+--		in_data <= "0000000000000000"; -- IN 0 -> R7
 
       wait;
    end process;

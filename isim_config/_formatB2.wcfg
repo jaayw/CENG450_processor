@@ -13,7 +13,7 @@
          </top_modules>
       </db_ref>
    </db_ref_list>
-   <WVObjectSize size="47" />
+   <WVObjectSize size="48" />
    <wave_markers>
       <marker time="250000000000" label="" />
       <marker time="950000000000" label="" />
@@ -84,6 +84,10 @@
       <obj_property name="UseCustomSignalColor">true</obj_property>
       <obj_property name="CustomSignalColor">#ff00ff</obj_property>
    </wvobject>
+   <wvobject fp_name="/cpu_b2_tb/uut/pc_hold" type="logic" db_ref_id="1">
+      <obj_property name="ElementShortName">pc_hold</obj_property>
+      <obj_property name="ObjectShortName">pc_hold</obj_property>
+   </wvobject>
    <wvobject fp_name="/cpu_b2_tb/uut/br_en" type="logic" db_ref_id="1">
       <obj_property name="ElementShortName">br_en</obj_property>
       <obj_property name="ObjectShortName">br_en</obj_property>
@@ -122,6 +126,13 @@
       <obj_property name="ObjectShortName">rd_data2[15:0]</obj_property>
       <obj_property name="Radix">UNSIGNEDDECRADIX</obj_property>
    </wvobject>
+   <wvobject fp_name="/cpu_b2_tb/uut/displacement" type="array" db_ref_id="1">
+      <obj_property name="ElementShortName">displacement[8:0]</obj_property>
+      <obj_property name="ObjectShortName">displacement[8:0]</obj_property>
+      <obj_property name="Radix">BINARYRADIX</obj_property>
+      <obj_property name="UseCustomSignalColor">true</obj_property>
+      <obj_property name="CustomSignalColor">#ffff00</obj_property>
+   </wvobject>
    <wvobject fp_name="/cpu_b2_tb/uut/mux1_select" type="array" db_ref_id="1">
       <obj_property name="ElementShortName">mux1_select[2:0]</obj_property>
       <obj_property name="ObjectShortName">mux1_select[2:0]</obj_property>
@@ -134,13 +145,6 @@
    <wvobject fp_name="/cpu_b2_tb/uut/mux2_select" type="array" db_ref_id="1">
       <obj_property name="ElementShortName">mux2_select[2:0]</obj_property>
       <obj_property name="ObjectShortName">mux2_select[2:0]</obj_property>
-   </wvobject>
-   <wvobject fp_name="/cpu_b2_tb/uut/displacement" type="array" db_ref_id="1">
-      <obj_property name="ElementShortName">displacement[8:0]</obj_property>
-      <obj_property name="ObjectShortName">displacement[8:0]</obj_property>
-      <obj_property name="Radix">BINARYRADIX</obj_property>
-      <obj_property name="UseCustomSignalColor">true</obj_property>
-      <obj_property name="CustomSignalColor">#ffff00</obj_property>
    </wvobject>
    <wvobject fp_name="/cpu_b2_tb/uut/mux2_data" type="array" db_ref_id="1">
       <obj_property name="ElementShortName">mux2_data[15:0]</obj_property>
@@ -174,7 +178,7 @@
    <wvobject fp_name="/cpu_b2_tb/uut/out_data2" type="array" db_ref_id="1">
       <obj_property name="ElementShortName">out_data2[15:0]</obj_property>
       <obj_property name="ObjectShortName">out_data2[15:0]</obj_property>
-      <obj_property name="Radix">UNSIGNEDDECRADIX</obj_property>
+      <obj_property name="Radix">BINARYRADIX</obj_property>
    </wvobject>
    <wvobject fp_name="/cpu_b2_tb/uut/result_alu" type="array" db_ref_id="1">
       <obj_property name="ElementShortName">result_alu[15:0]</obj_property>

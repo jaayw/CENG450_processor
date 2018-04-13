@@ -361,9 +361,9 @@ begin
 				
 				-- BRR, BRR.N, BRR.Z
 				when "1000000" | "1000001" | "1000010" =>
-					stall <= '0';
+					stall <= '0'; -- might not even need to signify a stall
 					mux1_select <= "001"; -- Use PC val from IF/ID for mux 1
-					mux2_select <= "010"; -- Use displacement data for mux 2
+					mux2_select <= "010"; -- Use displacement data (from CU) for mux 2
 				
 				-- BR, BR.N, BR.Z, BRR.SUB, RETURN
 				when "1000011" | "1000100" | "1000101" | "1000110" | "1000111" =>
@@ -713,10 +713,12 @@ begin
 		"01" when opc_exe = ("1000110") else
 		-- OUT, RETURN, LOAD, STORE
 		"10" when (opc_exe = ("0100000" or "1000111" or "0010000" or "0010001")) else
+		-- BRR
 		"00";
 		
 	br_flush <=
-		-- RETURN
+		-- BRR, RETURN
+		'1' when opc_exe = "1000000" else
 		'1' when opc_exe = "1000111" else
 		'0';
 	

@@ -406,9 +406,9 @@ IF_ID: fetch_decode port map (
 			rst => rst,
 			br_flush => br_flush,
 			instr_in => instr,
-			pc_in => counter, -- might remove
+			pc_in => counter, -- might remove -- need to remove
 			instr_out => instr_ifid,
-			pc_out => pc_ifid, -- might remove testing
+			pc_out => pc_ifid, -- might remove testing -- need to remove
 			ra_out => ra_id,
 			rb_out => rb,
 			rc_out => rc,
@@ -438,7 +438,7 @@ REG0: register_file	port map (
 MUX1_REG: reg_mux1 port map(
 			-- Inputs
 			data_select => mux1_select, -- From CU
-			pc_val => pc_ifid, -- Counter value from IF/ID -- might remove testing and go back to direct from pc
+			pc_val => counter, -- From PC for branching
 			data_reg => rd_data1, -- Data read from reg (op1)
 			data_exe => mux_ex_result, -- Data forwarded from EXE
 			data_mem => mux_mem_result, -- Data forwarded from MEM
