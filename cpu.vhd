@@ -450,7 +450,7 @@ REG0: register_file	port map (
 MUX1_REG: reg_mux1 port map(
 			-- Inputs
 			data_select => mux1_select, -- From CU
-			pc_val => counter, -- From PC for branching
+			pc_val => pc_ifid, -- From PC for branching
 			data_reg => rd_data1, -- Data read from reg (op1)
 			data_exe => mux_ex_result, -- Data forwarded from EXE
 			data_mem => mux_mem_result, -- Data forwarded from MEM
