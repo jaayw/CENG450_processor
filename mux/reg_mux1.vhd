@@ -30,7 +30,7 @@ architecture Behavioral of reg_mux1 is
 begin
 
 	data_out <=
-		-- Use PC val from IF/ID
+		-- Use PC val from IF/ID for BRR, BRR.Z(N)
 		("000000000" & pc_val) when data_select = "001" else
 		-- Use data forwarded from EXE stage
 		data_exe when data_select = "101" else

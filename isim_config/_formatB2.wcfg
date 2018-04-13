@@ -178,7 +178,15 @@
    <wvobject fp_name="/cpu_b2_tb/uut/out_data2" type="array" db_ref_id="1">
       <obj_property name="ElementShortName">out_data2[15:0]</obj_property>
       <obj_property name="ObjectShortName">out_data2[15:0]</obj_property>
-      <obj_property name="Radix">BINARYRADIX</obj_property>
+      <obj_property name="Radix">SIGNEDDECRADIX</obj_property>
+   </wvobject>
+   <wvobject fp_name="/cpu_b2_tb/uut/mux_in2_select" type="logic" db_ref_id="1">
+      <obj_property name="ElementShortName">mux_in2_select</obj_property>
+      <obj_property name="ObjectShortName">mux_in2_select</obj_property>
+   </wvobject>
+   <wvobject fp_name="/cpu_b2_tb/uut/mux_in2_result" type="array" db_ref_id="1">
+      <obj_property name="ElementShortName">mux_in2_result[15:0]</obj_property>
+      <obj_property name="ObjectShortName">mux_in2_result[15:0]</obj_property>
    </wvobject>
    <wvobject fp_name="/cpu_b2_tb/uut/result_alu" type="array" db_ref_id="1">
       <obj_property name="ElementShortName">result_alu[15:0]</obj_property>
@@ -193,14 +201,6 @@
       <obj_property name="Radix">UNSIGNEDDECRADIX</obj_property>
       <obj_property name="UseCustomSignalColor">true</obj_property>
       <obj_property name="CustomSignalColor">#ffff00</obj_property>
-   </wvobject>
-   <wvobject fp_name="/cpu_b2_tb/uut/z_flag_alu" type="logic" db_ref_id="1">
-      <obj_property name="ElementShortName">z_flag_alu</obj_property>
-      <obj_property name="ObjectShortName">z_flag_alu</obj_property>
-   </wvobject>
-   <wvobject fp_name="/cpu_b2_tb/uut/n_flag_alu" type="logic" db_ref_id="1">
-      <obj_property name="ElementShortName">n_flag_alu</obj_property>
-      <obj_property name="ObjectShortName">n_flag_alu</obj_property>
    </wvobject>
    <wvobject fp_name="/cpu_b2_tb/uut/z_flag" type="logic" db_ref_id="1">
       <obj_property name="ElementShortName">z_flag</obj_property>

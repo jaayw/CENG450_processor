@@ -36,6 +36,8 @@ component controller is
 		-- EXE
 		instr_exe : IN std_logic_vector(15 downto 0);
 		ra_exe : IN std_logic_vector(2 downto 0);
+		z_flag : IN STD_LOGIC;
+		n_flag : IN STD_LOGIC;
 		
 		-- MEM
 		opc_mem : IN std_logic_vector(6 downto 0);
@@ -61,6 +63,7 @@ component controller is
 		-- EXE
 		br_flush : OUT std_logic;
 		displacement : OUT std_logic_vector(8 downto 0);
+		mux_in2_select : OUT std_logic;
 		mux_ex_select : OUT std_logic_vector(1 downto 0);
 		
 		-- MEM
@@ -184,6 +187,14 @@ end component;
 
 -- EXECUTE STAGE
 
+component exe_mux_in2 is
+	port (
+		data_select : IN std_logic;
+		data_in2 : IN std_logic_vector(15 downto 0);
+		data_out : OUT std_logic_vector(15 downto 0)
+	);
+end component;
+
 component alu is
 	port (
 			clk : IN STD_LOGIC;
@@ -217,15 +228,11 @@ component mem is
 			ra_in : IN STD_LOGIC_VECTOR(2 downto 0);
 			result_in : IN STD_LOGIC_VECTOR(15 downto 0);
 			in2_in : IN STD_LOGIC_VECTOR(15 downto 0);
-			z_in : IN STD_LOGIC;
-			n_in : IN STD_LOGIC;
 			opc_out : OUT STD_LOGIC_VECTOR(6 downto 0);
 			ra_out : OUT STD_LOGIC_VECTOR(2 downto 0);
 			result_out : OUT STD_LOGIC_VECTOR(15 downto 0);
 			in2_out : OUT STD_LOGIC_VECTOR(15 downto 0);
-			wr_en : OUT STD_LOGIC;
-			z_out : OUT STD_LOGIC;
-			n_out : OUT STD_LOGIC
+			wr_en : OUT STD_LOGIC
 			);
 end component;	
 
@@ -311,11 +318,13 @@ signal out_data2 : std_logic_vector(15 downto 0);
 signal ra_exe : std_logic_vector(2 downto 0);
 signal ml_exe : std_logic;
 signal displacement : std_logic_vector(8 downto 0); -- CU -> BRANCH
+signal mux_in2_select : std_logic; -- From CU -> mux_in2
+signal mux_in2_result : std_logic_vector(15 downto 0); -- mux_in2 -> ALU
 signal result_alu : std_logic_vector(15 downto 0); -- ALU -> MUX or PC -> MEM
 signal mux_ex_result : std_logic_vector(15 downto 0); -- Data forwarding from EXE to ID
 signal mux_ex_select : std_logic_vector(1 downto 0); -- From CU
-signal z_flag_alu : std_logic;
-signal n_flag_alu : std_logic;
+--signal z_flag_alu : std_logic;
+--signal n_flag_alu : std_logic;
 signal z_flag : std_logic;
 signal n_flag : std_logic;
 signal br_flush : std_logic;
@@ -357,6 +366,8 @@ CU0: controller port map(
 				instr => instr_ifid,
 				instr_exe => instr_exe,
 				ra_exe => ra_exe,
+				z_flag => z_flag,
+				n_flag => n_flag,
 				opc_mem => op_code_mem,
 				ra_mem => ra_mem,
 				opc_wb => op_code_wb,
@@ -372,6 +383,7 @@ CU0: controller port map(
 				mux1_select => mux1_select,
 				mux2_select => mux2_select,
 				displacement => displacement,
+				mux_in2_select => mux_in2_select,
 				mux_ex_select => mux_ex_select,
 				mux_mem_select => mux_mem_select,
 				memory_wr_en => wr_en_memory
@@ -483,18 +495,24 @@ EX0: execute port map (
 			);
 			
 -- EXECUTE STAGE
+
+MUX_IN20: exe_mux_in2 port map (
+		data_select => mux_in2_select,
+		data_in2 => out_data2,
+		data_out => mux_in2_result
+		);
 	
 ALU0: alu port map (
 			clk => clk,
 			rst => rst,
 			-- Inputs
 			in1 => out_data1,
-			in2 => out_data2,
+			in2 => mux_in2_result,
 			opc_in => op_code_exe,
 			-- Outputs
 			result => result_alu,
-			z_flag => z_flag_alu,
-			n_flag => n_flag_alu
+			z_flag => z_flag,
+			n_flag => n_flag
 			);
 			
 MUX_EXE0: exe_mux port map (
@@ -515,16 +533,12 @@ MEM0: mem port map (
 			ra_in => ra_exe,
 			result_in => result_alu,
 			in2_in => out_data2,
-			z_in => z_flag_alu,
-			n_in => n_flag_alu,
 			-- Outputs
 			opc_out => op_code_mem,
 			ra_out => ra_mem,
 			result_out => result_mem,
 			in2_out => memory_addr,
-			wr_en => wr_en_mem,
-			z_out => z_flag,
-			n_out => n_flag
+			wr_en => wr_en_mem
 			);
 
 -- MEM STAGE

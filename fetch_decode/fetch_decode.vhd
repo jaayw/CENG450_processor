@@ -125,9 +125,10 @@ begin
 						rc_out <= (others => '0');
 						cl_out <= (others => '0');
 					
-					-- BRR.N, BRR.Z, BR, BR.N, BR.Z 
+					-- #TODO
+					-- BR NOT COMPLETE: BRR.N, BRR.Z, BR.N, BR.Z
 					when "1000001" | "1000010" | "1000011" | "1000100" | "1000101" =>
-						ra_out <= ra_internal;
+						ra_out <= (others => '0');
 						rb_out <= ra_internal;
 						rc_out <= (others => '0');
 						cl_out <= (others => '0');

@@ -22,6 +22,8 @@ entity controller is
 		-- EXE
 		instr_exe : IN std_logic_vector(15 downto 0); -- From ID/EXE
 		ra_exe : IN std_logic_vector(2 downto 0); -- From ID/EXE
+		z_flag : IN std_logic;
+		n_flag : IN std_logic;
 		
 		-- MEM
 		opc_mem : IN std_logic_vector(6 downto 0); -- From EXE/MEM
@@ -47,6 +49,7 @@ entity controller is
 		-- EXE
 		br_flush : OUT std_logic;
 		displacement : OUT std_logic_vector(8 downto 0);
+		mux_in2_select : OUT std_logic;
 		mux_ex_select : OUT std_logic_vector(1 downto 0); -- To MUX @ [EXE]
 		
 		-- MEM
@@ -365,7 +368,7 @@ begin
 					mux1_select <= "001"; -- Use PC val from IF/ID for mux 1
 					mux2_select <= "010"; -- Use displacement data (from CU) for mux 2
 				
-				-- BR, BR.N, BR.Z, BRR.SUB, RETURN
+				-- BR, BR.N, BR.Z, BR.SUB, RETURN
 				when "1000011" | "1000100" | "1000101" | "1000110" | "1000111" =>
 					-- Check for write back
 					case trackHazard_1 is
@@ -706,7 +709,15 @@ begin
 	mov_en <=
 		'1' when op_code = "0010011" else
 		'0';
-		
+	
+	-- Select in2 data for ALU if branch not taken
+	mux_in2_select <=
+		-- Z(N) flag = 0 and BRR.Z or BRR.N
+		'1' when (z_flag = '0' or n_flag = '0') and (opc_exe = ("1000010" or "1000001")) else
+		-- Z(N) flag = 0 and BR.Z or BR.N
+		'1' when (z_flag = '0' or n_flag = '0') and (opc_exe = ("1000101" or "1000100")) else
+		'0';
+	
 	-- Select data for EXE stage output
 	mux_ex_select <=
 		-- BR.SUB

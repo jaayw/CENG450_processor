@@ -21,18 +21,13 @@ entity mem is
 		ra_in : in std_logic_vector(2 downto 0);
 		result_in : in std_logic_vector(15 downto 0);
 		in2_in : in std_logic_vector(15 downto 0);
-		z_in : in std_logic;
-		n_in : in std_logic;
-		
 		
 		--output
 		opc_out : out std_logic_vector(6 downto 0);
 		ra_out : out std_logic_vector(2 downto 0);
 		result_out : out std_logic_vector(15 downto 0);
 		in2_out : OUT std_logic_vector(15 downto 0);
-		wr_en : out std_logic;
-		z_out : out std_logic;
-		n_out : out std_logic
+		wr_en : out std_logic
 		
 	);
 
@@ -46,7 +41,7 @@ begin
 
 	op_code <= instr_in(15 downto 9);
 
-	process (clk, op_code, result_in, ra_in, z_in, n_in)
+	process (clk, op_code, result_in, ra_in)
 	
 		begin
 		
@@ -57,8 +52,6 @@ begin
 					ra_out <= (others => '0');
 					result_out <= (others => '0');
 					wr_en <= '0';
-					z_out <= '0';
-					n_out <= '0';
 				
 				else	
 		
@@ -79,8 +72,7 @@ begin
 					result_out <= result_in; -- ALU result to WB
 					in2_out <= in2_in;
 					ra_out <= ra_in; --ra register
-					z_out <= z_in;
-					n_out <= n_in;
+
 				end if;
 		
 			end if;
