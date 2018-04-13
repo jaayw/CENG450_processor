@@ -50,6 +50,37 @@ architecture BHV of ROM_VHDL_F2 is
 	026 => "0000000000000000", -- NOP
 	027 => "0000000000000000", -- NOP
 	others => x"0000" ); -- NOP
+	
+	
+--	000 => "0000000000000000", -- NOP # CENG450
+--	002 => "0000000000000000", -- NOP # The factorial of IN input number
+--	004 => "0000000000000000", -- NOP # OUT(r1)=IN*(IN-1)*(IN-2)*…*2
+--	006 => "0000000000000000", -- NOP # This loop should run (N-1) times
+--	008 => "0000000000000000", -- NOP # The start of this program must be at address 0, make sure of the correct branching
+--	010 => "0010010000000001", -- LOADIMM.lower #1 
+--	012 => "0010011101111000", -- MOV r5, r7	-- r5 is the decrement value
+--	014 => "0010011001101000", -- MOV r1, r5 	-- r1 is the Factorial variable, so it is initialized to 1
+--	016 => "0010011110101000", -- MOV r6, r5 	-- r6 is initialized to 1, then it’s shifted to get 2
+--	018 => "0000101110000001", -- SHL r6#1 	-- the lowest value to be multiplied by (r6=2)
+--	020 => "0100001000000000", -- IN r0
+--	022 => "0000000000000000", -- NOP
+--	024 => "0000000000000000", -- NOP
+--	026 => "0000011001001000", -- Mul r1,r1,r0 -- the actual multiplication to find the factorial (IN!)
+--	028 => "0000010000000101", -- Sub r0,r0,r5 -- to move to the lower number (r0-1)
+--	030 => "0000010100000110", -- Sub r4,r0,r6 -- to check if r0 reaches 2
+--	032 => "0000000000000000", -- NOP
+--	034 => "0000000000000000", -- NOP
+--	036 => "0000111100000000", -- TEST r4 		-- IF negative 
+--	038 => "1000001000000100", -- BRR.N +4		-- goto OUT
+--	040 => "1000011110001011", -- BR r6,11		-- ElSE: r6=2, 11*2=22, 22+2=24 Byte = 12 Word : goto 12
+--	042 => "0000000000000000", -- NOP
+--	044 => "0000000000000000", -- NOP
+--	046 => "0100000001000000", -- OUT r1 		-- Printout the Factorial
+--	048 => "0000000000000000", -- NOP
+--	050 => "1000000111101011", -- BRR -21		-- goto to the beginning 
+--	052 => "0000000000000000", -- NOP
+--	054 => "0000000000000000", -- NOP
+
 begin
 
 p1:    process (clk)

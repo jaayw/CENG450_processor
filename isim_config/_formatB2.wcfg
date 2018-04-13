@@ -3,7 +3,7 @@
    <wave_state>
    </wave_state>
    <db_ref_list>
-      <db_ref path="E:/Documents/Xilinx/CENG450_processor/cpu_b2_tb_isim_beh.wdb" id="1" type="auto">
+      <db_ref path="C:/Users/james/Documents/Xilinx Projects/CENG450_processor/cpu_b2_tb_isim_beh.wdb" id="1" type="auto">
          <top_modules>
             <top_module name="cpu_b2_tb" />
             <top_module name="numeric_std" />
@@ -13,7 +13,7 @@
          </top_modules>
       </db_ref>
    </db_ref_list>
-   <WVObjectSize size="50" />
+   <WVObjectSize size="51" />
    <wave_markers>
       <marker time="250000000000" label="" />
       <marker time="950000000000" label="" />
@@ -105,6 +105,11 @@
    <wvobject fp_name="/cpu_b2_tb/uut/instr_ifid" type="array" db_ref_id="1">
       <obj_property name="ElementShortName">instr_ifid[15:0]</obj_property>
       <obj_property name="ObjectShortName">instr_ifid[15:0]</obj_property>
+   </wvobject>
+   <wvobject fp_name="/cpu_b2_tb/uut/pc_ifid" type="array" db_ref_id="1">
+      <obj_property name="ElementShortName">pc_ifid[6:0]</obj_property>
+      <obj_property name="ObjectShortName">pc_ifid[6:0]</obj_property>
+      <obj_property name="Radix">SIGNEDDECRADIX</obj_property>
    </wvobject>
    <wvobject fp_name="/cpu_b2_tb/uut/ra_id" type="array" db_ref_id="1">
       <obj_property name="ElementShortName">ra_id[2:0]</obj_property>
