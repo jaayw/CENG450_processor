@@ -67,7 +67,7 @@ BEGIN
 		rst <= '0';
 		
 		wait until (clk='1' and clk'event);
-		wait until (clk='1' and clk'event);
+		--wait until (clk='1' and clk'event);
 		
 		in_data <= "1111111111111110"; -- IN -2 -> R0
 		

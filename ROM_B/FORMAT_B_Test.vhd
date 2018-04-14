@@ -33,36 +33,41 @@ architecture BHV of ROM_VHDL_B is
 --		others => x"0000" ); -- NOP
 		
 		-- Format B2
---		000 => "0100001000000000", -- IN R0 , 02  -- This example tests the branching capabilities of the design.No data dependencies.
---		001 => "0100001001000000", -- IN R1 , 03  -- The values to be loaded into the corresponding resgister.
---		002 => "0100001010000000", -- IN R2 , 01
---		003 => "0100001011000000", -- IN R3 , 05  --  End of initialization
---		004 => "0100001100000000", -- IN R4 , 00 -- Changed input to 01
---		005 => "0100001101000000", -- IN R5 , 01 -- for absolute branching
---		006 => "0100001110000000", -- IN R6 , 05 -- r6 is counter for the loop and indicates the number of times the loop is done.
---		007 => "0100001111000000", -- IN R7 , 00 -- Register init complete - ALL COMPLETE***
---		008 => "1000110100000001", -- BR.SUB R4, 1 -- Go to the subroutine
-		000 => X"0000",
-		002 => X"0000",
-		004 => X"0000",
-		006 => X"0000",
-		008 => X"0000",
---		010 => "1000000111111111", -- BRR -1     -- Infinite loop (the end of the program)
---		010 => "0000001010001101", -- ADD R2, R1, R5  -- Start of the subroutine. It runs for 5 times. R2 <-- R1 + 1
---		011 => "0000010110110101", -- SUB R6, R6, R5  -- R6 <-- R6 - 1   The counter for the loop.
---		012 => "0000111110000000", -- TEST R6         -- Set the z flag for the branch decision
---		013 => "1000101100000001", -- BR.z R4, 1      -- If r6 is zero, jump out of the loop. 
-		010 => "1000000111111011", -- BRR -5		-- If not jump to the start of the subroutine.
---		015 => "1000111000000000", -- RETURN 
+		000 => "0100001000000000", -- IN R0 , 02  -- This example tests the branching capabilities of the design.No data dependencies.
+		002 => "0100001001000000", -- IN R1 , 03  -- The values to be loaded into the corresponding resgister.
+		004 => "0100001010000000", -- IN R2 , 01
+		006 => "0100001011000000", -- IN R3 , 05  --  End of initialization
+		008 => "0100001100000000", -- IN R4 , 00 -- Changed input to 01
+		010 => "0100001101000000", -- IN R5 , 01 -- for absolute branching
+		012 => "0100001110000000", -- IN R6 , 05 -- r6 is counter for the loop and indicates the number of times the loop is done.
+		014 => "0100001111000000", -- IN R7 , 00 -- Register init complete - ALL COMPLETE***
+		016 => "1000110100000001", -- BR.SUB R4, 1 -- Go to the subroutine
+--		000 => X"0000",
+--		002 => X"0000", -- TESTING
+--		004 => X"0000", -- TESTING
+--		006 => X"0000", -- TESTING
+--		008 => X"0000", -- TESTING
+--		010 => "1000011000000001", -- BR R0, 1 -- PC <- R0 + 1 -- REMOVE
+--		012 => X"0000", -- TESTING
+--		012 => "1000000111111111", -- BRR -1 -- TESTING end of program
+		018 => "1000000111111111", -- BRR -1     -- Infinite loop (the end of the program)
+		020 => "0000001010001101", -- ADD R2, R1, R5  -- Start of the subroutine. It runs for 5 times. R2 <-- R1 + 1
+		022 => "0000010110110101", -- SUB R6, R6, R5  -- R6 <-- R6 - 1   The counter for the loop.
+		024 => "0000111110000000", -- TEST R6         -- Set the z flag for the branch decision
+--		014 => "1000101111010000", -- BR.z R7, 16  ---- TEST
+		026 => "1000101100000001", -- BR.z R4, 1      -- If r6 is zero, jump out of the loop.
+--		016 => "1000000111110000", -- BRR -16 -- TEST 
+		028 => "1000000111111011", -- BRR -5		-- If not jump to the start of the subroutine.
+		030 => "1000111000000000", -- RETURN 
 		others => x"0000" ); -- NOP
 		
 		-- Format B3
 --		000 => "0100001000000000", -- IN R0 , -2  -- This example tests how fast a multiplication operation is performed.
---		001 => "0100001001000000", -- IN R1 , 03  -- The values to be loaded into the corresponding resgister.
---		002 => "0100001010000000", -- IN R2 , 01
---		003 => "0100001011000000", -- IN R3 , 05  --  End of initialization
---		004 => "0000011110000011", -- MUL R6, R0, R3
---		005 => "1000000111111111", -- BRR -1
+--		002 => "0100001001000000", -- IN R1 , 03  -- The values to be loaded into the corresponding resgister.
+--		004 => "0100001010000000", -- IN R2 , 01
+--		006 => "0100001011000000", -- IN R3 , 05  --  End of initialization
+--		008 => "0000011110000011", -- MUL R6, R0, R3
+--		010 => "1000000111111111", -- BRR -1
 --		others => x"0000" ); -- NOP
 		
 begin
@@ -70,10 +75,10 @@ begin
 p1:    process (clk)
 	 variable add_in : integer := 0;
     begin
-        if rising_edge(clk) then
+        --if rising_edge(clk) then
 					 add_in := conv_integer(unsigned(addr));
                 data <= rom_content(add_in);
-        end if;
+       -- end if;
     end process;
 end BHV;
 

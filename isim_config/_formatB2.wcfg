@@ -13,15 +13,7 @@
          </top_modules>
       </db_ref>
    </db_ref_list>
-   <WVObjectSize size="51" />
-   <wave_markers>
-      <marker time="250000000000" label="" />
-      <marker time="950000000000" label="" />
-      <marker time="1050000000000" label="" />
-      <marker time="1150000000000" label="" />
-      <marker time="1250000000000" label="" />
-      <marker time="25000000000" label="" />
-   </wave_markers>
+   <WVObjectSize size="55" />
    <wvobject fp_name="/cpu_b2_tb/clk_period" type="other" db_ref_id="1">
       <obj_property name="ElementShortName">clk_period</obj_property>
       <obj_property name="ObjectShortName">clk_period</obj_property>
@@ -59,6 +51,10 @@
       <obj_property name="ObjectShortName">displacement[8:0]</obj_property>
       <obj_property name="UseCustomSignalColor">true</obj_property>
       <obj_property name="CustomSignalColor">#ffff00</obj_property>
+   </wvobject>
+   <wvobject fp_name="/cpu_b2_tb/uut/br_flush" type="logic" db_ref_id="1">
+      <obj_property name="ElementShortName">br_flush</obj_property>
+      <obj_property name="ObjectShortName">br_flush</obj_property>
    </wvobject>
    <wvobject fp_name="/cpu_b2_tb/uut/CU0/pc_overwrite_en" type="logic" db_ref_id="1">
       <obj_property name="ElementShortName">pc_overwrite_en</obj_property>
@@ -171,6 +167,19 @@
       <obj_property name="ElementShortName">instr_exe[15:0]</obj_property>
       <obj_property name="ObjectShortName">instr_exe[15:0]</obj_property>
    </wvobject>
+   <wvobject fp_name="/cpu_b2_tb/uut/EX0/br_flush" type="logic" db_ref_id="1">
+      <obj_property name="ElementShortName">br_flush</obj_property>
+      <obj_property name="ObjectShortName">br_flush</obj_property>
+   </wvobject>
+   <wvobject fp_name="/cpu_b2_tb/uut/EX0/instr_in" type="array" db_ref_id="1">
+      <obj_property name="ElementShortName">instr_in[15:0]</obj_property>
+      <obj_property name="ObjectShortName">instr_in[15:0]</obj_property>
+   </wvobject>
+   <wvobject fp_name="/cpu_b2_tb/uut/EX0/in_direct" type="array" db_ref_id="1">
+      <obj_property name="ElementShortName">in_direct[15:0]</obj_property>
+      <obj_property name="ObjectShortName">in_direct[15:0]</obj_property>
+      <obj_property name="Radix">SIGNEDDECRADIX</obj_property>
+   </wvobject>
    <wvobject fp_name="/cpu_b2_tb/uut/EX0/opc_out" type="array" db_ref_id="1">
       <obj_property name="ElementShortName">opc_out[6:0]</obj_property>
       <obj_property name="ObjectShortName">opc_out[6:0]</obj_property>
@@ -178,7 +187,7 @@
    <wvobject fp_name="/cpu_b2_tb/uut/out_data1" type="array" db_ref_id="1">
       <obj_property name="ElementShortName">out_data1[15:0]</obj_property>
       <obj_property name="ObjectShortName">out_data1[15:0]</obj_property>
-      <obj_property name="Radix">UNSIGNEDDECRADIX</obj_property>
+      <obj_property name="Radix">BINARYRADIX</obj_property>
    </wvobject>
    <wvobject fp_name="/cpu_b2_tb/uut/out_data2" type="array" db_ref_id="1">
       <obj_property name="ElementShortName">out_data2[15:0]</obj_property>
