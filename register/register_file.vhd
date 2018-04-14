@@ -44,7 +44,7 @@ process(clk)
 	begin
 		if(clk='0' and clk'event) then if(rst='1') then
 			for i in 0 to 7 loop
-				reg_file(i)<= reg_file(i);--(others => '0'); 
+				reg_file(i)<= (others => '0');--reg_file(i);--(others => '0'); 
 			end loop;
 		elsif(wr_enable_reg='1' and loadimm_en = '0') then
 		
