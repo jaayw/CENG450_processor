@@ -90,7 +90,7 @@ end component;
 -- Format B: ROM_VHDL_B
 -- Format L: ROM_VHDL_L
 -- Format Final: ROM_VHDL_F1 ROM_VHDL_F2 ROM_VHDL_F3
-component ROM_VHDL_B is
+component ROM_VHDL_F1 is
 	port (
 			clk : IN STD_LOGIC;
 			addr : IN STD_LOGIC_VECTOR(6 downto 0);
@@ -382,6 +382,7 @@ CU0: controller port map(
 				mov_en => mov_en,
 				mux1_select => mux1_select,
 				mux2_select => mux2_select,
+				br_flush => br_flush,
 				displacement => displacement,
 				mux_in2_select => mux_in2_select,
 				mux_ex_select => mux_ex_select,
@@ -405,7 +406,7 @@ PC0: pc port map (
 -- Format B: ROM_VHDL_B
 -- Format L: ROM_VHDL_L
 -- Format Final: ROM_VHDL_F1 ROM_VHDL_F2 ROM_VHDL_F3
-ROM: ROM_VHDL_B port map (
+ROM: ROM_VHDL_F1 port map (
 			clk => clk,
 			addr => counter,
 			data => instr

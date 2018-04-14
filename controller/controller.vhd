@@ -208,14 +208,14 @@ begin
 							case opc_exe is
 								-- IN @ EXE or LOAD @ EXE
 								-- Stall to allow WB or LOAD to finish
-								when "0100001" | "0010000" =>
+								when "0010000" => -- "0100001" | -- might remove IN for this
 									stall <= '1';
 									mux2_select <= "000";
 								
 								when others =>
 									-- Forward data from EXE
 									stall <= '0';
-									mux2_select <= "101";	
+									mux2_select <= "101";
 							end case; -- end opc_exe case select
 						
 						when "10" =>
@@ -272,7 +272,7 @@ begin
 								when others =>
 									-- Forward data from MEM
 									stall <= '0';
-									mux1_select <= "110";
+									mux1_select <= "000"; --110 changed
 							end case; -- end opc_mem case select
 						
 						when "11" =>
@@ -354,6 +354,7 @@ begin
 					-- Need to remove MOV and LOADIMM hazard detection
 					-- IMM
 					--mux2_select <= "000";
+					
 					-- end when TEST or OUT case
 				
 				-- IN
@@ -421,7 +422,7 @@ begin
 							mux1_select <= "000";
 					end case; -- end trackHazard_1
 					
-					-- Displacement
+					-- Displacement for BR, BR.Z(N), BR.SUB, RETURN
 					mux2_select <= "010"; 
 					
 					-- end when BR or BR.N or BR.Z or BR.SUB or RETURN case
@@ -515,21 +516,21 @@ begin
 									mux1_select <= "110";
 							end case; -- end opc_mem case select
 						
-						when "11" =>
-							case opc_wb is
-								-- #TODO:
-								-- Need to remove MOV and LOADIMM hazard detection
-								-- LOADIMM @ MEM
-								-- Stall to allow WB to finish
---								when "0100010" =>
---									stall <= '1';
---									mux1_select <= "000";
-								
-								when others =>
-									-- Forward data from WB
-									stall <= '0';
-									mux1_select <= "111";
-							end case;
+--						when "11" =>
+--							case opc_wb is
+--								-- #TODO:
+--								-- Need to remove MOV and LOADIMM hazard detection
+--								-- LOADIMM @ MEM
+--								-- Stall to allow WB to finish
+----								when "0100010" =>
+----									stall <= '1';
+----									mux1_select <= "000";
+--								
+--								when others =>
+--									-- Forward data from WB
+--									stall <= '0';
+--									mux1_select <= "111";
+--							end case;
 						
 						when others =>
 							stall <= '0';
@@ -544,6 +545,12 @@ begin
 								when "0100001" | "0010000" =>
 									stall <= '1';
 									mux1_select <= "000";
+								
+--								-- SHL, SHR, ADD, SUB, MUL, NAND
+--								when "0000001" | "0000010" | "0000011" | "0000100" | "0000101" | "0000110" =>
+--									-- Forward from MEM
+--									stall <= '0';
+--									mux1_select <= "110";
 								
 								when others =>
 									-- Forward data from EXE
@@ -580,10 +587,10 @@ begin
 									stall <= '0';
 									mux1_select <= "111";
 							end case;
-						
+
 						when others =>
 							stall <= '0';
-							mux2_select <= "000";	
+							mux2_select <= "000";
 					end case; -- end trackHazard_2
 					
 					-- end when STORE case
@@ -712,26 +719,41 @@ begin
 	
 	-- Select in2 data for ALU if branch not taken
 	mux_in2_select <=
-		-- Z(N) flag = 0 and BRR.Z or BRR.N
-		'1' when (z_flag = '0' or n_flag = '0') and (opc_exe = ("1000010" or "1000001")) else
-		-- Z(N) flag = 0 and BR.Z or BR.N
-		'1' when (z_flag = '0' or n_flag = '0') and (opc_exe = ("1000101" or "1000100")) else
+		-- Z flag = 0 and BRR.Z
+		'1' when (z_flag = '0') and (opc_exe = "1000010") else
+		-- N flag = 0 and BRR.N
+		'1' when (n_flag = '0') and (opc_exe = "1000001") else
+		-- Z flag = 0 and BR.Z
+		'1' when (z_flag = '0') and (opc_exe = "1000101") else
+		-- N flag = 0 and BR.N
+		'1' when (n_flag = '0') and (opc_exe = "1000100") else
+		
+		'0';
+		
+	br_flush <=
+		-- BRR, BR, RETURN
+		'1' when opc_exe = "1000000" else
+		'1' when opc_exe = "1000011" else
+		'1' when opc_exe = "1000111" else
+		-- #TODO
+		-- BRR.N(Z), BR.N(Z), BR.SUB
+		'1' when opc_exe = "1000001" else
+		'1' when opc_exe = "1000010" else
+		'1' when opc_exe = "1000100" else
+		'1' when opc_exe = "1000101" else
+		'1' when opc_exe = "1000110" else
 		'0';
 	
 	-- Select data for EXE stage output
+	-- #TODO
+	-- BRR.Z(N), BR.Z(N), BR.SUB
 	mux_ex_select <=
-		-- BR.SUB
+		-- BR.SUB -- probs remove?
 		"01" when opc_exe = ("1000110") else
 		-- OUT, RETURN, LOAD, STORE
 		"10" when (opc_exe = ("0100000" or "1000111" or "0010000" or "0010001")) else
-		-- BRR
+		-- BRR, BR
 		"00";
-		
-	br_flush <=
-		-- BRR, RETURN
-		'1' when opc_exe = "1000000" else
-		'1' when opc_exe = "1000111" else
-		'0';
 	
 	-- Select data for MEM stage output
 	mux_mem_select <=

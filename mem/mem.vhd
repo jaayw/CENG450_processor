@@ -70,7 +70,7 @@ begin
 					-- write data out to WB stage AND out
 					opc_out <= op_code;
 					result_out <= result_in; -- ALU result to WB
-					in2_out <= in2_in;
+					in2_out <= in2_in; -- Memory Addr
 					ra_out <= ra_in; --ra register
 
 				end if;

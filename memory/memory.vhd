@@ -38,7 +38,7 @@ begin
 		begin
 		
 			-- Write operation
-			if rising_edge(clk) then
+			if falling_edge(clk) then
 				if rst = '1' then
 					
 						for i in 0 to 256 loop --(2**16 == 65536) -- Use 128 for testing
