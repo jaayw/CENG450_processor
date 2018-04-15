@@ -117,9 +117,15 @@ begin
 						rb_out <= (others => '0');
 						rc_out <= (others => '0');
 						cl_out <= (others => '0');
+					-- TEST 
+					when "0000111" =>
+						ra_out <= (others => '0');
+						rb_out <= ra_internal;
+						rc_out <= (others => '0');
+						cl_out <= (others => '0');
 					
-					-- BRR
-					when "1000000" =>
+					-- BRR, BRR.N, BRR.Z
+					when "1000000" | "1000010" | "1000011" =>
 						ra_out <= (others => '0');
 						rb_out <= (others => '0');
 						rc_out <= (others => '0');
@@ -127,8 +133,8 @@ begin
 					
 					-- BR
 					-- #TODO
-					-- NOT COMPLETE: BRR.N, BRR.Z, BR.N, BR.Z
-					when "1000001" | "1000010" | "1000011" | "1000100" | "1000101" =>
+					-- NOT COMPLETE: BR.N, BR.Z
+					when "1000001"  | "1000100" | "1000101" =>
 						ra_out <= (others => '0');
 						rb_out <= ra_internal;
 						rc_out <= (others => '0');
@@ -158,9 +164,9 @@ begin
 					-- STORE
 					when "0010001" =>
 						ra_out <= ra_internal;
-						rb_out <= rb_internal;
-						rc_out <= ra_internal;
-						cl_out <= (others => '0');--'0' & rb_internal;
+						rb_out <= rb_internal; -- Contents to read and store MEM[Rc] = Rb
+						rc_out <= ra_internal; -- Addr to store contents at MEM[Rc]
+						cl_out <= (others => '0');
 						
 					-- LOADIMM
 					when "0010010" =>
