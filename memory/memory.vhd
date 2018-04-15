@@ -28,12 +28,19 @@ architecture Behavioral of memory is
 	signal memory_content : MEM_ARRAY;
 	-- Data stored as big endian (2**16 == 65536) -- Use 128 for testing
 	
-	signal data_fetch : std_logic_vector(15 downto 0);
+	signal addr_in : std_logic_vector(7 downto 0);
+	signal addr_target : integer range 0 to 256;
+	
+	--signal data_fetch : std_logic_vector(15 downto 0);
+	
 
-begin	
+begin
+
+	addr_in <= addr(7 downto 0);
+	addr_target <= conv_integer(unsigned(addr_in));
 
 	-- Write Process
-	mem_wr : process(clk, wr_en_memory, memory_content)
+	mem_wr : process(clk, addr_target, wr_data, wr_en_memory, memory_content)
 	
 		begin
 		
@@ -49,19 +56,18 @@ begin
 						
 				elsif(wr_en_memory = '1') then
 				
-					memory_content(conv_integer(unsigned(addr(7 downto 0))))(7 downto 0) <= wr_data(7 downto 0);
-					memory_content(conv_integer(unsigned(addr(7 downto 0))))(15 downto 8) <= wr_data(15 downto 8);
-					
+					memory_content(addr_target) <= wr_data;--(7 downto 0); (7 downto 0)
+					--memory_content(to_integer(unsigned(addr(7 downto 0))))(15 downto 8) <= wr_data(15 downto 8);
+		
 				end if;
+				
 			end if;
 			
 			-- Read operation
-			if wr_en_memory = '0' then
-				data_fetch <= memory_content(conv_integer(unsigned(addr(7 downto 0))));
-				data_out <= data_fetch;
-			end if;
+			data_out <= memory_content(addr_target);
 		
 	end process;
+	
 
 end Behavioral;
 
