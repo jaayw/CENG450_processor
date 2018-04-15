@@ -67,7 +67,7 @@ BEGIN
 		
 		wait until (clk='1' and clk'event);
 		
-		in_data <= "0000000000000101";
+		in_data <= "0000000000000010";
 		
 		-- Wait until process finished
 		-- No required stimulus

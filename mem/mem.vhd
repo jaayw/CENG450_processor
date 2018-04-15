@@ -61,16 +61,21 @@ begin
 						-- FORMAT A: OUT, TEST, NOP
 						-- FORMAT B: BRR, BRR,N, BRR.Z, BR, BR.N, BR.Z, RETURN
 						-- FORMAT L: STORE
-						when "0100000" | "0000111" | "0000000" | "1000000" | "1000001" | "1000010" | "1000011" | "1000100" | "1000101" | "0010001" =>
+						when "0100000" | "0000111" | "1000000" | "1000001" | "1000010" | "1000011" | "1000100" | "1000101" | "0010001" =>
 							wr_en <= '0';
+							in2_out <= in2_in; -- Memory Addr
+						-- NOP
+						when "0000000" =>
+							wr_en <= '0';
+							in2_out <= (others => '0'); -- Memory Addr
 						when others	 =>
 							wr_en <= '1';
+							in2_out <= in2_in;
 					end case;
 					
 					-- write data out to WB stage AND out
 					opc_out <= op_code;
 					result_out <= result_in; -- ALU result to WB
-					in2_out <= in2_in; -- Memory Addr
 					ra_out <= ra_in; --ra register
 
 				end if;

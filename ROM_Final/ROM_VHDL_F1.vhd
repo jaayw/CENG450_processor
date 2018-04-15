@@ -82,17 +82,24 @@ architecture BHV of ROM_VHDL_F1 is
 	032 => "0000010011011010", -- Sub r3,r3,r2	-- r3=r3-r2: Checking the difference between the square of the two numbers
 	034 => "0000000000000000", -- NOP
 	036 => "0000000000000000", -- NOP
-	038 => "0010001100011000", -- STORE r3,@r4	-- Store the content of r3 into the address indexed by the value of r4=2 
+	-- ORIGINAL STORE COMMAND WAS INCORRECT
+	-- STORE CONTENTS OF R3 into Mem[R4]
+	038 => "0010001100011000", -- STORE r3,@r4	-- Store the content of r3 into the address indexed by the value of r4=2
 	040 => "0000001010000001", -- Add r2,r0,r1	-- r2=r0+r1
 	042 => "0000101100000001", -- SHL r4#1	-- r4=2*r4: r4=4 as another even destination for the second Store
-	--044 => X"0000",
+	-- ORIGINAL STORE COMMAND WAS INCORRECT
+	-- STORE CONTENTS OF R2 into Mem[R4]
 	044 => "0010001100010000", -- STORE r2,@r4	-- Store the content of r2 into the address indexed by the value of r4=4 
 	046 => "0000000000000000", -- NOP
 	048 => "0000000000000000", -- NOP
+	-- LOAD CONTENTS OF Mem[R4] into R2
 	050 => "0010000010100000", -- LOAD r2,@r4	-- Load the content of the address indexed by the value of r4=4 into r2 
 	052 => "0000110100000001", -- SHR r4#1	-- r4=r4/2: r4 is back to 2 as the first Store destination
-	054 => "0010000011100000", -- LOAD r3,@r4	-- Load the content of the address indexed by the value of r4=2 into r3 
-	056 => "0000010010010011", -- Sub r2,r2,r3	-- r2=r2-r3: Checking the difference ((r1^2-r0^2)-(r0+r1)) 
+	-- LOAD CONTENTS OF Mem[R4] into R3
+	054 => "0010000011100000", -- LOAD r3,@r4	-- Load the content of the address indexed by the value of r4=2 into r3
+----	-- ORIGINAL SUB COMMAND IS INCORRECT
+----	-- R2 = R3 - R2 Should be according to the math
+	056 => "0000010010011010", -- Sub r2,r2,r3	-- r2=r2-r3: Checking the difference ((r1^2-r0^2)-(r0+r1)) 
 	058 => "0000111010000000", -- Test r2		 
 	060 => "1000010000000011", -- BRR.Z +3	-- IF Zero: goto (OUT +/-)
 	062 => "0000010110110101", -- Sub r6,r6,r5	-- ELSE: r6=r6-1: When r6=1, r1^2-r0^2=r0+r1
@@ -101,7 +108,7 @@ architecture BHV of ROM_VHDL_F1 is
 	068 => "0100000011000000", -- OUT r3		-- Printout the value (r1^2-r0^2=r0+r1)
 	070 => "0000000000000000", -- NOP
 	072 => "0000000000000000", -- NOP
-	074 => X"0000",--"1000000111100000", -- BRR -32		-- goto (The beginning)
+	074 => "1000000111100000", -- BRR -32		-- goto (The beginning)
 	076 => "0000000000000000", -- NOP
 	078 => "0000000000000000", -- NOP
 	others => x"0000" ); -- NOP

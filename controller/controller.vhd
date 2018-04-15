@@ -118,10 +118,13 @@ begin
 	trackHazard_3 <=
 		-- When (current rc == rc@exe) && (op_code@exe /= nop) && (current op_code /= return)
 		"01" when ((instr_rc = ra_exe) and (opc_exe /= "0000000") and (op_code /= "1000111")) else
+		
 		-- When (current rc == rc@mem) && (op_code@mem /= nop) && (current op_code /= return)
 		"10" when ((instr_rc = ra_mem) and (opc_mem /= "0000000") and (op_code /= "1000111")) else
 		-- When (current rc == rc@wb) && (op_code@wb /= nop) && (current op_code /= return)
 		"11" when ((instr_rc = ra_wb) and (opc_wb /= "0000000") and (op_code /= "1000111")) else
+--		-- When (current rc == rc@exe) && (op_code@exe /= nop) && (current op_code = store)
+--		"01" when ((instr_rc = ra_exe) and (opc_exe /= "0000000") and ("0010001" = op_code)) else
 		"00";
 
 	-- Branching (Format B)
@@ -480,7 +483,18 @@ begin
 							mux1_select <= "000";
 					end case; -- end trackHazard_2
 					
-					mux2_select <= "000";
+					--
+					case opc_exe is
+						-- STORE Addr @ EXE stage
+						-- SHL, SHR, ADD, SUB, MUL, NAND
+						when "0000001" | "0000010" | "0000011" | "0000100" | "0000101" | "0000110" =>
+							stall <= '0';
+							mux2_select <= "101";
+						
+						when others =>
+							stall <= '0';
+							mux2_select <= "000";
+					end case; -- end opc_exe case select
 			
 					-- end when LOAD case
 				
@@ -559,6 +573,18 @@ begin
 							end case; -- end opc_exe case select
 						
 						when "10" =>
+						
+--							case opc_exe is
+--								-- STORE Addr @ EXE stage
+								-- SHL, SHR, ADD, SUB, MUL, NAND
+--								when "0000001" | "0000010" | "0000011" | "0000100" | "0000101" | "0000110" =>
+--									stall <= '0';
+--									mux2_select <= "101";
+--								when others =>
+--									stall <= '0';
+--									mux2_select <= "000";
+--							end case;
+						
 							case opc_mem is
 								-- IN @ MEM
 								-- Stall to allow WB or LOAD to finish
@@ -589,8 +615,18 @@ begin
 							end case;
 
 						when others =>
-							stall <= '0';
-							mux2_select <= "000";
+							case opc_exe is
+								-- STORE Addr @ EXE stage
+								-- SHL, SHR, ADD, SUB, MUL, NAND
+								when "0000001" | "0000010" | "0000011" | "0000100" | "0000101" | "0000110" =>
+									stall <= '0';
+									mux2_select <= "101";
+								
+								when others =>
+									stall <= '0';
+									mux2_select <= "000";
+							end case; -- end opc_exe case
+							
 					end case; -- end trackHazard_2
 					
 					-- end when STORE case
@@ -727,7 +763,6 @@ begin
 		'1' when (z_flag = '0') and (opc_exe = "1000101") else
 		-- N flag = 0 and BR.N
 		'1' when (n_flag = '0') and (opc_exe = "1000100") else
-		
 		'0';
 		
 	br_flush <=

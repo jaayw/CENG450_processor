@@ -99,8 +99,8 @@ begin
 					-- LOAD
 					when "0010000" =>
 						instr_out <= instr;
-						opc_out <= "0000001";
-						out_data1 <= in_data1;
+						opc_out <= "1111111";
+						out_data1 <= in_data1;--(others => '0');--
 						out_data2 <= in_data2;
 						
 					-- LOADIMM, MOV
